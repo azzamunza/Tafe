@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "Google Colab & FastAI – AI Training Reference",
+    "title": "Google Colab & FastAI \u2013 AI Training Reference",
     "version": "2025",
     "description": "Comprehensive Python scripting reference for AI/ML training in Google Colab",
     "target": "AI LLM Training Knowledgebase"
@@ -9,7 +9,7 @@
     {
       "id": "imports",
       "title": "Common Library Imports",
-      "icon": "📚",
+      "icon": "\ud83d\udcda",
       "description": "Standard library import statements for AI/ML development in Google Colab",
       "entries": [
         {
@@ -84,7 +84,7 @@
           "description": "Scikit-learn is the most widely used machine learning library for classical ML algorithms, preprocessing, and model evaluation.",
           "syntax": "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LinearRegression",
           "examples": [
-            "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error, r2_score\n\n# Split data\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42\n)\n\n# Scale features\nscaler = StandardScaler()\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)\n\n# Train model\nmodel = LinearRegression()\nmodel.fit(X_train_scaled, y_train)\n\n# Evaluate\ny_pred = model.predict(X_test_scaled)\nprint(f'R² Score: {r2_score(y_test, y_pred)}')"
+            "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error, r2_score\n\n# Split data\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42\n)\n\n# Scale features\nscaler = StandardScaler()\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)\n\n# Train model\nmodel = LinearRegression()\nmodel.fit(X_train_scaled, y_train)\n\n# Evaluate\ny_pred = model.predict(X_test_scaled)\nprint(f'R\u00b2 Score: {r2_score(y_test, y_pred)}')"
           ],
           "notes": [
             "Use specific imports rather than wildcard imports",
@@ -171,13 +171,76 @@
             "BGR color format by default (not RGB)",
             "Extensive image processing capabilities"
           ]
+        },
+        {
+          "id": "week_10_lab_import_libraries_2",
+          "name": "Import Libraries - Week 10 Lab",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "Import statements for numpy, pandas, os libraries used in ML/AI development.",
+          "syntax": "",
+          "examples": [
+            "import numpy as np\nimport pandas as pd\nimport os\nimport matplotlib.pyplot as plt\nimport cv2\nimport torchvision.transforms as transforms\nfrom torch.utils.data.sampler import SubsetRandomSampler\nimport torch\nimport torch.nn as nn\nimport torch.nn.functional as F\nfrom torch.utils.data import Dataset, DataLoader\nimport torch.optim as optim"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_11_worked_example_loading_the_data_14",
+          "name": "Loading the data",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "Import statements for load_breast_cancer, pandas, matplotlib libraries used in ML/AI development.",
+          "syntax": "from sklearn.datasets import load_breast_cancer\nimport pandas as pd\nimport matplotlib.pyplot as plt",
+          "examples": [
+            "# Importing necessary libraries\nfrom sklearn.datasets import load_breast_cancer\nimport pandas as pd\nimport matplotlib.pyplot as plt\n%matplotlib inline\n\n# Loading the data\ndata = load_breast_cancer()\ndf = pd.DataFrame(data.data, columns=data.feature_names)\ndf['target'] = data.target"
+          ],
+          "notes": [
+            "Importing necessary libraries",
+            "Loading the data"
+          ],
+          "source": "Week 11/worked_example"
+        },
+        {
+          "id": "week_11_worked_example_normalizing_the_data_18",
+          "name": "Normalizing the data",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "Import statements for train_test_split, StandardScaler libraries used in ML/AI development.",
+          "syntax": "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler",
+          "examples": [
+            "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n# Splitting the dataset into training and test sets\nX_train, X_test, y_train, y_test = train_test_split(\n    df.drop('target', axis=1), df['target'], test_size=0.2, random_state=42\n)\n\n# Normalizing the data\nscaler = StandardScaler()\nX_train = scaler.fit_transform(X_train)\nX_test = scaler.transform(X_test)"
+          ],
+          "notes": [
+            "Splitting the dataset into training and test sets",
+            "Normalizing the data"
+          ],
+          "source": "Week 11/worked_example"
+        },
+        {
+          "id": "week_3_slides_first_import_our_dependencies__23",
+          "name": "First import our dependencies:",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "Import statements for numpy, datasets, LabelSpreading libraries used in ML/AI development.",
+          "syntax": "",
+          "examples": [
+            "import numpy as np\nfrom sklearn import datasets\nfrom sklearn.semi_supervised import LabelSpreading\nimport matplotlib.pyplot as plt"
+          ],
+          "notes": [
+            "Example from Week 3 course materials"
+          ],
+          "source": "Week 3/slides"
         }
       ]
     },
     {
       "id": "math_methods",
       "title": "Mathematical Methods",
-      "icon": "🔢",
+      "icon": "\ud83d\udd22",
       "description": "Core mathematical operations for numerical computing and scientific analysis",
       "entries": [
         {
@@ -188,12 +251,36 @@
           "description": "Functions for creating NumPy arrays with various initialization methods.",
           "syntax": "np.array(object)\nnp.zeros(shape)\nnp.ones(shape)\nnp.arange(start, stop, step)\nnp.linspace(start, stop, num)",
           "parameters": [
-            {"name": "object", "type": "array_like", "description": "Array-like object (list, tuple, etc.)"},
-            {"name": "shape", "type": "tuple", "description": "Shape of the array (rows, columns)"},
-            {"name": "start", "type": "number", "description": "Start of interval"},
-            {"name": "stop", "type": "number", "description": "End of interval"},
-            {"name": "step", "type": "number", "description": "Spacing between values"},
-            {"name": "num", "type": "int", "description": "Number of samples to generate"}
+            {
+              "name": "object",
+              "type": "array_like",
+              "description": "Array-like object (list, tuple, etc.)"
+            },
+            {
+              "name": "shape",
+              "type": "tuple",
+              "description": "Shape of the array (rows, columns)"
+            },
+            {
+              "name": "start",
+              "type": "number",
+              "description": "Start of interval"
+            },
+            {
+              "name": "stop",
+              "type": "number",
+              "description": "End of interval"
+            },
+            {
+              "name": "step",
+              "type": "number",
+              "description": "Spacing between values"
+            },
+            {
+              "name": "num",
+              "type": "int",
+              "description": "Number of samples to generate"
+            }
           ],
           "returns": "ndarray",
           "examples": [
@@ -229,8 +316,16 @@
           "description": "Functions for computing statistical measures and aggregations on arrays.",
           "syntax": "np.mean(a, axis=None)\nnp.median(a, axis=None)\nnp.std(a, axis=None)\nnp.var(a, axis=None)\nnp.min(a, axis=None)\nnp.max(a, axis=None)\nnp.sum(a, axis=None)\nnp.prod(a, axis=None)",
           "parameters": [
-            {"name": "a", "type": "array_like", "description": "Input array"},
-            {"name": "axis", "type": "int or tuple", "description": "Axis along which to compute (None for all)"}
+            {
+              "name": "a",
+              "type": "array_like",
+              "description": "Input array"
+            },
+            {
+              "name": "axis",
+              "type": "int or tuple",
+              "description": "Axis along which to compute (None for all)"
+            }
           ],
           "examples": [
             "import numpy as np\n\ndata = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])\n\n# Central tendency\nprint(f'Mean: {np.mean(data)}')          # 5.0\nprint(f'Median: {np.median(data)}')      # 5.0\n\n# Dispersion\nprint(f'Std Dev: {np.std(data)}')       # 2.58\nprint(f'Variance: {np.var(data)}')      # 6.67\n\n# Range\nprint(f'Min: {np.min(data)}')           # 1\nprint(f'Max: {np.max(data)}')           # 9\nprint(f'Range: {np.ptp(data)}')         # 8 (peak-to-peak)\n\n# Aggregations\nprint(f'Sum: {np.sum(data)}')           # 45\nprint(f'Product: {np.prod(data)}')      # 362880\n\n# Along axis\nprint(f'Mean per row: {np.mean(data, axis=1)}')  # [2, 5, 8]\nprint(f'Mean per col: {np.mean(data, axis=0)}')  # [4, 5, 6]\n\n# Percentiles\nprint(f'25th percentile: {np.percentile(data, 25)}')\nprint(f'75th percentile: {np.percentile(data, 75)}')\n\n# Correlation\nx = np.array([1, 2, 3, 4, 5])\ny = np.array([2, 4, 6, 8, 10])\nprint(f'Correlation: {np.corrcoef(x, y)[0, 1]}')"
@@ -281,7 +376,7 @@
           "description": "Numerical integration (quadrature) for computing definite integrals.",
           "syntax": "from scipy.integrate import quad, dblquad, odeint",
           "examples": [
-            "from scipy.integrate import quad, dblquad, odeint\nimport numpy as np\n\n# Single integral\ndef integrand(x):\n    return np.exp(-x**2)\n\nresult, error = quad(integrand, 0, np.inf)\nprint(f'Integral from 0 to inf: {result} ± {error}')\n\n# Integral with parameters\ndef integrand_param(x, a, b):\n    return a * x**2 + b * x\n\nresult, error = quad(integrand_param, 0, 1, args=(2, 3))\nprint(f'Parametric integral: {result}')\n\n# Double integral\ndef integrand_2d(y, x):\n    return x * y**2\n\nresult, error = dblquad(\n    integrand_2d,\n    0, 1,  # x bounds\n    lambda x: 0, lambda x: 1  # y bounds\n)\nprint(f'Double integral: {result}')\n\n# Solve ODE dy/dt = -k*y\ndef dydt(y, t, k):\n    return -k * y\n\ny0 = 5  # Initial condition\nt = np.linspace(0, 5, 50)\nk = 0.5\n\nsolution = odeint(dydt, y0, t, args=(k,))\nprint(f'ODE solution at t=5: {solution[-1][0]}')"
+            "from scipy.integrate import quad, dblquad, odeint\nimport numpy as np\n\n# Single integral\ndef integrand(x):\n    return np.exp(-x**2)\n\nresult, error = quad(integrand, 0, np.inf)\nprint(f'Integral from 0 to inf: {result} \u00b1 {error}')\n\n# Integral with parameters\ndef integrand_param(x, a, b):\n    return a * x**2 + b * x\n\nresult, error = quad(integrand_param, 0, 1, args=(2, 3))\nprint(f'Parametric integral: {result}')\n\n# Double integral\ndef integrand_2d(y, x):\n    return x * y**2\n\nresult, error = dblquad(\n    integrand_2d,\n    0, 1,  # x bounds\n    lambda x: 0, lambda x: 1  # y bounds\n)\nprint(f'Double integral: {result}')\n\n# Solve ODE dy/dt = -k*y\ndef dydt(y, t, k):\n    return -k * y\n\ny0 = 5  # Initial condition\nt = np.linspace(0, 5, 50)\nk = 0.5\n\nsolution = odeint(dydt, y0, t, args=(k,))\nprint(f'ODE solution at t=5: {solution[-1][0]}')"
           ],
           "notes": [
             "quad() uses adaptive quadrature",
@@ -297,7 +392,7 @@
           "description": "Statistical distributions, hypothesis tests, and probability functions.",
           "syntax": "from scipy import stats",
           "examples": [
-            "from scipy import stats\nimport numpy as np\n\n# Distributions\n# Normal distribution\nmu, sigma = 0, 1\nnorm_dist = stats.norm(loc=mu, scale=sigma)\n\n# PDF and CDF\nx = np.linspace(-3, 3, 100)\npdf = norm_dist.pdf(x)\ncdf = norm_dist.cdf(x)\n\n# Generate random samples\nsamples = norm_dist.rvs(size=1000)\n\n# Other distributions\nt_dist = stats.t(df=10)\nchi2_dist = stats.chi2(df=5)\nbinom_dist = stats.binom(n=10, p=0.5)\npoisson_dist = stats.poisson(mu=3)\n\n# Hypothesis tests\n# T-test (independent samples)\ngroup1 = np.random.normal(100, 15, 50)\ngroup2 = np.random.normal(105, 15, 50)\nt_stat, p_value = stats.ttest_ind(group1, group2)\nprint(f'T-test: t={t_stat:.3f}, p={p_value:.3f}')\n\n# Paired t-test\nbefore = np.random.normal(100, 15, 30)\nafter = before + np.random.normal(5, 10, 30)\nt_stat, p_value = stats.ttest_rel(before, after)\nprint(f'Paired t-test: t={t_stat:.3f}, p={p_value:.3f}')\n\n# Chi-square test\nobserved = np.array([40, 60, 30, 70])\nexpected = np.array([50, 50, 50, 50])\nchi2, p_value = stats.chisquare(observed, expected)\nprint(f'Chi-square: χ²={chi2:.3f}, p={p_value:.3f}')\n\n# Correlation test\nx = np.random.normal(0, 1, 100)\ny = 2*x + np.random.normal(0, 0.5, 100)\nr, p_value = stats.pearsonr(x, y)\nprint(f'Pearson r={r:.3f}, p={p_value:.3f}')\n\n# Spearman correlation (non-parametric)\nrho, p_value = stats.spearmanr(x, y)\nprint(f'Spearman ρ={rho:.3f}, p={p_value:.3f}')\n\n# ANOVA\ngroup1 = np.random.normal(100, 15, 30)\ngroup2 = np.random.normal(105, 15, 30)\ngroup3 = np.random.normal(110, 15, 30)\nf_stat, p_value = stats.f_oneway(group1, group2, group3)\nprint(f'ANOVA: F={f_stat:.3f}, p={p_value:.3f}')\n\n# Normality test\nw_stat, p_value = stats.shapiro(group1)\nprint(f'Shapiro-Wilk: W={w_stat:.3f}, p={p_value:.3f}')"
+            "from scipy import stats\nimport numpy as np\n\n# Distributions\n# Normal distribution\nmu, sigma = 0, 1\nnorm_dist = stats.norm(loc=mu, scale=sigma)\n\n# PDF and CDF\nx = np.linspace(-3, 3, 100)\npdf = norm_dist.pdf(x)\ncdf = norm_dist.cdf(x)\n\n# Generate random samples\nsamples = norm_dist.rvs(size=1000)\n\n# Other distributions\nt_dist = stats.t(df=10)\nchi2_dist = stats.chi2(df=5)\nbinom_dist = stats.binom(n=10, p=0.5)\npoisson_dist = stats.poisson(mu=3)\n\n# Hypothesis tests\n# T-test (independent samples)\ngroup1 = np.random.normal(100, 15, 50)\ngroup2 = np.random.normal(105, 15, 50)\nt_stat, p_value = stats.ttest_ind(group1, group2)\nprint(f'T-test: t={t_stat:.3f}, p={p_value:.3f}')\n\n# Paired t-test\nbefore = np.random.normal(100, 15, 30)\nafter = before + np.random.normal(5, 10, 30)\nt_stat, p_value = stats.ttest_rel(before, after)\nprint(f'Paired t-test: t={t_stat:.3f}, p={p_value:.3f}')\n\n# Chi-square test\nobserved = np.array([40, 60, 30, 70])\nexpected = np.array([50, 50, 50, 50])\nchi2, p_value = stats.chisquare(observed, expected)\nprint(f'Chi-square: \u03c7\u00b2={chi2:.3f}, p={p_value:.3f}')\n\n# Correlation test\nx = np.random.normal(0, 1, 100)\ny = 2*x + np.random.normal(0, 0.5, 100)\nr, p_value = stats.pearsonr(x, y)\nprint(f'Pearson r={r:.3f}, p={p_value:.3f}')\n\n# Spearman correlation (non-parametric)\nrho, p_value = stats.spearmanr(x, y)\nprint(f'Spearman \u03c1={rho:.3f}, p={p_value:.3f}')\n\n# ANOVA\ngroup1 = np.random.normal(100, 15, 30)\ngroup2 = np.random.normal(105, 15, 30)\ngroup3 = np.random.normal(110, 15, 30)\nf_stat, p_value = stats.f_oneway(group1, group2, group3)\nprint(f'ANOVA: F={f_stat:.3f}, p={p_value:.3f}')\n\n# Normality test\nw_stat, p_value = stats.shapiro(group1)\nprint(f'Shapiro-Wilk: W={w_stat:.3f}, p={p_value:.3f}')"
           ],
           "notes": [
             "Wide variety of distributions available",
@@ -326,7 +421,7 @@
     {
       "id": "data_processing",
       "title": "Data Processing Methods",
-      "icon": "📊",
+      "icon": "\ud83d\udcca",
       "description": "Comprehensive data manipulation, transformation, and preprocessing techniques",
       "entries": [
         {
@@ -494,6 +589,909 @@
             "RobustScaler better for data with outliers",
             "OneHotEncoder creates binary columns for each category"
           ]
+        }
+      ]
+    },
+    {
+      "id": "data_loading",
+      "title": "Data Loading & Preprocessing",
+      "icon": "\ud83d\udcca",
+      "description": "Methods for loading, preparing, and preprocessing datasets",
+      "entries": [
+        {
+          "id": "week_10_lab_load_and_explore_the_dataset_3",
+          "name": "Load and Explore the Dataset",
+          "category": "Data Loading & Preprocessing",
+          "type": "data_loading",
+          "description": "Load and Explore the Dataset",
+          "syntax": "",
+          "examples": [
+            "train_df = pd.read_csv(\"path/to/train.csv\")\nprint(f\"Train Size: {len(os.listdir('path/to/train/train'))}\")\nprint(f\"Test Size: {len(os.listdir('path/to/test/test'))}\")"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_10_lab_define_custom_dataset_class_4",
+          "name": "Define Custom Dataset Class",
+          "category": "Data Loading & Preprocessing",
+          "type": "data_loading",
+          "description": "Define Custom Dataset Class",
+          "syntax": "",
+          "examples": [
+            "class CreateDataset(Dataset):\n    def __init__(self, df_data, data_dir = './', transform=None):\n        super().__init__()\n        self.df = df_data.values\n        self.data_dir = data_dir\n        self.transform = transform\n\n    def __len__(self):\n        return len(self.df)\n    \n    def __getitem__(self, index):\n        img_name, label = self.df[index]\n        img_path = os.path.join(self.data_dir, img_name)\n        image = cv2.imread(img_path)\n        if self.transform is not None:\n            image = self.transform(image)\n        return image, label"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_10_lab_define_data_augmentations_and_create_dataset_6",
+          "name": "Define Data Augmentations and Create Dataset",
+          "category": "Data Loading & Preprocessing",
+          "type": "data_loading",
+          "description": "Define Data Augmentations and Create Dataset",
+          "syntax": "",
+          "examples": [
+            "transforms_train = transforms.Compose([\n    transforms.ToPILImage(),\n    transforms.RandomHorizontalFlip(),\n    transforms.RandomRotation(10),\n    transforms.ToTensor(),\n    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))\n])\n\ntransforms_test = transforms.Compose([\n    transforms.ToPILImage(),\n    transforms.ToTensor(),\n    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))\n])\n\ntrain_data = CreateDataset(df_data=train_df, data_dir=train_path, transform=transforms_train)\ntest_data = CreateDataset(df_data=pd.read_csv(\"path/to/sample_submission.csv\"), data_dir=test_path, transform=transforms_test)"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_10_lab_prepare_data_loaders_7",
+          "name": "Prepare Data Loaders",
+          "category": "Data Loading & Preprocessing",
+          "type": "data_loading",
+          "description": "Prepare Data Loaders",
+          "syntax": "",
+          "examples": [
+            "batch_size = 64\nvalid_size = 0.2\n\nnum_train = len(train_data)\nindices = list(range(num_train))\nnp.random.shuffle(indices)\nsplit = int(np.floor(valid_size * num_train))\ntrain_idx, valid_idx = indices[split:], indices[:split]\n\ntrain_sampler = SubsetRandomSampler(train_idx)\nvalid_sampler = SubsetRandomSampler(valid_idx)\n\ntrain_loader = DataLoader(train_data, batch_size=batch_size, sampler=train_sampler)\nvalid_loader = DataLoader(train_data, batch_size=batch_size, sampler=valid_sampler)\ntest_loader = DataLoader(test_data, batch_size=batch_size, shuffle=False)"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_10_lab_make_predictions_on_test_set_13",
+          "name": "Make Predictions on Test Set",
+          "category": "Data Loading & Preprocessing",
+          "type": "data_loading",
+          "description": "Make Predictions on Test Set",
+          "syntax": "",
+          "examples": [
+            "model.eval()\n\npreds = []\nfor data, target in test_loader:\n    if device:\n        data, target = data.cuda(), target.cuda()\n    output = model(data)\n    pr = output[:,1].detach().cpu().numpy()\n    preds.extend(pr)\n\nsample_sub = pd.read_csv(\"path/to/sample_submission.csv\")\nsample_sub['has_cactus'] = preds\nsample_sub.to_csv('submission.csv', index=False)"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_10_in_depth_guide_to_convolutional_neural_networks_nb_8",
+          "name": "CNN Guide - Data Loading (1)",
+          "category": "Data Loading & Preprocessing",
+          "type": "data_loading",
+          "description": "Import libraries for data processing, visualization, and PyTorch deep learning operations",
+          "syntax": "",
+          "examples": [
+            "import numpy as np # linear algebra\nimport pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)\n\nimport os\nprint(os.listdir('../input/'))\n\nimport matplotlib.pyplot as plt\nplt.style.use(\"ggplot\")\n\n# OpenCV Image Library\nimport cv2\n\n# Import PyTorch\nimport torchvision.transforms as transforms\nfrom torch.utils.data.sampler import SubsetRandomSampler\nimport torch\nimport torch.nn as nn\nimport torch.nn.functional as F\nfrom torch.utils.data import TensorDataset, DataLoader, Dataset\nimport torchvision\nimport torch.optim as optim"
+          ],
+          "notes": [
+            "linear algebra",
+            "data processing, CSV file I/O (e.g. pd.read_csv)",
+            "OpenCV Image Library"
+          ],
+          "source": "Week 10/in-depth-guide-to-convolutional-neural-networks (notebook)"
+        },
+        {
+          "id": "week_8_worked_example_nb_17",
+          "name": "Data Loading & Preprocessing - worked example",
+          "category": "Data Loading & Preprocessing",
+          "type": "data_loading",
+          "description": "Load dataset",
+          "syntax": "",
+          "examples": [
+            "# Load dataset\ndf = pd.read_csv(\"sms.csv\")\n\n# Display first few rows\ndf.head()\n\n# Define the appropriate column names\ncolumn_names = [\"index\", \"sms\", \"is_spam\", \"extra\"]\n\n# Load the data into a pandas DataFrame, ignoring the extra column\ndf = pd.read_csv(\"sms.csv\", names=column_names, usecols=[\"sms\", \"is_spam\"], skiprows=1)\ndata = df.copy()\n\n# Display dataset information\nprint(data.info())\nprint(data.head())"
+          ],
+          "notes": [
+            "Load dataset",
+            "Display first few rows",
+            "Define the appropriate column names"
+          ],
+          "source": "Week 8/worked example (notebook)"
+        },
+        {
+          "id": "week_8_lab_nb_24",
+          "name": "Data Loading & Preprocessing - lab",
+          "category": "Data Loading & Preprocessing",
+          "type": "data_loading",
+          "description": "Load the dataset",
+          "syntax": "",
+          "examples": [
+            "import pandas as pd\n\n# Load the dataset\nurl = \"https://raw.githubusercontent.com/jordanhill-NMTAFE/AISS-ICTSS00120/main/1%20Learning%20Materials/Week%208/sms.csv\"\ndata = pd.read_csv(url)\n\n# Wrangle data into desired form\ndf = pd.DataFrame()\n\ndf[\"sms\"] = data[\"sms\"]\n\n# Label encoding\ndf[\"label\"] = data[\"spam\"].map({False: \"ham\", True: \"spam\"})\ndf.head()"
+          ],
+          "notes": [
+            "Load the dataset",
+            "Wrangle data into desired form",
+            "Label encoding"
+          ],
+          "source": "Week 8/lab (notebook)"
+        },
+        {
+          "id": "week_10_in_depth_guide_to_convolutional_neural_networks_nb_31",
+          "name": "Configure Dataset Paths",
+          "category": "Data Loading & Preprocessing",
+          "type": "data_loading",
+          "description": "creating test data",
+          "syntax": "",
+          "examples": [
+            "transforms_test = transforms.Compose([\n    transforms.ToPILImage(),\n    transforms.ToTensor(),\n    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))\n])\n\n# creating test data\nsample_sub = pd.read_csv(\"../input/sample_submission.csv\")\ntest_data = CreateDataset(df_data=sample_sub, data_dir=test_path, transform=transforms_test)\n\n# prepare the test loader\ntest_loader = DataLoader(test_data, batch_size=batch_size, shuffle=False)"
+          ],
+          "notes": [
+            "creating test data",
+            "prepare the test loader"
+          ],
+          "source": "Week 10/in-depth-guide-to-convolutional-neural-networks (notebook)"
+        }
+      ]
+    },
+    {
+      "id": "general",
+      "title": "General Operations",
+      "icon": "\u2699\ufe0f",
+      "description": "General Python operations and utilities",
+      "entries": [
+        {
+          "id": "week_10_lab_define_custom_dataset_class_5",
+          "name": "Configure Dataset Paths",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Define Custom Dataset Class",
+          "syntax": "",
+          "examples": [
+            "train_path = 'path/to/train/train'\ntest_path = 'path/to/test/test'"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_3_slides_create_a_synthetic_dataset_24",
+          "name": "Create a synthetic dataset",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Create a synthetic dataset",
+          "syntax": "",
+          "examples": [
+            "# Create a synthetic dataset\nX, y = datasets.make_moons(n_samples=300, noise=0.1)"
+          ],
+          "notes": [
+            "Create a synthetic dataset"
+          ],
+          "source": "Week 3/slides"
+        },
+        {
+          "id": "week_3_slides_let_s_unlabel_most_of_the_data_to_simulate_a_la_25",
+          "name": "Unlabel Data for Semi-Supervised Learning",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Unlabels the majority of data to simulate a semi-supervised learning scenario with limited labeled examples",
+          "syntax": "",
+          "examples": [
+            "y[50:] = -1  # Unlabel majority of the data"
+          ],
+          "notes": [
+            "Unlabel majority of the data"
+          ],
+          "source": "Week 3/slides"
+        },
+        {
+          "id": "week_8_worked_example_nb_6",
+          "name": "General Operations - worked example (1)",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Naive Bayes parameters",
+          "syntax": "",
+          "examples": [
+            "from sklearn.model_selection import GridSearchCV\n\n# Naive Bayes parameters\nparams_nb = {\"alpha\": [0.01, 0.1, 0.5, 1.0, 10.0]}\nnb_grid_search = GridSearchCV(\n    nb_classifier, param_grid=params_nb, cv=5, scoring=\"f1_weighted\"\n)\nnb_grid_search.fit(X_train_smote, y_train_smote)\n\nprint(\"Best Naive Bayes Parameters:\", nb_grid_search.best_params_)\nprint(\"Best Naive Bayes Model:\", nb_grid_search.best_estimator_)\nprint(\"Best CV Score:\", nb_grid_search.best_score_)\n\n# SVM parameters\nparams_svm = {\n    \"svc__C\": [0.1, 1, 10],\n    \"svc__gamma\": [\"scale\", \"auto\"],\n    \"svc__kernel\": [\"linear\", \"rbf\"],\n}\nsvm_grid_search = GridSearchCV(\n    svm_pipeline, param_grid=params_svm, cv=5, scoring=\"f1_weighted\", n_jobs=1\n)\nsvm_grid_search.fit(X_train_smote, y_train_smote)\n\nprint(\"Best SVM Parameters:\", svm_grid_search.best_params_)\nprint(\"Best SVM Model:\", svm_grid_search.best_estimator_)\nprint(\"Best CV Score:\", svm_grid_search.best_score_)"
+          ],
+          "notes": [
+            "Naive Bayes parameters",
+            "SVM parameters"
+          ],
+          "source": "Week 8/worked example (notebook)"
+        },
+        {
+          "id": "week_13_softmax_temperature_nb_10",
+          "name": "General Operations - softmax+temperature (1)",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Define logits",
+          "syntax": "",
+          "examples": [
+            "from matplotlib.pylab import MT19937, RandomState, SeedSequence\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom scipy.stats import norm\n\n# Define logits\nlogits = np.array([0.1, 1.0, 2.0, 4.0, 5.0, 2.0, 1.0, 0.1])\n\n# print(np.random.standard_normal(10))\n\nrs = RandomState(MT19937(SeedSequence(42)))\nlogits = rs.standard_normal(10) * rs.randn() + rs.randint()\nlogits = center_largest_values(logits)\n\nprint(logits)\n\n\n# Define the softmax function with temperature scaling\ndef softmax(logits, temperature=1.0):\n    scaled_logits = logits / temperature\n    exp_scaled_logits = np.exp(scaled_logits)\n    return exp_scaled_logits / np.sum(exp_scaled_logits)\n\n\n# Define temperatures to visualize the effect\ntemperatures = [0.5, 1.0, 2.0]\n\n# Calculate softmax probabilities for each temperature\nsoftmax_probs = [softmax(logits, T) for T in temperatures]\n\nsoftmax_probs"
+          ],
+          "notes": [
+            "Define logits",
+            "print(np.random.standard_normal(10))",
+            "Define the softmax function with temperature scaling"
+          ],
+          "source": "Week 13/softmax+temperature (notebook)"
+        },
+        {
+          "id": "week_8_lab_nb_13",
+          "name": "General Operations - lab",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Define the model",
+          "syntax": "",
+          "examples": [
+            "from sklearn.naive_bayes import MultinomialNB\nfrom sklearn.model_selection import GridSearchCV\n\n# Define the model\nmodel = MultinomialNB()\n\n# Define hyperparameters and GridSearchCV\nparam_grid = {\"alpha\": [0.1, 0.5, 1.0, 1.5, 2.0]}\ngrid_search = GridSearchCV(model, param_grid, cv=5, scoring=\"accuracy\")\ngrid_search.fit(X_train_tfidf, y_train)\n\n# Best parameters and model\nbest_params = grid_search.best_params_\nbest_model = grid_search.best_estimator_\nprint(f\"Best Parameters: {best_params}\")"
+          ],
+          "notes": [
+            "Define the model",
+            "Define hyperparameters and GridSearchCV",
+            "Best parameters and model"
+          ],
+          "source": "Week 8/lab (notebook)"
+        },
+        {
+          "id": "week_8_worked_example_nb_20",
+          "name": "General Operations - worked example (2)",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Initialize stemmer, lemmatizer, and stop words",
+          "syntax": "",
+          "examples": [
+            "# Initialize stemmer, lemmatizer, and stop words\nstemmer = PorterStemmer()\nlemmatizer = WordNetLemmatizer()\nstop_words = set(stopwords.words(\"english\"))\n\n\n# Function to preprocess text\ndef preprocess_text(sms):\n    sms = re.sub(r\"<.*?>\", \" \", sms)  # Remove HTML tags\n    sms = sms.lower()  # Convert to lowercase\n    words = word_tokenize(sms)  # Tokenize\n    words = [word for word in words if word not in stop_words]  # Remove stop words\n    words = [stemmer.stem(word) for word in words]  # Stemming\n    words = [lemmatizer.lemmatize(word) for word in words]  # Lemmatization\n    words = [word for word in words if word.isalnum()]  # Remove non-alphanumeric\n    return \" \".join(words)\n\n\n# Apply preprocessing\ndata[\"sms_cleaned\"] = data[\"sms\"].apply(preprocess_text)\nprint(data[[\"sms\", \"sms_cleaned\"]].head())"
+          ],
+          "notes": [
+            "Initialize stemmer, lemmatizer, and stop words",
+            "Function to preprocess text",
+            "Remove HTML tags"
+          ],
+          "source": "Week 8/worked example (notebook)"
+        },
+        {
+          "id": "week_10_in_depth_guide_to_convolutional_neural_networks_nb_23",
+          "name": "Set Batch Size",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Set Batch Size",
+          "syntax": "",
+          "examples": [
+            "# Set Batch Size\nbatch_size = 64\n\n# Percentage of training set to use as validation\nvalid_size = 0.2\n\n# obtain training indices that will be used for validation\nnum_train = len(train_data)\nindices = list(range(num_train))\nnp.random.shuffle(indices)\nsplit = int(np.floor(valid_size * num_train))\ntrain_idx, valid_idx = indices[split:], indices[:split]\n\n# Create Samplers\ntrain_sampler = SubsetRandomSampler(train_idx)\nvalid_sampler = SubsetRandomSampler(valid_idx)\n\n# prepare data loaders (combine dataset and sampler)\ntrain_loader = DataLoader(train_data, batch_size=batch_size, sampler=train_sampler)\nvalid_loader = DataLoader(train_data, batch_size=batch_size, sampler=valid_sampler)"
+          ],
+          "notes": [
+            "Set Batch Size",
+            "Percentage of training set to use as validation",
+            "obtain training indices that will be used for validation"
+          ],
+          "source": "Week 10/in-depth-guide-to-convolutional-neural-networks (notebook)"
+        },
+        {
+          "id": "week_10_in_depth_guide_to_convolutional_neural_networks_nb_26",
+          "name": "Our own custom class for datasets",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Our own custom class for datasets",
+          "syntax": "",
+          "examples": [
+            "# Our own custom class for datasets\nclass CreateDataset(Dataset):\n    def __init__(self, df_data, data_dir = './', transform=None):\n        super().__init__()\n        self.df = df_data.values\n        self.data_dir = data_dir\n        self.transform = transform\n\n    def __len__(self):\n        return len(self.df)\n    \n    def __getitem__(self, index):\n        img_name,label = self.df[index]\n        img_path = os.path.join(self.data_dir, img_name)\n        image = cv2.imread(img_path)\n        if self.transform is not None:\n            image = self.transform(image)\n        return image, label"
+          ],
+          "notes": [
+            "Our own custom class for datasets"
+          ],
+          "source": "Week 10/in-depth-guide-to-convolutional-neural-networks (notebook)"
+        },
+        {
+          "id": "week_3_semi_supervised_lab_nb_28",
+          "name": "General Operations - semi-supervised lab",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Create and fit the model",
+          "syntax": "",
+          "examples": [
+            "# Create and fit the model\nlabel_spread = LabelSpreading(kernel='knn', alpha=0.3)\nlabel_spread.fit(X, y)\n\n# Predict labels for the entire dataset\ny_pred = label_spread.transduction_"
+          ],
+          "notes": [
+            "Create and fit the model",
+            "Predict labels for the entire dataset"
+          ],
+          "source": "Week 3/semi-supervised lab (notebook)"
+        },
+        {
+          "id": "week_8_worked_example_nb_30",
+          "name": "General Operations - worked example (3)",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Check for missing or null values",
+          "syntax": "",
+          "examples": [
+            "# Check for missing or null values\nmissing_values = data.isnull().sum()\nprint(\"\\nMissing values per column:\")\nprint(missing_values)\n\n# Reset index\ndata.reset_index(drop=True, inplace=True)\n\n# Check for duplicate entries\nduplicate_rows = data.duplicated()\nprint(\"\\nDuplicate rows:\")\nprint(duplicate_rows.sum())\n\n# Display distribution of duplicates\nprint(\"Marked as spam:\", len(data[duplicate_rows][data[\"is_spam\"]]))\nprint(\"Marked as not spam:\", len(data[duplicate_rows][~data[\"is_spam\"]]))"
+          ],
+          "notes": [
+            "Check for missing or null values",
+            "Reset index",
+            "Check for duplicate entries"
+          ],
+          "source": "Week 8/worked example (notebook)"
+        },
+        {
+          "id": "week_8_worked_example_nb_32",
+          "name": "General Operations - worked example (4)",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Set display options",
+          "syntax": "",
+          "examples": [
+            "from pandas import DataFrame\nimport pandas as pd\n\n# Set display options\npd.set_option(\"display.max_rows\", 50)\npd.set_option(\"display.max_columns\", 500)\n\n\n# Function to get unique values in each column\ndef get_unique_values(df: DataFrame):\n    return {column: set(df[column].unique()) for column in df}"
+          ],
+          "notes": [
+            "Set display options",
+            "Function to get unique values in each column"
+          ],
+          "source": "Week 8/worked example (notebook)"
+        },
+        {
+          "id": "week_13_softmax_temperature_nb_34",
+          "name": "General Operations - softmax+temperature (2)",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Step 1: Sort the array in ascending order",
+          "syntax": "",
+          "examples": [
+            "def center_largest_values(arr):\n    n = len(arr)\n    sorted_arr = np.sort(arr)  # Step 1: Sort the array in ascending order\n    result = np.zeros_like(arr)  # Initialize the result array with the same shape\n\n    # Place elements to center largest values\n    left, right = 0, n - 1\n    for i in range(n):\n        if i % 2 == 0:\n            result[left] = sorted_arr[i]\n            left += 1\n        else:\n            result[right] = sorted_arr[i]\n            right -= 1\n\n    return result"
+          ],
+          "notes": [
+            "Step 1: Sort the array in ascending order",
+            "Initialize the result array with the same shape",
+            "Place elements to center largest values"
+          ],
+          "source": "Week 13/softmax+temperature (notebook)"
+        }
+      ]
+    },
+    {
+      "id": "visualization",
+      "title": "Data Visualization",
+      "icon": "\ud83d\udcc8",
+      "description": "Visualization methods using matplotlib and seaborn",
+      "entries": [
+        {
+          "id": "week_10_lab_visualize_sample_images_8",
+          "name": "Visualize Sample Images",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Visualize Sample Images",
+          "syntax": "",
+          "examples": [
+            "classes = ['No Cactus','Cactus']\n\ndef imshow(img):\n    img = img / 2 + 0.5\n    plt.imshow(np.transpose(img, (1, 2, 0)))\n\ndataiter = iter(train_loader)\nimages, labels = dataiter.next()\nimages = images.numpy()\n\nfig = plt.figure(figsize=(25, 4))\nfor idx in np.arange(20):\n    ax = fig.add_subplot(2, 20//2, idx+1, xticks=[], yticks=[])\n    imshow(images[idx])\n    ax.set_title(classes[labels[idx]])"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_10_lab_evaluate_performance_with_a_graph_11",
+          "name": "Evaluate Performance with a Graph",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Evaluate Performance with a Graph",
+          "syntax": "",
+          "examples": [
+            "plt.plot(train_losses, label='Training loss')\nplt.plot(valid_losses, label='Validation loss')\nplt.xlabel(\"Epochs\")\nplt.ylabel(\"Loss\")\nplt.legend(frameon=False)"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_11_worked_example_visualizing_feature_relationships_16",
+          "name": "Visualizing feature relationships",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Visualizing feature relationships",
+          "syntax": "",
+          "examples": [
+            "import seaborn as sns\n\n# Visualizing feature relationships\nplt.figure(figsize=(10, 6))\nsns.pairplot(df.iloc[:, :5], hue='target', markers=['o', 's'])\nplt.show()"
+          ],
+          "notes": [
+            "Visualizing feature relationships"
+          ],
+          "source": "Week 11/worked_example"
+        },
+        {
+          "id": "week_13_softmax_temperature_add_labels__title__and_legend_21",
+          "name": "Add labels, title, and legend",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Add labels, title, and legend",
+          "syntax": "",
+          "examples": [
+            "import numpy as np\nimport matplotlib.pyplot as plt\n\n# Define logits\nlogits = np.array([2.0, 1.0, 0.1])\n\n# Define a function to calculate softmax with temperature scaling\ndef softmax(logits, temperature=1.0):\n    scaled_logits = logits / temperature\n    exp_scaled_logits = np.exp(scaled_logits)\n    return exp_scaled_logits / np.sum(exp_scaled_logits)\n\n# Define temperatures to visualize the effect\ntemperatures = [0.5, 1.0, 2.0]\n\n# Calculate softmax probabilities for each temperature\nsoftmax_probs = [softmax(logits, T) for T in temperatures]\n\n# Plot the results\nlabels = ['Logit 1', 'Logit 2', 'Logit 3']\nx = np.arange(len(labels))\n\nfig, ax = plt.subplots()\nwidth = 0.2  # Width of the bars\n\nfor i, T in enumerate(temperatures):\n    ax.bar(x + i * width, softmax_probs[i], width, label=f'Temperature = {T}')\n\n# Add labels, title, and legend\nax.set_ylabel('Probability')\nax.set_title('Softmax Probabilities with Different Temperatures')\nax.set_xticks(x + width / len(temperatures))\nax.set_xticklabels(labels)\nax.legend()\n\nplt.show()"
+          ],
+          "notes": [
+            "Define logits",
+            "Define a function to calculate softmax with temperature scaling",
+            "Define temperatures to visualize the effect"
+          ],
+          "source": "Week 13/softmax+temperature"
+        },
+        {
+          "id": "week_3_slides_plot_the_results_27",
+          "name": "Plot the results",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Plot the results",
+          "syntax": "",
+          "examples": [
+            "# Plot the results\nplt.figure(figsize=(8, 5))\ncm = plt.cm.RdBu\nplt.scatter(X[:, 0], X[:, 1], c=y_pred, cmap=cm, edgecolors='k')\nplt.title(\"Semi-Supervised Learning with Label Spreading\")\nplt.show()"
+          ],
+          "notes": [
+            "Plot the results"
+          ],
+          "source": "Week 3/slides"
+        },
+        {
+          "id": "week_8_hyperparameter_tuning_slides_plotting_the_confusion_matrix_29",
+          "name": "Plotting the confusion matrix",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Plotting the confusion matrix",
+          "syntax": "",
+          "examples": [
+            "import matplotlib.pyplot as plt\nimport seaborn as sns\n\n# Plotting the confusion matrix\nsns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')\nplt.xlabel('Predicted Label')\nplt.ylabel('True Label')\nplt.title('Confusion Matrix')\nplt.show()"
+          ],
+          "notes": [
+            "Plotting the confusion matrix"
+          ],
+          "source": "Week 8/Hyperparameter_Tuning_slides"
+        },
+        {
+          "id": "week_8_worked_example_nb_1",
+          "name": "Data Visualization - worked example",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Value counts for 'is_spam' column",
+          "syntax": "",
+          "examples": [
+            "# Value counts for 'is_spam' column\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom sklearn.feature_extraction.text import CountVectorizer\n\nprint(\"\\nValue counts for 'is_spam' column:\")\nprint(data[\"is_spam\"].value_counts())\nprint(data[\"is_spam\"].value_counts(normalize=True))\n\n\n# Function to plot most common words in spam and ham messages\ndef plot_most_common_words(df, n_top_words=20):\n    spam_messages = df[df[\"is_spam\"]][\"sms_cleaned\"]\n    ham_messages = df[~df[\"is_spam\"]][\"sms_cleaned\"]\n\n    vectorizer_spam = CountVectorizer(stop_words=\"english\")\n    vectorizer_ham = CountVectorizer(stop_words=\"english\")\n\n    spam_matrix = vectorizer_spam.fit_transform(spam_messages)\n    ham_matrix = vectorizer_ham.fit_transform(ham_messages)\n\n    sum_spam = np.sum(spam_matrix, axis=0)\n    sum_ham = np.sum(ham_matrix, axis=0)\n\n    words_spam = [\n        (word, sum_spam[0, idx]) for word, idx in vectorizer_spam.vocabulary_.items()\n    ]\n    words_ham = [\n        (word, sum_ham[0, idx]) for word, idx in vectorizer_ham.vocabulary_.items()\n    ]\n\n    words_spam = sorted(words_spam, key=lambda x: x[1], reverse=True)[:n_top_words]\n    words_ham = sorted(words_ham, key=lambda x: x[1], reverse=True)[:n_top_words]\n\n    spam_words, spam_counts = zip(*words_spam)\n    ham_words, ham_counts = zip(*words_ham)\n\n    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 6))\n    ax1.barh(spam_words, spam_counts, color=\"red\")\n    ax1.set_title(f\"Top {n_top_words} Most Common Words in Spam Messages\")\n    ax1.invert_yaxis()\n\n    ax2.barh(ham_words, ham_counts, color=\"green\")\n    ax2.set_title(f\"Top {n_top_words} Most Common Words in Ham Messages\")\n    ax2.invert_yaxis()\n\n    plt.tight_layout()\n    plt.show()\n\n\n# Plot most common words\nplot_most_common_words(data, n_top_words=20)"
+          ],
+          "notes": [
+            "Value counts for 'is_spam' column",
+            "Function to plot most common words in spam and ham messages",
+            "Plot most common words"
+          ],
+          "source": "Week 8/worked example (notebook)"
+        },
+        {
+          "id": "week_13_softmax_temperature_nb_12",
+          "name": "Data Visualization - softmax+temperature",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Define a function to plot Gaussian distribution",
+          "syntax": "",
+          "examples": [
+            "# Define a function to plot Gaussian distribution\ndef plot_gaussian(ax, mean, variance, label):\n    x = np.linspace(mean - 3 * variance, mean + 3 * variance, 1000)\n    y = norm.pdf(x, mean, variance)\n    ax.plot(x, y, label=label)\n    return x, y\n\n\n# Set up the plot\nfig, ax = plt.subplots()\n\n# Plot the Gaussian distributions for each temperature\nvariance = 0.1  # Set a variance to control the width of the bell curves\nx_labels = [\"Logit 1\", \"Logit 2\", \"Logit 3\"]\n\nfor i, prob in enumerate(softmax_probs):\n\n    x, y = zip(*enumerate(prob))\n    ax.plot(x, y, label=temperatures[i])\nelse:\n    x_labels = x\n\n# Adjusting plot details\nplt.xticks(np.arange(len(x_labels)), x_labels)\nax.set_title(\"Softmax Probability Distributions with Different Temperatures\")\nax.set_xlabel(\"Logit Index\")\nax.set_ylabel(\"Probability Density\")\nax.legend(loc=\"upper right\")\n\nplt.show()"
+          ],
+          "notes": [
+            "Define a function to plot Gaussian distribution",
+            "Set up the plot",
+            "Plot the Gaussian distributions for each temperature"
+          ],
+          "source": "Week 13/softmax+temperature (notebook)"
+        },
+        {
+          "id": "week_3_semi_supervised_lab_nb_18",
+          "name": "Data Visualization - semi-supervised lab (1)",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Plot the results",
+          "syntax": "",
+          "examples": [
+            "# Plot the results\nplt.figure(figsize=(10, 8))\ncolors = {-1: 'gray', 0: 'red', 1: 'blue'}\nlabels = {-1: 'Unlabeled', 0: 'Class 0', 1: 'Class 1'}\n\nfor label in colors:\n    indices = (y_pred == label)\n    plt.scatter(X[indices, 0], X[indices, 1], c=colors[label], label=labels[label], edgecolors='k', s=60)\n\n# Plot the predicted labels\n# plt.scatter(X[:, 0], X[:, 1], c=[colors[label] for label in y_pred], edgecolors='k', alpha=1, s=60)\n\n# Add a legend\nplt.legend(loc='best')\nplt.title(\"Semi-Supervised Learning with Label Spreading\")\nplt.xlabel(\"Feature 1\")\nplt.ylabel(\"Feature 2\")\nplt.show()"
+          ],
+          "notes": [
+            "Plot the results",
+            "Plot the predicted labels",
+            "plt.scatter(X[:, 0], X[:, 1], c=[colors[label] for label in y_pred], edgecolors='k', alpha=1, s=60)"
+          ],
+          "source": "Week 3/semi-supervised lab (notebook)"
+        },
+        {
+          "id": "week_3_semi_supervised_lab_nb_21",
+          "name": "Data Visualization - semi-supervised lab (2)",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Plot the predicted labels",
+          "syntax": "",
+          "examples": [
+            "plt.figure(figsize=(10, 8))\ncolors = {-1: 'gray', 0: 'red', 1: 'blue'}\nlabels = {-1: 'Unlabeled', 0: 'Class 0', 1: 'Class 1'}\n\nfor label in colors:\n    indices = (y == label)\n    plt.scatter(X[indices, 0], X[indices, 1], c=colors[label], label=labels[label], edgecolors='k', s=60)\n\n# Plot the predicted labels\n# plt.scatter(X[:, 0], X[:, 1], c=[colors[label] for label in y_pred], edgecolors='k', alpha=1, s=60)\n\n# Add a legend\nplt.legend(loc='best')\nplt.title(\"Semi-Supervised Learning with Label Spreading\")\nplt.xlabel(\"Feature 1\")\nplt.ylabel(\"Feature 2\")\nplt.show()"
+          ],
+          "notes": [
+            "Plot the predicted labels",
+            "plt.scatter(X[:, 0], X[:, 1], c=[colors[label] for label in y_pred], edgecolors='k', alpha=1, s=60)",
+            "Add a legend"
+          ],
+          "source": "Week 3/semi-supervised lab (notebook)"
+        },
+        {
+          "id": "week_3_semi_supervised_lab_nb_22",
+          "name": "Data Visualization - semi-supervised lab (3)",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Plot the predicted labels",
+          "syntax": "",
+          "examples": [
+            "plt.figure(figsize=(10, 8))\ncolors = {-1: 'gray', 0: 'red', 1: 'blue'}\nlabels = {-1: 'Unlabeled', 0: 'Class 0', 1: 'Class 1'}\n\nfor label in colors:\n    indices = (y == label)\n    plt.scatter(X[indices, 0], X[indices, 1], c=colors[label], label=labels[label], edgecolors='k', s=60)\n\n# Plot the predicted labels\n# plt.scatter(X[:, 0], X[:, 1], c=[colors[label] for label in y_pred], edgecolors='k', alpha=1, s=60)\n\n# Add a legend\nplt.legend(loc='best')\nplt.title(\"Semi-Supervised Learning with Label Spreading\")\nplt.xlabel(\"Feature 1\")\nplt.ylabel(\"Feature 2\")\nplt.show()"
+          ],
+          "notes": [
+            "Plot the predicted labels",
+            "plt.scatter(X[:, 0], X[:, 1], c=[colors[label] for label in y_pred], edgecolors='k', alpha=1, s=60)",
+            "Add a legend"
+          ],
+          "source": "Week 3/semi-supervised lab (notebook)"
+        },
+        {
+          "id": "week_10_in_depth_guide_to_convolutional_neural_networks_nb_25",
+          "name": "obtain one batch of training images",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "obtain one batch of training images",
+          "syntax": "",
+          "examples": [
+            "# obtain one batch of training images\ndataiter = iter(train_loader)\nimages, labels = dataiter.next()\nimages = images.numpy() # convert images to numpy for display\n\n# plot the images in the batch, along with the corresponding labels\nfig = plt.figure(figsize=(25, 4))\n# display 20 images\nfor idx in np.arange(20):\n    ax = fig.add_subplot(2, 20/2, idx+1, xticks=[], yticks=[])\n    imshow(images[idx])\n    ax.set_title(classes[labels[idx]])"
+          ],
+          "notes": [
+            "obtain one batch of training images",
+            "convert images to numpy for display",
+            "plot the images in the batch, along with the corresponding labels"
+          ],
+          "source": "Week 10/in-depth-guide-to-convolutional-neural-networks (notebook)"
+        },
+        {
+          "id": "week_11_worked_example_nb_27",
+          "name": "Data Visualization - worked_example",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Visualizing feature relationships",
+          "syntax": "",
+          "examples": [
+            "import seaborn as sns\n\n# Visualizing feature relationships\nplt.figure(figsize=(10, 6))\nsns.pairplot(\n    pd.concat([df.iloc[:, -5:], df[\"target\"]]), hue=\"target\", markers=[\"o\", \"s\"]\n)\nplt.show()"
+          ],
+          "notes": [
+            "Visualizing feature relationships"
+          ],
+          "source": "Week 11/worked_example (notebook)"
+        },
+        {
+          "id": "week_10_in_depth_guide_to_convolutional_neural_networks_nb_29",
+          "name": "Visualization code from Week 10 notebook: in-depth",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Visualization code from Week 10 notebook: in-depth-guide-to-convolutional-neural-networks",
+          "syntax": "",
+          "examples": [
+            "rgb_img = np.squeeze(images[3])\nchannels = ['red channel', 'green channel', 'blue channel']\n\nfig = plt.figure(figsize = (36, 36)) \nfor idx in np.arange(rgb_img.shape[0]):\n    ax = fig.add_subplot(3, 1, idx + 1)\n    img = rgb_img[idx]\n    ax.imshow(img, cmap='gray')\n    ax.set_title(channels[idx])\n    width, height = img.shape\n    thresh = img.max()/2.5\n    for x in range(width):\n        for y in range(height):\n            val = round(img[x][y],2) if img[x][y] !=0 else 0\n            ax.annotate(str(val), xy=(y,x),\n                    horizontalalignment='center',\n                    verticalalignment='center', size=8,\n                    color='white' if img[x][y]<thresh else 'black')"
+          ],
+          "notes": [
+            "From Week 10 Jupyter notebook: in-depth-guide-to-convolutional-neural-networks"
+          ],
+          "source": "Week 10/in-depth-guide-to-convolutional-neural-networks (notebook)"
+        },
+        {
+          "id": "week_8_lab_nb_33",
+          "name": "Data Visualization - lab",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Visualization code from Week 8 notebook: lab",
+          "syntax": "",
+          "examples": [
+            "import matplotlib.pyplot as plt\nimport seaborn as sns\n\nsns.heatmap(\n    cm,\n    annot=True,\n    fmt=\"d\",\n    cmap=\"Blues\",\n    xticklabels=[\"Ham\", \"Spam\"],\n    yticklabels=[\"Ham\", \"Spam\"],\n)\nplt.xlabel(\"Predicted\")\nplt.ylabel(\"Actual\")\nplt.title(\"Confusion Matrix\")\nplt.show()"
+          ],
+          "notes": [
+            "From Week 8 Jupyter notebook: lab"
+          ],
+          "source": "Week 8/lab (notebook)"
+        }
+      ]
+    },
+    {
+      "id": "deep_learning",
+      "title": "Deep Learning Operations",
+      "icon": "\ud83e\udde0",
+      "description": "PyTorch neural network models and operations",
+      "entries": [
+        {
+          "id": "week_10_lab_define_cnn_model_architecture_9",
+          "name": "Define CNN Model Architecture",
+          "category": "Deep Learning Operations",
+          "type": "model",
+          "description": "Define CNN Model Architecture",
+          "syntax": "",
+          "examples": [
+            "class CNN(nn.Module):\n    def __init__(self):\n        super(CNN, self).__init__()\n        self.conv1 = nn.Conv2d(in_channels=3, out_channels=16, kernel_size=3, padding=1)\n        self.conv2 = nn.Conv2d(16, 32, 3, padding=1)\n        self.conv3 = nn.Conv2d(32, 64, 3, padding=1)\n        self.conv4 = nn.Conv2d(64, 128, 3, padding=1)\n        self.pool = nn.MaxPool2d(2, 2)\n        self.fc1 = nn.Linear(128*2*2, 512)\n        self.fc2 = nn.Linear(512, 2)\n        self.dropout = nn.Dropout(0.2)\n        \n    def forward(self, x):\n        x = self.pool(F.relu(self.conv1(x)))\n        x = self.pool(F.relu(self.conv2(x)))\n        x = self.pool(F.relu(self.conv3(x)))\n        x = self.pool(F.relu(self.conv4(x)))\n        x = x.view(-1, 128 * 2 * 2)\n        x = self.dropout(x)\n        x = F.relu(self.fc1(x))\n        x = self.dropout(x)\n        x = self.fc2(x)\n        return x\n\ndevice = torch.cuda.is_available()\nmodel = CNN().cuda() if device else CNN()"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        }
+      ]
+    },
+    {
+      "id": "training",
+      "title": "Model Training",
+      "icon": "\ud83c\udfcb\ufe0f",
+      "description": "Training loops and optimization procedures",
+      "entries": [
+        {
+          "id": "week_10_lab_set_up_training_and_validation_loop_10",
+          "name": "Set Up Training and Validation Loop",
+          "category": "Model Training",
+          "type": "training",
+          "description": "Set Up Training and Validation Loop",
+          "syntax": "",
+          "examples": [
+            "criterion = nn.CrossEntropyLoss()\noptimizer = optim.Adamax(model.parameters(), lr=0.001)\n\nn_epochs = 30\n\nvalid_loss_min = np.Inf \n\ntrain_losses = []\nvalid_losses = []\n\nfor epoch in range(1, n_epochs+1):\n\n    train_loss = 0.0\n    valid_loss = 0.0\n    \n    model.train()\n    for data, target in train_loader:\n        if device:\n            data, target = data.cuda(), target.cuda()\n        optimizer.zero_grad()\n        output = model(data)\n        loss = criterion(output, target)\n        loss.backward()\n        optimizer.step()\n        train_loss += loss.item()*data.size(0)\n        \n    model.eval()\n    for data, target in valid_loader:\n        if device:\n            data, target = data.cuda(), target.cuda()\n        output = model(data)\n        loss = criterion(output, target)\n        valid_loss += loss.item()*data.size(0)\n    \n    train_loss = train_loss/len(train_loader.sampler)\n    valid_loss = valid_loss/len(valid_loader.sampler)\n    train_losses.append(train_loss)\n    valid_losses.append(valid_loss)\n        \n    print('Epoch: {} \\tTraining Loss: {:.6f} \\tValidation Loss: {:.6f}'.format(\n        epoch, train_loss, valid_loss))\n    \n    if valid_loss <= valid_loss_min:\n        print('Validation loss decreased ({:.6f} --> {:.6f}).  Saving model ...'.format(\n        valid_loss_min, valid_loss))\n        torch.save(model.state_dict(), 'best_model.pt')\n        valid_loss_min = valid_loss"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_10_in_depth_guide_to_convolutional_neural_networks_nb_0",
+          "name": "number of epochs to train the model",
+          "category": "Model Training",
+          "type": "training",
+          "description": "number of epochs to train the model",
+          "syntax": "",
+          "examples": [
+            "# number of epochs to train the model\nn_epochs = 30\n\nvalid_loss_min = np.Inf # track change in validation loss\n\n# keeping track of losses as it happen\ntrain_losses = []\nvalid_losses = []\n\nfor epoch in range(1, n_epochs+1):\n\n    # keep track of training and validation loss\n    train_loss = 0.0\n    valid_loss = 0.0\n    \n    ###################\n    # train the model #\n    ###################\n    model.train()\n    for data, target in train_loader:\n        # move tensors to GPU if CUDA is available\n        if train_on_gpu:\n            data, target = data.cuda(), target.cuda()\n        # clear the gradients of all optimized variables\n        optimizer.zero_grad()\n        # forward pass: compute predicted outputs by passing inputs to the model\n        output = model(data)\n        # calculate the batch loss\n        loss = criterion(output, target)\n        # backward pass: compute gradient of the loss with respect to model parameters\n        loss.backward()\n        # perform a single optimization step (parameter update)\n        optimizer.step()\n        # update training loss\n        train_loss += loss.item()*data.size(0)\n        \n    ######################    \n    # validate the model #\n    ######################\n    model.eval()\n    for data, target in valid_loader:\n        # move tensors to GPU if CUDA is available\n        if train_on_gpu:\n            data, target = data.cuda(), target.cuda()\n        # forward pass: compute predicted outputs by passing inputs to the model\n        output = model(data)\n        # calculate the batch loss\n        loss = criterion(output, target)\n        # update average validation loss \n        valid_loss += loss.item()*data.size(0)\n    \n    # calculate average losses\n    train_loss = train_loss/len(train_loader.sampler)\n    valid_loss = valid_loss/len(valid_loader.sampler)\n    train_losses.append(train_loss)\n    valid_losses.append(valid_loss)\n        \n    # print training/validation statistics \n    print('Epoch: {} \\tTraining Loss: {:.6f} \\tValidation Loss: {:.6f}'.format(\n        epoch, train_loss, valid_loss))\n    \n    # save model if validation loss has decreased\n    if valid_loss <= valid_loss_min:\n        print('Validation loss decreased ({:.6f} --> {:.6f}).  Saving model ...'.format(\n        valid_loss_min,\n        valid_loss))\n        torch.save(model.state_dict(), 'best_model.pt')\n        valid_loss_min = valid_loss"
+          ],
+          "notes": [
+            "number of epochs to train the model",
+            "track change in validation loss",
+            "keeping track of losses as it happen"
+          ],
+          "source": "Week 10/in-depth-guide-to-convolutional-neural-networks (notebook)"
+        }
+      ]
+    },
+    {
+      "id": "evaluation",
+      "title": "Model Evaluation",
+      "icon": "\ud83d\udcca",
+      "description": "Model evaluation metrics and performance assessment",
+      "entries": [
+        {
+          "id": "week_11_worked_example_training_the_models_19",
+          "name": "Training the models",
+          "category": "Model Evaluation",
+          "type": "evaluation",
+          "description": "Training the models",
+          "syntax": "",
+          "examples": [
+            "from sklearn.linear_model import LogisticRegression\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.metrics import accuracy_score, f1_score\n\n# Initializing models\nlogreg = LogisticRegression(max_iter=10000)\nrf = RandomForestClassifier(random_state=42)\n\n# Training the models\nlogreg.fit(X_train, y_train)\nrf.fit(X_train, y_train)"
+          ],
+          "notes": [
+            "Initializing models",
+            "Training the models"
+          ],
+          "source": "Week 11/worked_example"
+        },
+        {
+          "id": "week_11_worked_example_evaluating_models_20",
+          "name": "Evaluating models",
+          "category": "Model Evaluation",
+          "type": "evaluation",
+          "description": "Evaluating models",
+          "syntax": "",
+          "examples": [
+            "# Making predictions\ny_pred_logreg = logreg.predict(X_test)\ny_pred_rf = rf.predict(X_test)\n\n# Evaluating models\naccuracy_logreg = accuracy_score(y_test, y_pred_logreg)\nf1_logreg = f1_score(y_test, y_pred_logreg)\naccuracy_rf = accuracy_score(y_test, y_pred_rf)\nf1_rf = f1_score(y_test, y_pred_rf)\n\n(accuracy_logreg, f1_logreg), (accuracy_rf, f1_rf)"
+          ],
+          "notes": [
+            "Making predictions",
+            "Evaluating models"
+          ],
+          "source": "Week 11/worked_example"
+        },
+        {
+          "id": "week_8_hyperparameter_tuning_slides_printing_results_28",
+          "name": "Printing results",
+          "category": "Model Evaluation",
+          "type": "evaluation",
+          "description": "Printing results",
+          "syntax": "",
+          "examples": [
+            "from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix\n\n# Predictions\ny_pred = grid_search.predict(X_test)\n\n# Calculating metrics\naccuracy = accuracy_score(y_test, y_pred)\nprecision = precision_score(y_test, y_pred)\nrecall = recall_score(y_test, y_pred)\nf1 = f1_score(y_test, y_pred)\nconf_matrix = confusion_matrix(y_test, y_pred)\n\n# Printing results\nprint(f\"Accuracy: {accuracy}\")\nprint(f\"Precision: {precision}\")\nprint(f\"Recall: {recall}\")\nprint(f\"F1 Score: {f1}\")\nprint(f\"Confusion Matrix:\\n{conf_matrix}\")"
+          ],
+          "notes": [
+            "Predictions",
+            "Calculating metrics",
+            "Printing results"
+          ],
+          "source": "Week 8/Hyperparameter_Tuning_slides"
+        },
+        {
+          "id": "week_8_worked_example_nb_2",
+          "name": "Model Evaluation - worked example (1)",
+          "category": "Model Evaluation",
+          "type": "evaluation",
+          "description": "Initialize dictionaries to save the evaluation metrics",
+          "syntax": "",
+          "examples": [
+            "import time\nfrom sklearn.metrics import accuracy_score, balanced_accuracy_score\n\n# Initialize dictionaries to save the evaluation metrics\nmetrics_nb = {}\nmetrics_svc = {}\n\n# Evaluate Naive Bayes\nstart_train_nb = time.time()\nbest_nb_classifier.fit(X_train_smote, y_train_smote)\nend_train_nb = time.time()\nmetrics_nb[\"training_time\"] = end_train_nb - start_train_nb\n\nstart_pred_nb = time.time()\ny_pred_nb = best_nb_classifier.predict(X_test)\nend_pred_nb = time.time()\nmetrics_nb[\"prediction_time\"] = end_pred_nb - start_pred_nb\nmetrics_nb[\"accuracy\"] = accuracy_score(y_test, y_pred_nb)\nmetrics_nb[\"balanced_accuracy\"] = balanced_accuracy_score(y_test, y_pred_nb)\n\n# Print Naive Bayes metrics\nprint(\"Naive Bayes Metrics:\")\nfor metric, value in metrics_nb.items():\n    print(f\"{metric}: {value:.4f}\")\n\n# Evaluate SVM\nstart_train_svc = time.time()\nbest_svm_pipeline.fit(X_train_smote, y_train_smote)\nend_train_svc = time.time()\nmetrics_svc[\"training_time\"] = end_train_svc - start_train_svc\n\nstart_pred_svc = time.time()\ny_pred_svc = best_svm_pipeline.predict(X_test)\nend_pred_svc = time.time()\nmetrics_svc[\"prediction_time\"] = end_pred_svc - start_pred_svc\nmetrics_svc[\"accuracy\"] = accuracy_score(y_test, y_pred_svc)\nmetrics_svc[\"balanced_accuracy\"] = balanced_accuracy_score(y_test, y_pred_svc)\n\n# Print SVM metrics\nprint(\"\\nSVM Metrics:\")\nfor metric, value in metrics_svc.items():\n    print(f\"{metric}: {value:.4f}\")"
+          ],
+          "notes": [
+            "Initialize dictionaries to save the evaluation metrics",
+            "Evaluate Naive Bayes",
+            "Print Naive Bayes metrics"
+          ],
+          "source": "Week 8/worked example (notebook)"
+        },
+        {
+          "id": "week_11_worked_example_nb_4",
+          "name": "Model Evaluation - worked_example",
+          "category": "Model Evaluation",
+          "type": "evaluation",
+          "description": "Making predictions",
+          "syntax": "",
+          "examples": [
+            "from sklearn.metrics import (\n    accuracy_score,\n    f1_score,\n    precision_score,\n    recall_score,\n    confusion_matrix,\n    ConfusionMatrixDisplay,\n)\n\n# Making predictions\ny_pred_logreg = logreg.predict(X_test)\ny_pred_rf = rf.predict(X_test)\n\n# Confusion Matrix for Random Forest\nconf_matrix_rf = confusion_matrix(y_test, y_pred_rf)\ndisp = ConfusionMatrixDisplay(\n    confusion_matrix=conf_matrix_rf, display_labels=data.target_names\n)\n\n# Plotting the confusion matrix\ndisp.plot(cmap=\"Blues\")\nplt.title(\"Confusion Matrix: Random Forest\")\nplt.show()\n\n# Evaluate model performance using classification metrics\naccuracy_rf = accuracy_score(y_test, y_pred_rf)\nprecision_rf = precision_score(y_test, y_pred_rf)\nrecall_rf = recall_score(y_test, y_pred_rf)\nf1_rf = f1_score(y_test, y_pred_rf)\n\nprint(f\"Accuracy: {accuracy_rf}\")\nprint(f\"Precision: {precision_rf}\")\nprint(f\"Recall: {recall_rf}\")\nprint(f\"F1 Score: {f1_rf}\")"
+          ],
+          "notes": [
+            "Making predictions",
+            "Confusion Matrix for Random Forest",
+            "Plotting the confusion matrix"
+          ],
+          "source": "Week 11/worked_example (notebook)"
+        },
+        {
+          "id": "week_8_worked_example_nb_9",
+          "name": "Model Evaluation - worked example (2)",
+          "category": "Model Evaluation",
+          "type": "evaluation",
+          "description": "Train Naive Bayes classifier",
+          "syntax": "",
+          "examples": [
+            "from sklearn.naive_bayes import MultinomialNB\nfrom sklearn.metrics import accuracy_score, confusion_matrix, classification_report\n\n# Train Naive Bayes classifier\nnb_classifier = MultinomialNB()\nnb_classifier.fit(X_train_smote, y_train_smote)\n\n# Predict on test data\ny_pred = nb_classifier.predict(X_test)\n\n# Accuracy and confusion matrix\naccuracy = accuracy_score(y_test, y_pred)\nprint(f\"Accuracy of the Naive Bayes classifier: {accuracy:.2f}\")\nconf_matrix = confusion_matrix(y_test, y_pred)\nprint(\"Confusion Matrix:\\n\", conf_matrix)\n\n# Classification report\nclass_report = classification_report(y_test, y_pred, target_names=[\"Ham\", \"Spam\"])\nprint(\"Classification Report:\\n\", class_report)"
+          ],
+          "notes": [
+            "Train Naive Bayes classifier",
+            "Predict on test data",
+            "Accuracy and confusion matrix"
+          ],
+          "source": "Week 8/worked example (notebook)"
+        },
+        {
+          "id": "week_8_lab_nb_14",
+          "name": "Model Evaluation - lab",
+          "category": "Model Evaluation",
+          "type": "evaluation",
+          "description": "Evaluation code from Week 8 notebook: lab",
+          "syntax": "",
+          "examples": [
+            "X_test_counts = count_vectorizer.transform(X_test)\nX_test_tfidf = tfidf_transformer.transform(X_test_counts)\n\ny_pred = best_model.predict(X_test_tfidf)\n\nfrom sklearn.metrics import (\n    accuracy_score,\n    precision_score,\n    recall_score,\n    f1_score,\n    confusion_matrix,\n    classification_report,\n)\n\naccuracy = accuracy_score(y_test, y_pred)\nprecision = precision_score(y_test, y_pred)\nrecall = recall_score(y_test, y_pred)\nf1 = f1_score(y_test, y_pred)\ncm = confusion_matrix(y_test, y_pred)\nreport = classification_report(y_test, y_pred)\n\nprint(f\"Accuracy: {accuracy}\")\nprint(f\"Precision: {precision}\")\nprint(f\"Recall: {recall}\")\nprint(f\"F1 Score: {f1}\")\nprint(f\"Confusion Matrix:\\n{cm}\")\nprint(f\"Classification Report:\\n{report}\")"
+          ],
+          "notes": [
+            "From Week 8 Jupyter notebook: lab"
+          ],
+          "source": "Week 8/lab (notebook)"
+        },
+        {
+          "id": "week_8_worked_example_nb_15",
+          "name": "Model Evaluation - worked example (3)",
+          "category": "Model Evaluation",
+          "type": "evaluation",
+          "description": "Predictions",
+          "syntax": "",
+          "examples": [
+            "from sklearn.metrics import (\n    accuracy_score,\n    precision_score,\n    recall_score,\n    f1_score,\n    confusion_matrix,\n)\n\n# Predictions\ny_pred = svm_grid_search.predict(X_test)\n\n# Calculating metrics\naccuracy = accuracy_score(y_test, y_pred)\nprecision = precision_score(y_test, y_pred)\nrecall = recall_score(y_test, y_pred)\nf1 = f1_score(y_test, y_pred)\nconf_matrix = confusion_matrix(y_test, y_pred)\n\n# Printing results\nprint(f\"Accuracy: {accuracy}\")\nprint(f\"Precision: {precision}\")\nprint(f\"Recall: {recall}\")\nprint(f\"F1 Score: {f1}\")\nprint(f\"Confusion Matrix:\\n{conf_matrix}\")"
+          ],
+          "notes": [
+            "Predictions",
+            "Calculating metrics",
+            "Printing results"
+          ],
+          "source": "Week 8/worked example (notebook)"
+        },
+        {
+          "id": "week_8_worked_example_nb_16",
+          "name": "Model Evaluation - worked example (4)",
+          "category": "Model Evaluation",
+          "type": "evaluation",
+          "description": "Train Naive Bayes classifier with optimal hyperparameters",
+          "syntax": "",
+          "examples": [
+            "# Train Naive Bayes classifier with optimal hyperparameters\nbest_nb_classifier = MultinomialNB(alpha=0.1)\nbest_nb_classifier.fit(X_train_smote, y_train_smote)\n\n# Predict on test data\ny_pred_nb = best_nb_classifier.predict(X_test)\n\n# Calculate accuracy\naccuracy_nb = accuracy_score(y_test, y_pred_nb)\nprint(f\"Accuracy of the Naive Bayes classifier: {accuracy_nb:.2f}\")\n\n# Generate confusion matrix and classification report\nconf_matrix_nb = confusion_matrix(y_test, y_pred_nb)\nprint(\"Confusion Matrix:\\n\", conf_matrix_nb)\nclass_report_nb = classification_report(y_test, y_pred_nb, target_names=[\"Ham\", \"Spam\"])\nprint(\"Classification Report:\\n\", class_report_nb)"
+          ],
+          "notes": [
+            "Train Naive Bayes classifier with optimal hyperparameters",
+            "Predict on test data",
+            "Calculate accuracy"
+          ],
+          "source": "Week 8/worked example (notebook)"
+        }
+      ]
+    },
+    {
+      "id": "ml_models",
+      "title": "Machine Learning Models",
+      "icon": "\ud83e\udd16",
+      "description": "Scikit-learn and other ML model implementations",
+      "entries": [
+        {
+          "id": "week_3_slides_predict_labels_for_the_entire_dataset_26",
+          "name": "Predict labels for the entire dataset",
+          "category": "Machine Learning Models",
+          "type": "model",
+          "description": "Predict labels for the entire dataset",
+          "syntax": "",
+          "examples": [
+            "# Create and fit the model\nlabel_spread = LabelSpreading(kernel='knn', alpha=0.8)\nlabel_spread.fit(X, y)\n\n# Predict labels for the entire dataset\ny_pred = label_spread.transduction_"
+          ],
+          "notes": [
+            "Create and fit the model",
+            "Predict labels for the entire dataset"
+          ],
+          "source": "Week 3/slides"
+        },
+        {
+          "id": "week_8_worked_example_nb_3",
+          "name": "Machine Learning Models - worked example (1)",
+          "category": "Machine Learning Models",
+          "type": "model",
+          "description": "Create SVM pipeline",
+          "syntax": "",
+          "examples": [
+            "from sklearn.svm import SVC\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.pipeline import make_pipeline\n\n# Create SVM pipeline\nsvm_pipeline = make_pipeline(\n    StandardScaler(with_mean=False), SVC(kernel=\"linear\", random_state=42)\n)\n\n# Train SVM model\nsvm_pipeline.fit(X_train_smote, y_train_smote)\n\n# Predict on test data\ny_pred_svm = svm_pipeline.predict(X_test)\n\n# Accuracy and confusion matrix\naccuracy_svm = accuracy_score(y_test, y_pred_svm)\nprint(f\"Accuracy of the SVM classifier: {accuracy_svm:.2f}\")\nconf_matrix_svm = confusion_matrix(y_test, y_pred_svm)\nprint(\"Confusion Matrix:\\n\", conf_matrix_svm)\n\n# Classification report\nclass_report_svm = classification_report(\n    y_test, y_pred_svm, target_names=[\"Ham\", \"Spam\"]\n)\nprint(\"Classification Report:\\n\", class_report_svm)"
+          ],
+          "notes": [
+            "Create SVM pipeline",
+            "Train SVM model",
+            "Predict on test data"
+          ],
+          "source": "Week 8/worked example (notebook)"
+        },
+        {
+          "id": "week_8_worked_example_nb_7",
+          "name": "Machine Learning Models - worked example (2)",
+          "category": "Machine Learning Models",
+          "type": "model",
+          "description": "Create best SVM pipeline with optimal hyperparameters",
+          "syntax": "",
+          "examples": [
+            "# Create best SVM pipeline with optimal hyperparameters\nbest_svm_pipeline = make_pipeline(\n    StandardScaler(with_mean=False),\n    SVC(C=10, kernel=\"rbf\", gamma=\"scale\", random_state=42),\n)\n\n# Train the SVM model with optimal hyperparameters\nbest_svm_pipeline.fit(X_train_smote, y_train_smote)\n\n# Predict on test data\ny_pred_svm = best_svm_pipeline.predict(X_test)\n\n# Calculate accuracy\naccuracy_svm = accuracy_score(y_test, y_pred_svm)\nprint(f\"Accuracy of the SVM classifier: {accuracy_svm:.2f}\")\n\n# Generate confusion matrix and classification report\nconf_matrix_svm = confusion_matrix(y_test, y_pred_svm)\nprint(\"Confusion Matrix:\\n\", conf_matrix_svm)\nclass_report_svm = classification_report(\n    y_test, y_pred_svm, target_names=[\"Ham\", \"Spam\"]\n)\nprint(\"Classification Report:\\n\", class_report_svm)"
+          ],
+          "notes": [
+            "Create best SVM pipeline with optimal hyperparameters",
+            "Train the SVM model with optimal hyperparameters",
+            "Predict on test data"
+          ],
+          "source": "Week 8/worked example (notebook)"
         }
       ]
     }
