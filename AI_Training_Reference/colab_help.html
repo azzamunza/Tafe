@@ -1776,6 +1776,165 @@ interp.<span class="fn">plot_confusion_matrix</span>(figsize=(<span class="num">
 </div><!-- /main -->
 
 <script>
+  // ── Data storage ──
+  let helpData = null;
+  let breadcrumbLabels = {
+    home: 'Overview', untar_data: 'untar_data', get_image_files: 'get_image_files',
+    get_text_files: 'get_text_files', DataBlock: 'DataBlock', ImageDataLoaders: 'ImageDataLoaders',
+    LinearRegression: 'LinearRegression', GridSearchCV: 'GridSearchCV',
+    cnn_learner: 'cnn_learner', text_classifier_learner: 'text_classifier_learner',
+    tabular_learner: 'tabular_learner', collab_learner: 'collab_learner',
+    fine_tune: 'learn.fine_tune', fit_one_cycle: 'learn.fit_one_cycle', sgd_loop: 'SGD Loop',
+    predict: 'learn.predict', export: 'learn.export', load_learner: 'load_learner',
+    FileUpload: 'widgets.FileUpload', Button: 'widgets.Button', Output: 'widgets.Output',
+    VBox: 'VBox', voila: 'Voilà',
+    ImageClassifierCleaner: 'ImageClassifierCleaner',
+    plot_top_losses: 'interp.plot_top_losses', most_confused: 'interp.most_confused'
+  };
+
+  // ── Load JSON data ──
+  async function loadHelpData() {
+    try {
+      const response = await fetch('colab_help_data.json');
+      helpData = await response.json();
+      generateDynamicContent();
+    } catch (error) {
+      console.error('Error loading help data:', error);
+    }
+  }
+
+  // ── Generate dynamic content from JSON ──
+  function generateDynamicContent() {
+    if (!helpData || !helpData.sections) return;
+
+    const navTree = document.getElementById('nav-tree');
+    const content = document.getElementById('content');
+
+    // Generate navigation and pages for each section
+    helpData.sections.forEach(section => {
+      // Create navigation section
+      const navHeader = document.createElement('div');
+      navHeader.className = 'nav-section-header';
+      navHeader.onclick = function() { toggleSection(this); };
+      navHeader.innerHTML = `<span class="arrow">▶</span> ${section.title}`;
+
+      const navItems = document.createElement('div');
+      navItems.className = 'nav-section-items';
+
+      // Generate nav items and pages for each entry
+      section.entries.forEach(entry => {
+        // Navigation item
+        const navItem = document.createElement('a');
+        navItem.className = 'nav-item';
+        navItem.href = 'javascript:void(0)';
+        navItem.onclick = function() { showPage(entry.id); };
+        
+        const tagClass = entry.type === 'import' ? 'func' : 
+                        entry.type === 'function' ? 'func' :
+                        entry.type === 'method' ? 'method' :
+                        entry.type === 'class' ? 'class' : 'func';
+        navItem.innerHTML = `${entry.name} <span class="tag ${tagClass}">${entry.type}</span>`;
+        navItems.appendChild(navItem);
+
+        // Add to breadcrumb labels
+        breadcrumbLabels[entry.id] = entry.name;
+
+        // Create page content
+        const page = document.createElement('div');
+        page.className = 'page';
+        page.id = 'page-' + entry.id;
+
+        let pageHTML = `
+          <div class="page-title">${entry.name}</div>
+          <div class="page-category">${entry.category}</div>
+          <div class="page-desc">${entry.description}</div>
+        `;
+
+        // Entry card
+        pageHTML += `<div class="entry">
+          <div class="entry-header">
+            <span class="entry-name">${entry.name}</span>
+            <span class="entry-type-badge badge-${entry.type === 'class' ? 'class' : entry.type === 'method' ? 'method' : 'function'}">${entry.type.charAt(0).toUpperCase() + entry.type.slice(1)}</span>
+          </div>
+          <div class="entry-body">`;
+
+        // Syntax
+        if (entry.syntax) {
+          pageHTML += `
+            <div class="syntax-label">Syntax</div>
+            <div class="syntax-block">${highlightSyntax(entry.syntax)}</div>`;
+        }
+
+        // Parameters
+        if (entry.parameters && entry.parameters.length > 0) {
+          pageHTML += `
+            <table class="params-table">
+              <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>`;
+          entry.parameters.forEach(param => {
+            pageHTML += `
+              <tr>
+                <td class="param-name">${param.name}</td>
+                <td class="param-type">${param.type}</td>
+                <td class="param-desc">${param.description}</td>
+              </tr>`;
+          });
+          pageHTML += `</table>`;
+        }
+
+        // Returns
+        if (entry.returns) {
+          pageHTML += `
+            <div class="returns-row">
+              <span class="returns-label">Returns</span>
+              <span class="returns-type">${entry.returns}</span>
+            </div>`;
+        }
+
+        // Examples
+        if (entry.examples && entry.examples.length > 0) {
+          entry.examples.forEach((example, idx) => {
+            if (idx === 0) {
+              pageHTML += `<div class="syntax-label">Example Script</div>`;
+            } else {
+              pageHTML += `<div class="syntax-label">Example ${idx + 1}</div>`;
+            }
+            pageHTML += `<div class="syntax-block">${highlightSyntax(example)}</div>`;
+          });
+        }
+
+        // Notes
+        if (entry.notes && entry.notes.length > 0) {
+          pageHTML += `<div class="note-box"><div class="note-title">📌 Note</div>`;
+          entry.notes.forEach(note => {
+            pageHTML += `<p>${note}</p>`;
+          });
+          pageHTML += `</div>`;
+        }
+
+        pageHTML += `</div></div>`;
+        page.innerHTML = pageHTML;
+        content.appendChild(page);
+      });
+
+      navTree.appendChild(navHeader);
+      navTree.appendChild(navItems);
+    });
+  }
+
+  // ── Syntax highlighting helper ──
+  function highlightSyntax(code) {
+    return code
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\b(import|from|as|def|class|return|if|else|elif|for|while|in|True|False|None|and|or|not)\b/g, '<span class="kw">$1</span>')
+      .replace(/\b(np|pd|plt|sns)\b/g, '<span class="cls">$1</span>')
+      .replace(/'([^']*)'/g, '<span class="string">\'$1\'</span>')
+      .replace(/"([^"]*)"/g, '<span class="string">"$1"</span>')
+      .replace(/\b(\d+\.?\d*)\b/g, '<span class="num">$1</span>')
+      .replace(/#(.*)$/gm, '<span class="comment">#$1</span>');
+  }
+
   // ── Page routing ──
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1795,20 +1954,7 @@ interp.<span class="fn">plot_confusion_matrix</span>(figsize=(<span class="num">
       }
     }
     // Breadcrumb
-    const labels = {
-      home: 'Overview', untar_data: 'untar_data', get_image_files: 'get_image_files',
-      get_text_files: 'get_text_files', DataBlock: 'DataBlock', ImageDataLoaders: 'ImageDataLoaders',
-      LinearRegression: 'LinearRegression', GridSearchCV: 'GridSearchCV',
-      cnn_learner: 'cnn_learner', text_classifier_learner: 'text_classifier_learner',
-      tabular_learner: 'tabular_learner', collab_learner: 'collab_learner',
-      fine_tune: 'learn.fine_tune', fit_one_cycle: 'learn.fit_one_cycle', sgd_loop: 'SGD Loop',
-      predict: 'learn.predict', export: 'learn.export', load_learner: 'load_learner',
-      FileUpload: 'widgets.FileUpload', Button: 'widgets.Button', Output: 'widgets.Output',
-      VBox: 'VBox', voila: 'Voilà',
-      ImageClassifierCleaner: 'ImageClassifierCleaner',
-      plot_top_losses: 'interp.plot_top_losses', most_confused: 'interp.most_confused'
-    };
-    document.getElementById('breadcrumb-current').textContent = labels[id] || id;
+    document.getElementById('breadcrumb-current').textContent = breadcrumbLabels[id] || id;
     document.getElementById('content').scrollTop = 0;
   }
 
@@ -1832,6 +1978,9 @@ interp.<span class="fn">plot_confusion_matrix</span>(figsize=(<span class="num">
       });
     }
   }
+
+  // ── Initialize on page load ──
+  document.addEventListener('DOMContentLoaded', loadHelpData);
 </script>
 </body>
 </html>
