@@ -680,7 +680,7 @@
         },
         {
           "id": "week_10_in_depth_guide_to_convolutional_neural_networks_nb_8",
-          "name": "Data Loading & Preprocessing - in-depth-guide-to-convolut...",
+          "name": "CNN Guide - Data Loading (1)",
           "category": "Data Loading & Preprocessing",
           "type": "data_loading",
           "description": "linear algebra",
@@ -731,7 +731,7 @@
         },
         {
           "id": "week_10_in_depth_guide_to_convolutional_neural_networks_nb_31",
-          "name": "Data Loading & Preprocessing - in-depth-guide-to-convolut...",
+          "name": "Configure Dataset Paths",
           "category": "Data Loading & Preprocessing",
           "type": "data_loading",
           "description": "creating test data",
@@ -770,68 +770,6 @@
           "source": "Week 10/lab"
         },
         {
-          "id": "week_10_lab_load_best_model_parameters_12",
-          "name": "Load Best Model Parameters",
-          "category": "General Operations",
-          "type": "code",
-          "description": "Load Best Model Parameters",
-          "syntax": "",
-          "examples": [
-            "model.load_state_dict(torch.load('best_model.pt'))"
-          ],
-          "notes": [
-            "Example from Week 10 course materials",
-            "Practical lab exercise code"
-          ],
-          "source": "Week 10/lab"
-        },
-        {
-          "id": "week_11_worked_example_display_the_first_few_records_to_understand_the____15",
-          "name": "Display the first few records to understand the...",
-          "category": "General Operations",
-          "type": "code",
-          "description": "Display the first few records to understand the data",
-          "syntax": "",
-          "examples": [
-            "# Display the first few records to understand the data\ndf.head()"
-          ],
-          "notes": [
-            "Display the first few records to understand the data"
-          ],
-          "source": "Week 11/worked_example"
-        },
-        {
-          "id": "week_11_worked_example_checking_class_distribution_17",
-          "name": "Checking class distribution",
-          "category": "General Operations",
-          "type": "code",
-          "description": "Checking class distribution",
-          "syntax": "",
-          "examples": [
-            "# Checking for missing values\ndf.isnull().sum()\n\n# Checking class distribution\ndf['target'].value_counts()"
-          ],
-          "notes": [
-            "Checking for missing values",
-            "Checking class distribution"
-          ],
-          "source": "Week 11/worked_example"
-        },
-        {
-          "id": "week_14_slides_next__hands_on_demo_22",
-          "name": "Next: Hands-On Demo",
-          "category": "General Operations",
-          "type": "code",
-          "description": "Next: Hands-On Demo",
-          "syntax": "",
-          "examples": [
-            "(Note: The code snippets will be provided in the demo session, or I can prepare an example script here if desired.)"
-          ],
-          "notes": [
-            "Example from Week 14 course materials"
-          ],
-          "source": "Week 14/slides"
-        },
-        {
           "id": "week_3_slides_create_a_synthetic_dataset_24",
           "name": "Create a synthetic dataset",
           "category": "General Operations",
@@ -848,7 +786,7 @@
         },
         {
           "id": "week_3_slides_let_s_unlabel_most_of_the_data_to_simulate_a_la____25",
-          "name": "Let's unlabel most of the data to simulate a la...",
+          "name": "Let's unlabel most of the data to simulate a large",
           "category": "General Operations",
           "type": "code",
           "description": "Let's unlabel most of the data to simulate a large amount of unlabeled data with some small set of labels",
@@ -863,7 +801,7 @@
         },
         {
           "id": "week_8_worked_example_nb_6",
-          "name": "General Operations - worked example",
+          "name": "General Operations - worked example (1)",
           "category": "General Operations",
           "type": "code",
           "description": "Naive Bayes parameters",
@@ -879,7 +817,7 @@
         },
         {
           "id": "week_13_softmax_temperature_nb_10",
-          "name": "General Operations - softmax+temperature",
+          "name": "General Operations - softmax+temperature (1)",
           "category": "General Operations",
           "type": "code",
           "description": "Define logits",
@@ -913,7 +851,7 @@
         },
         {
           "id": "week_8_worked_example_nb_20",
-          "name": "General Operations - worked example",
+          "name": "General Operations - worked example (2)",
           "category": "General Operations",
           "type": "code",
           "description": "Initialize stemmer, lemmatizer, and stop words",
@@ -930,7 +868,7 @@
         },
         {
           "id": "week_10_in_depth_guide_to_convolutional_neural_networks_nb_23",
-          "name": "General Operations - in-depth-guide-to-convolutional-neur...",
+          "name": "Set Batch Size",
           "category": "General Operations",
           "type": "code",
           "description": "Set Batch Size",
@@ -947,7 +885,7 @@
         },
         {
           "id": "week_10_in_depth_guide_to_convolutional_neural_networks_nb_26",
-          "name": "General Operations - in-depth-guide-to-convolutional-neur...",
+          "name": "Our own custom class for datasets",
           "category": "General Operations",
           "type": "code",
           "description": "Our own custom class for datasets",
@@ -978,7 +916,7 @@
         },
         {
           "id": "week_8_worked_example_nb_30",
-          "name": "General Operations - worked example",
+          "name": "General Operations - worked example (3)",
           "category": "General Operations",
           "type": "code",
           "description": "Check for missing or null values",
@@ -995,7 +933,7 @@
         },
         {
           "id": "week_8_worked_example_nb_32",
-          "name": "General Operations - worked example",
+          "name": "General Operations - worked example (4)",
           "category": "General Operations",
           "type": "code",
           "description": "Set display options",
@@ -1011,7 +949,7 @@
         },
         {
           "id": "week_13_softmax_temperature_nb_34",
-          "name": "General Operations - softmax+temperature",
+          "name": "General Operations - softmax+temperature (2)",
           "category": "General Operations",
           "type": "code",
           "description": "Step 1: Sort the array in ascending order",
@@ -1164,7 +1102,7 @@
         },
         {
           "id": "week_3_semi_supervised_lab_nb_18",
-          "name": "Data Visualization - semi-supervised lab",
+          "name": "Data Visualization - semi-supervised lab (1)",
           "category": "Data Visualization",
           "type": "visualization",
           "description": "Plot the results",
@@ -1181,7 +1119,7 @@
         },
         {
           "id": "week_3_semi_supervised_lab_nb_21",
-          "name": "Data Visualization - semi-supervised lab",
+          "name": "Data Visualization - semi-supervised lab (2)",
           "category": "Data Visualization",
           "type": "visualization",
           "description": "Plot the predicted labels",
@@ -1198,7 +1136,7 @@
         },
         {
           "id": "week_3_semi_supervised_lab_nb_22",
-          "name": "Data Visualization - semi-supervised lab",
+          "name": "Data Visualization - semi-supervised lab (3)",
           "category": "Data Visualization",
           "type": "visualization",
           "description": "Plot the predicted labels",
@@ -1215,7 +1153,7 @@
         },
         {
           "id": "week_10_in_depth_guide_to_convolutional_neural_networks_nb_25",
-          "name": "Data Visualization - in-depth-guide-to-convolutional-neur...",
+          "name": "obtain one batch of training images",
           "category": "Data Visualization",
           "type": "visualization",
           "description": "obtain one batch of training images",
@@ -1247,7 +1185,7 @@
         },
         {
           "id": "week_10_in_depth_guide_to_convolutional_neural_networks_nb_29",
-          "name": "Data Visualization - in-depth-guide-to-convolutional-neur...",
+          "name": "Visualization code from Week 10 notebook: in-depth",
           "category": "Data Visualization",
           "type": "visualization",
           "description": "Visualization code from Week 10 notebook: in-depth-guide-to-convolutional-neural-networks",
@@ -1325,7 +1263,7 @@
         },
         {
           "id": "week_10_in_depth_guide_to_convolutional_neural_networks_nb_0",
-          "name": "Model Training - in-depth-guide-to-convolutional-neural-n...",
+          "name": "number of epochs to train the model",
           "category": "Model Training",
           "type": "training",
           "description": "number of epochs to train the model",
@@ -1399,7 +1337,7 @@
         },
         {
           "id": "week_8_worked_example_nb_2",
-          "name": "Model Evaluation - worked example",
+          "name": "Model Evaluation - worked example (1)",
           "category": "Model Evaluation",
           "type": "evaluation",
           "description": "Initialize dictionaries to save the evaluation metrics",
@@ -1433,7 +1371,7 @@
         },
         {
           "id": "week_8_worked_example_nb_9",
-          "name": "Model Evaluation - worked example",
+          "name": "Model Evaluation - worked example (2)",
           "category": "Model Evaluation",
           "type": "evaluation",
           "description": "Train Naive Bayes classifier",
@@ -1465,7 +1403,7 @@
         },
         {
           "id": "week_8_worked_example_nb_15",
-          "name": "Model Evaluation - worked example",
+          "name": "Model Evaluation - worked example (3)",
           "category": "Model Evaluation",
           "type": "evaluation",
           "description": "Predictions",
@@ -1482,7 +1420,7 @@
         },
         {
           "id": "week_8_worked_example_nb_16",
-          "name": "Model Evaluation - worked example",
+          "name": "Model Evaluation - worked example (4)",
           "category": "Model Evaluation",
           "type": "evaluation",
           "description": "Train Naive Bayes classifier with optimal hyperparameters",
@@ -1523,7 +1461,7 @@
         },
         {
           "id": "week_8_worked_example_nb_3",
-          "name": "Machine Learning Models - worked example",
+          "name": "Machine Learning Models - worked example (1)",
           "category": "Machine Learning Models",
           "type": "model",
           "description": "Create SVM pipeline",
@@ -1540,7 +1478,7 @@
         },
         {
           "id": "week_8_worked_example_nb_7",
-          "name": "Machine Learning Models - worked example",
+          "name": "Machine Learning Models - worked example (2)",
           "category": "Machine Learning Models",
           "type": "model",
           "description": "Create best SVM pipeline with optimal hyperparameters",
