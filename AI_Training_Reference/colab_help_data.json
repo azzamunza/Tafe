@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "Google Colab & FastAI – AI Training Reference",
+    "title": "Google Colab & FastAI \u2013 AI Training Reference",
     "version": "2025",
     "description": "Comprehensive Python scripting reference for AI/ML training in Google Colab",
     "target": "AI LLM Training Knowledgebase"
@@ -9,7 +9,7 @@
     {
       "id": "imports",
       "title": "Common Library Imports",
-      "icon": "📚",
+      "icon": "\ud83d\udcda",
       "description": "Standard library import statements for AI/ML development in Google Colab",
       "entries": [
         {
@@ -84,7 +84,7 @@
           "description": "Scikit-learn is the most widely used machine learning library for classical ML algorithms, preprocessing, and model evaluation.",
           "syntax": "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LinearRegression",
           "examples": [
-            "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error, r2_score\n\n# Split data\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42\n)\n\n# Scale features\nscaler = StandardScaler()\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)\n\n# Train model\nmodel = LinearRegression()\nmodel.fit(X_train_scaled, y_train)\n\n# Evaluate\ny_pred = model.predict(X_test_scaled)\nprint(f'R² Score: {r2_score(y_test, y_pred)}')"
+            "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error, r2_score\n\n# Split data\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42\n)\n\n# Scale features\nscaler = StandardScaler()\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)\n\n# Train model\nmodel = LinearRegression()\nmodel.fit(X_train_scaled, y_train)\n\n# Evaluate\ny_pred = model.predict(X_test_scaled)\nprint(f'R\u00b2 Score: {r2_score(y_test, y_pred)}')"
           ],
           "notes": [
             "Use specific imports rather than wildcard imports",
@@ -171,13 +171,76 @@
             "BGR color format by default (not RGB)",
             "Extensive image processing capabilities"
           ]
+        },
+        {
+          "id": "week_10_lab_import_libraries_2",
+          "name": "Import Libraries",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "Import statements for numpy, pandas, os libraries used in ML/AI development.",
+          "syntax": "",
+          "examples": [
+            "import numpy as np\nimport pandas as pd\nimport os\nimport matplotlib.pyplot as plt\nimport cv2\nimport torchvision.transforms as transforms\nfrom torch.utils.data.sampler import SubsetRandomSampler\nimport torch\nimport torch.nn as nn\nimport torch.nn.functional as F\nfrom torch.utils.data import Dataset, DataLoader\nimport torch.optim as optim"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_11_worked_example_loading_the_data_14",
+          "name": "Loading the data",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "Import statements for load_breast_cancer, pandas, matplotlib libraries used in ML/AI development.",
+          "syntax": "from sklearn.datasets import load_breast_cancer\nimport pandas as pd\nimport matplotlib.pyplot as plt",
+          "examples": [
+            "# Importing necessary libraries\nfrom sklearn.datasets import load_breast_cancer\nimport pandas as pd\nimport matplotlib.pyplot as plt\n%matplotlib inline\n\n# Loading the data\ndata = load_breast_cancer()\ndf = pd.DataFrame(data.data, columns=data.feature_names)\ndf['target'] = data.target"
+          ],
+          "notes": [
+            "Importing necessary libraries",
+            "Loading the data"
+          ],
+          "source": "Week 11/worked_example"
+        },
+        {
+          "id": "week_11_worked_example_normalizing_the_data_18",
+          "name": "Normalizing the data",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "Import statements for train_test_split, StandardScaler libraries used in ML/AI development.",
+          "syntax": "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler",
+          "examples": [
+            "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n# Splitting the dataset into training and test sets\nX_train, X_test, y_train, y_test = train_test_split(\n    df.drop('target', axis=1), df['target'], test_size=0.2, random_state=42\n)\n\n# Normalizing the data\nscaler = StandardScaler()\nX_train = scaler.fit_transform(X_train)\nX_test = scaler.transform(X_test)"
+          ],
+          "notes": [
+            "Splitting the dataset into training and test sets",
+            "Normalizing the data"
+          ],
+          "source": "Week 11/worked_example"
+        },
+        {
+          "id": "week_3_slides_first_import_our_dependencies__23",
+          "name": "First import our dependencies:",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "Import statements for numpy, datasets, LabelSpreading libraries used in ML/AI development.",
+          "syntax": "",
+          "examples": [
+            "import numpy as np\nfrom sklearn import datasets\nfrom sklearn.semi_supervised import LabelSpreading\nimport matplotlib.pyplot as plt"
+          ],
+          "notes": [
+            "Example from Week 3 course materials"
+          ],
+          "source": "Week 3/slides"
         }
       ]
     },
     {
       "id": "math_methods",
       "title": "Mathematical Methods",
-      "icon": "🔢",
+      "icon": "\ud83d\udd22",
       "description": "Core mathematical operations for numerical computing and scientific analysis",
       "entries": [
         {
@@ -188,12 +251,36 @@
           "description": "Functions for creating NumPy arrays with various initialization methods.",
           "syntax": "np.array(object)\nnp.zeros(shape)\nnp.ones(shape)\nnp.arange(start, stop, step)\nnp.linspace(start, stop, num)",
           "parameters": [
-            {"name": "object", "type": "array_like", "description": "Array-like object (list, tuple, etc.)"},
-            {"name": "shape", "type": "tuple", "description": "Shape of the array (rows, columns)"},
-            {"name": "start", "type": "number", "description": "Start of interval"},
-            {"name": "stop", "type": "number", "description": "End of interval"},
-            {"name": "step", "type": "number", "description": "Spacing between values"},
-            {"name": "num", "type": "int", "description": "Number of samples to generate"}
+            {
+              "name": "object",
+              "type": "array_like",
+              "description": "Array-like object (list, tuple, etc.)"
+            },
+            {
+              "name": "shape",
+              "type": "tuple",
+              "description": "Shape of the array (rows, columns)"
+            },
+            {
+              "name": "start",
+              "type": "number",
+              "description": "Start of interval"
+            },
+            {
+              "name": "stop",
+              "type": "number",
+              "description": "End of interval"
+            },
+            {
+              "name": "step",
+              "type": "number",
+              "description": "Spacing between values"
+            },
+            {
+              "name": "num",
+              "type": "int",
+              "description": "Number of samples to generate"
+            }
           ],
           "returns": "ndarray",
           "examples": [
@@ -229,8 +316,16 @@
           "description": "Functions for computing statistical measures and aggregations on arrays.",
           "syntax": "np.mean(a, axis=None)\nnp.median(a, axis=None)\nnp.std(a, axis=None)\nnp.var(a, axis=None)\nnp.min(a, axis=None)\nnp.max(a, axis=None)\nnp.sum(a, axis=None)\nnp.prod(a, axis=None)",
           "parameters": [
-            {"name": "a", "type": "array_like", "description": "Input array"},
-            {"name": "axis", "type": "int or tuple", "description": "Axis along which to compute (None for all)"}
+            {
+              "name": "a",
+              "type": "array_like",
+              "description": "Input array"
+            },
+            {
+              "name": "axis",
+              "type": "int or tuple",
+              "description": "Axis along which to compute (None for all)"
+            }
           ],
           "examples": [
             "import numpy as np\n\ndata = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])\n\n# Central tendency\nprint(f'Mean: {np.mean(data)}')          # 5.0\nprint(f'Median: {np.median(data)}')      # 5.0\n\n# Dispersion\nprint(f'Std Dev: {np.std(data)}')       # 2.58\nprint(f'Variance: {np.var(data)}')      # 6.67\n\n# Range\nprint(f'Min: {np.min(data)}')           # 1\nprint(f'Max: {np.max(data)}')           # 9\nprint(f'Range: {np.ptp(data)}')         # 8 (peak-to-peak)\n\n# Aggregations\nprint(f'Sum: {np.sum(data)}')           # 45\nprint(f'Product: {np.prod(data)}')      # 362880\n\n# Along axis\nprint(f'Mean per row: {np.mean(data, axis=1)}')  # [2, 5, 8]\nprint(f'Mean per col: {np.mean(data, axis=0)}')  # [4, 5, 6]\n\n# Percentiles\nprint(f'25th percentile: {np.percentile(data, 25)}')\nprint(f'75th percentile: {np.percentile(data, 75)}')\n\n# Correlation\nx = np.array([1, 2, 3, 4, 5])\ny = np.array([2, 4, 6, 8, 10])\nprint(f'Correlation: {np.corrcoef(x, y)[0, 1]}')"
@@ -281,7 +376,7 @@
           "description": "Numerical integration (quadrature) for computing definite integrals.",
           "syntax": "from scipy.integrate import quad, dblquad, odeint",
           "examples": [
-            "from scipy.integrate import quad, dblquad, odeint\nimport numpy as np\n\n# Single integral\ndef integrand(x):\n    return np.exp(-x**2)\n\nresult, error = quad(integrand, 0, np.inf)\nprint(f'Integral from 0 to inf: {result} ± {error}')\n\n# Integral with parameters\ndef integrand_param(x, a, b):\n    return a * x**2 + b * x\n\nresult, error = quad(integrand_param, 0, 1, args=(2, 3))\nprint(f'Parametric integral: {result}')\n\n# Double integral\ndef integrand_2d(y, x):\n    return x * y**2\n\nresult, error = dblquad(\n    integrand_2d,\n    0, 1,  # x bounds\n    lambda x: 0, lambda x: 1  # y bounds\n)\nprint(f'Double integral: {result}')\n\n# Solve ODE dy/dt = -k*y\ndef dydt(y, t, k):\n    return -k * y\n\ny0 = 5  # Initial condition\nt = np.linspace(0, 5, 50)\nk = 0.5\n\nsolution = odeint(dydt, y0, t, args=(k,))\nprint(f'ODE solution at t=5: {solution[-1][0]}')"
+            "from scipy.integrate import quad, dblquad, odeint\nimport numpy as np\n\n# Single integral\ndef integrand(x):\n    return np.exp(-x**2)\n\nresult, error = quad(integrand, 0, np.inf)\nprint(f'Integral from 0 to inf: {result} \u00b1 {error}')\n\n# Integral with parameters\ndef integrand_param(x, a, b):\n    return a * x**2 + b * x\n\nresult, error = quad(integrand_param, 0, 1, args=(2, 3))\nprint(f'Parametric integral: {result}')\n\n# Double integral\ndef integrand_2d(y, x):\n    return x * y**2\n\nresult, error = dblquad(\n    integrand_2d,\n    0, 1,  # x bounds\n    lambda x: 0, lambda x: 1  # y bounds\n)\nprint(f'Double integral: {result}')\n\n# Solve ODE dy/dt = -k*y\ndef dydt(y, t, k):\n    return -k * y\n\ny0 = 5  # Initial condition\nt = np.linspace(0, 5, 50)\nk = 0.5\n\nsolution = odeint(dydt, y0, t, args=(k,))\nprint(f'ODE solution at t=5: {solution[-1][0]}')"
           ],
           "notes": [
             "quad() uses adaptive quadrature",
@@ -297,7 +392,7 @@
           "description": "Statistical distributions, hypothesis tests, and probability functions.",
           "syntax": "from scipy import stats",
           "examples": [
-            "from scipy import stats\nimport numpy as np\n\n# Distributions\n# Normal distribution\nmu, sigma = 0, 1\nnorm_dist = stats.norm(loc=mu, scale=sigma)\n\n# PDF and CDF\nx = np.linspace(-3, 3, 100)\npdf = norm_dist.pdf(x)\ncdf = norm_dist.cdf(x)\n\n# Generate random samples\nsamples = norm_dist.rvs(size=1000)\n\n# Other distributions\nt_dist = stats.t(df=10)\nchi2_dist = stats.chi2(df=5)\nbinom_dist = stats.binom(n=10, p=0.5)\npoisson_dist = stats.poisson(mu=3)\n\n# Hypothesis tests\n# T-test (independent samples)\ngroup1 = np.random.normal(100, 15, 50)\ngroup2 = np.random.normal(105, 15, 50)\nt_stat, p_value = stats.ttest_ind(group1, group2)\nprint(f'T-test: t={t_stat:.3f}, p={p_value:.3f}')\n\n# Paired t-test\nbefore = np.random.normal(100, 15, 30)\nafter = before + np.random.normal(5, 10, 30)\nt_stat, p_value = stats.ttest_rel(before, after)\nprint(f'Paired t-test: t={t_stat:.3f}, p={p_value:.3f}')\n\n# Chi-square test\nobserved = np.array([40, 60, 30, 70])\nexpected = np.array([50, 50, 50, 50])\nchi2, p_value = stats.chisquare(observed, expected)\nprint(f'Chi-square: χ²={chi2:.3f}, p={p_value:.3f}')\n\n# Correlation test\nx = np.random.normal(0, 1, 100)\ny = 2*x + np.random.normal(0, 0.5, 100)\nr, p_value = stats.pearsonr(x, y)\nprint(f'Pearson r={r:.3f}, p={p_value:.3f}')\n\n# Spearman correlation (non-parametric)\nrho, p_value = stats.spearmanr(x, y)\nprint(f'Spearman ρ={rho:.3f}, p={p_value:.3f}')\n\n# ANOVA\ngroup1 = np.random.normal(100, 15, 30)\ngroup2 = np.random.normal(105, 15, 30)\ngroup3 = np.random.normal(110, 15, 30)\nf_stat, p_value = stats.f_oneway(group1, group2, group3)\nprint(f'ANOVA: F={f_stat:.3f}, p={p_value:.3f}')\n\n# Normality test\nw_stat, p_value = stats.shapiro(group1)\nprint(f'Shapiro-Wilk: W={w_stat:.3f}, p={p_value:.3f}')"
+            "from scipy import stats\nimport numpy as np\n\n# Distributions\n# Normal distribution\nmu, sigma = 0, 1\nnorm_dist = stats.norm(loc=mu, scale=sigma)\n\n# PDF and CDF\nx = np.linspace(-3, 3, 100)\npdf = norm_dist.pdf(x)\ncdf = norm_dist.cdf(x)\n\n# Generate random samples\nsamples = norm_dist.rvs(size=1000)\n\n# Other distributions\nt_dist = stats.t(df=10)\nchi2_dist = stats.chi2(df=5)\nbinom_dist = stats.binom(n=10, p=0.5)\npoisson_dist = stats.poisson(mu=3)\n\n# Hypothesis tests\n# T-test (independent samples)\ngroup1 = np.random.normal(100, 15, 50)\ngroup2 = np.random.normal(105, 15, 50)\nt_stat, p_value = stats.ttest_ind(group1, group2)\nprint(f'T-test: t={t_stat:.3f}, p={p_value:.3f}')\n\n# Paired t-test\nbefore = np.random.normal(100, 15, 30)\nafter = before + np.random.normal(5, 10, 30)\nt_stat, p_value = stats.ttest_rel(before, after)\nprint(f'Paired t-test: t={t_stat:.3f}, p={p_value:.3f}')\n\n# Chi-square test\nobserved = np.array([40, 60, 30, 70])\nexpected = np.array([50, 50, 50, 50])\nchi2, p_value = stats.chisquare(observed, expected)\nprint(f'Chi-square: \u03c7\u00b2={chi2:.3f}, p={p_value:.3f}')\n\n# Correlation test\nx = np.random.normal(0, 1, 100)\ny = 2*x + np.random.normal(0, 0.5, 100)\nr, p_value = stats.pearsonr(x, y)\nprint(f'Pearson r={r:.3f}, p={p_value:.3f}')\n\n# Spearman correlation (non-parametric)\nrho, p_value = stats.spearmanr(x, y)\nprint(f'Spearman \u03c1={rho:.3f}, p={p_value:.3f}')\n\n# ANOVA\ngroup1 = np.random.normal(100, 15, 30)\ngroup2 = np.random.normal(105, 15, 30)\ngroup3 = np.random.normal(110, 15, 30)\nf_stat, p_value = stats.f_oneway(group1, group2, group3)\nprint(f'ANOVA: F={f_stat:.3f}, p={p_value:.3f}')\n\n# Normality test\nw_stat, p_value = stats.shapiro(group1)\nprint(f'Shapiro-Wilk: W={w_stat:.3f}, p={p_value:.3f}')"
           ],
           "notes": [
             "Wide variety of distributions available",
@@ -326,7 +421,7 @@
     {
       "id": "data_processing",
       "title": "Data Processing Methods",
-      "icon": "📊",
+      "icon": "\ud83d\udcca",
       "description": "Comprehensive data manipulation, transformation, and preprocessing techniques",
       "entries": [
         {
@@ -494,6 +589,441 @@
             "RobustScaler better for data with outliers",
             "OneHotEncoder creates binary columns for each category"
           ]
+        }
+      ]
+    },
+    {
+      "id": "data_loading",
+      "title": "Data Loading & Preprocessing",
+      "icon": "\ud83d\udcca",
+      "description": "Methods for loading, preparing, and preprocessing datasets",
+      "entries": [
+        {
+          "id": "week_10_lab_load_and_explore_the_dataset_3",
+          "name": "Load and Explore the Dataset",
+          "category": "Data Loading & Preprocessing",
+          "type": "data_loading",
+          "description": "Load and Explore the Dataset",
+          "syntax": "",
+          "examples": [
+            "train_df = pd.read_csv(\"path/to/train.csv\")\nprint(f\"Train Size: {len(os.listdir('path/to/train/train'))}\")\nprint(f\"Test Size: {len(os.listdir('path/to/test/test'))}\")"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_10_lab_define_custom_dataset_class_4",
+          "name": "Define Custom Dataset Class",
+          "category": "Data Loading & Preprocessing",
+          "type": "data_loading",
+          "description": "Define Custom Dataset Class",
+          "syntax": "",
+          "examples": [
+            "class CreateDataset(Dataset):\n    def __init__(self, df_data, data_dir = './', transform=None):\n        super().__init__()\n        self.df = df_data.values\n        self.data_dir = data_dir\n        self.transform = transform\n\n    def __len__(self):\n        return len(self.df)\n    \n    def __getitem__(self, index):\n        img_name, label = self.df[index]\n        img_path = os.path.join(self.data_dir, img_name)\n        image = cv2.imread(img_path)\n        if self.transform is not None:\n            image = self.transform(image)\n        return image, label"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_10_lab_define_data_augmentations_and_create_dataset_6",
+          "name": "Define Data Augmentations and Create Dataset",
+          "category": "Data Loading & Preprocessing",
+          "type": "data_loading",
+          "description": "Define Data Augmentations and Create Dataset",
+          "syntax": "",
+          "examples": [
+            "transforms_train = transforms.Compose([\n    transforms.ToPILImage(),\n    transforms.RandomHorizontalFlip(),\n    transforms.RandomRotation(10),\n    transforms.ToTensor(),\n    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))\n])\n\ntransforms_test = transforms.Compose([\n    transforms.ToPILImage(),\n    transforms.ToTensor(),\n    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))\n])\n\ntrain_data = CreateDataset(df_data=train_df, data_dir=train_path, transform=transforms_train)\ntest_data = CreateDataset(df_data=pd.read_csv(\"path/to/sample_submission.csv\"), data_dir=test_path, transform=transforms_test)"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_10_lab_prepare_data_loaders_7",
+          "name": "Prepare Data Loaders",
+          "category": "Data Loading & Preprocessing",
+          "type": "data_loading",
+          "description": "Prepare Data Loaders",
+          "syntax": "",
+          "examples": [
+            "batch_size = 64\nvalid_size = 0.2\n\nnum_train = len(train_data)\nindices = list(range(num_train))\nnp.random.shuffle(indices)\nsplit = int(np.floor(valid_size * num_train))\ntrain_idx, valid_idx = indices[split:], indices[:split]\n\ntrain_sampler = SubsetRandomSampler(train_idx)\nvalid_sampler = SubsetRandomSampler(valid_idx)\n\ntrain_loader = DataLoader(train_data, batch_size=batch_size, sampler=train_sampler)\nvalid_loader = DataLoader(train_data, batch_size=batch_size, sampler=valid_sampler)\ntest_loader = DataLoader(test_data, batch_size=batch_size, shuffle=False)"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_10_lab_make_predictions_on_test_set_13",
+          "name": "Make Predictions on Test Set",
+          "category": "Data Loading & Preprocessing",
+          "type": "data_loading",
+          "description": "Make Predictions on Test Set",
+          "syntax": "",
+          "examples": [
+            "model.eval()\n\npreds = []\nfor data, target in test_loader:\n    if device:\n        data, target = data.cuda(), target.cuda()\n    output = model(data)\n    pr = output[:,1].detach().cpu().numpy()\n    preds.extend(pr)\n\nsample_sub = pd.read_csv(\"path/to/sample_submission.csv\")\nsample_sub['has_cactus'] = preds\nsample_sub.to_csv('submission.csv', index=False)"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        }
+      ]
+    },
+    {
+      "id": "general",
+      "title": "General Operations",
+      "icon": "\u2699\ufe0f",
+      "description": "General Python operations and utilities",
+      "entries": [
+        {
+          "id": "week_10_lab_define_custom_dataset_class_5",
+          "name": "Define Custom Dataset Class",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Define Custom Dataset Class",
+          "syntax": "",
+          "examples": [
+            "train_path = 'path/to/train/train'\ntest_path = 'path/to/test/test'"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_10_lab_load_best_model_parameters_12",
+          "name": "Load Best Model Parameters",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Load Best Model Parameters",
+          "syntax": "",
+          "examples": [
+            "model.load_state_dict(torch.load('best_model.pt'))"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_11_worked_example_display_the_first_few_records_to_understand_the____15",
+          "name": "Display the first few records to understand the...",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Display the first few records to understand the data",
+          "syntax": "",
+          "examples": [
+            "# Display the first few records to understand the data\ndf.head()"
+          ],
+          "notes": [
+            "Display the first few records to understand the data"
+          ],
+          "source": "Week 11/worked_example"
+        },
+        {
+          "id": "week_11_worked_example_checking_class_distribution_17",
+          "name": "Checking class distribution",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Checking class distribution",
+          "syntax": "",
+          "examples": [
+            "# Checking for missing values\ndf.isnull().sum()\n\n# Checking class distribution\ndf['target'].value_counts()"
+          ],
+          "notes": [
+            "Checking for missing values",
+            "Checking class distribution"
+          ],
+          "source": "Week 11/worked_example"
+        },
+        {
+          "id": "week_14_slides_next__hands_on_demo_22",
+          "name": "Next: Hands-On Demo",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Next: Hands-On Demo",
+          "syntax": "",
+          "examples": [
+            "(Note: The code snippets will be provided in the demo session, or I can prepare an example script here if desired.)"
+          ],
+          "notes": [
+            "Example from Week 14 course materials"
+          ],
+          "source": "Week 14/slides"
+        },
+        {
+          "id": "week_3_slides_create_a_synthetic_dataset_24",
+          "name": "Create a synthetic dataset",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Create a synthetic dataset",
+          "syntax": "",
+          "examples": [
+            "# Create a synthetic dataset\nX, y = datasets.make_moons(n_samples=300, noise=0.1)"
+          ],
+          "notes": [
+            "Create a synthetic dataset"
+          ],
+          "source": "Week 3/slides"
+        },
+        {
+          "id": "week_3_slides_let_s_unlabel_most_of_the_data_to_simulate_a_la____25",
+          "name": "Let's unlabel most of the data to simulate a la...",
+          "category": "General Operations",
+          "type": "code",
+          "description": "Let's unlabel most of the data to simulate a large amount of unlabeled data with some small set of labels",
+          "syntax": "",
+          "examples": [
+            "y[50:] = -1  # Unlabel majority of the data"
+          ],
+          "notes": [
+            "Unlabel majority of the data"
+          ],
+          "source": "Week 3/slides"
+        }
+      ]
+    },
+    {
+      "id": "visualization",
+      "title": "Data Visualization",
+      "icon": "\ud83d\udcc8",
+      "description": "Visualization methods using matplotlib and seaborn",
+      "entries": [
+        {
+          "id": "week_10_lab_visualize_sample_images_8",
+          "name": "Visualize Sample Images",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Visualize Sample Images",
+          "syntax": "",
+          "examples": [
+            "classes = ['No Cactus','Cactus']\n\ndef imshow(img):\n    img = img / 2 + 0.5\n    plt.imshow(np.transpose(img, (1, 2, 0)))\n\ndataiter = iter(train_loader)\nimages, labels = dataiter.next()\nimages = images.numpy()\n\nfig = plt.figure(figsize=(25, 4))\nfor idx in np.arange(20):\n    ax = fig.add_subplot(2, 20//2, idx+1, xticks=[], yticks=[])\n    imshow(images[idx])\n    ax.set_title(classes[labels[idx]])"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_10_lab_evaluate_performance_with_a_graph_11",
+          "name": "Evaluate Performance with a Graph",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Evaluate Performance with a Graph",
+          "syntax": "",
+          "examples": [
+            "plt.plot(train_losses, label='Training loss')\nplt.plot(valid_losses, label='Validation loss')\nplt.xlabel(\"Epochs\")\nplt.ylabel(\"Loss\")\nplt.legend(frameon=False)"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        },
+        {
+          "id": "week_11_worked_example_visualizing_feature_relationships_16",
+          "name": "Visualizing feature relationships",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Visualizing feature relationships",
+          "syntax": "",
+          "examples": [
+            "import seaborn as sns\n\n# Visualizing feature relationships\nplt.figure(figsize=(10, 6))\nsns.pairplot(df.iloc[:, :5], hue='target', markers=['o', 's'])\nplt.show()"
+          ],
+          "notes": [
+            "Visualizing feature relationships"
+          ],
+          "source": "Week 11/worked_example"
+        },
+        {
+          "id": "week_13_softmax_temperature_add_labels__title__and_legend_21",
+          "name": "Add labels, title, and legend",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Add labels, title, and legend",
+          "syntax": "",
+          "examples": [
+            "import numpy as np\nimport matplotlib.pyplot as plt\n\n# Define logits\nlogits = np.array([2.0, 1.0, 0.1])\n\n# Define a function to calculate softmax with temperature scaling\ndef softmax(logits, temperature=1.0):\n    scaled_logits = logits / temperature\n    exp_scaled_logits = np.exp(scaled_logits)\n    return exp_scaled_logits / np.sum(exp_scaled_logits)\n\n# Define temperatures to visualize the effect\ntemperatures = [0.5, 1.0, 2.0]\n\n# Calculate softmax probabilities for each temperature\nsoftmax_probs = [softmax(logits, T) for T in temperatures]\n\n# Plot the results\nlabels = ['Logit 1', 'Logit 2', 'Logit 3']\nx = np.arange(len(labels))\n\nfig, ax = plt.subplots()\nwidth = 0.2  # Width of the bars\n\nfor i, T in enumerate(temperatures):\n    ax.bar(x + i * width, softmax_probs[i], width, label=f'Temperature = {T}')\n\n# Add labels, title, and legend\nax.set_ylabel('Probability')\nax.set_title('Softmax Probabilities with Different Temperatures')\nax.set_xticks(x + width / len(temperatures))\nax.set_xticklabels(labels)\nax.legend()\n\nplt.show()"
+          ],
+          "notes": [
+            "Define logits",
+            "Define a function to calculate softmax with temperature scaling",
+            "Define temperatures to visualize the effect"
+          ],
+          "source": "Week 13/softmax+temperature"
+        },
+        {
+          "id": "week_3_slides_plot_the_results_27",
+          "name": "Plot the results",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Plot the results",
+          "syntax": "",
+          "examples": [
+            "# Plot the results\nplt.figure(figsize=(8, 5))\ncm = plt.cm.RdBu\nplt.scatter(X[:, 0], X[:, 1], c=y_pred, cmap=cm, edgecolors='k')\nplt.title(\"Semi-Supervised Learning with Label Spreading\")\nplt.show()"
+          ],
+          "notes": [
+            "Plot the results"
+          ],
+          "source": "Week 3/slides"
+        },
+        {
+          "id": "week_8_hyperparameter_tuning_slides_plotting_the_confusion_matrix_29",
+          "name": "Plotting the confusion matrix",
+          "category": "Data Visualization",
+          "type": "visualization",
+          "description": "Plotting the confusion matrix",
+          "syntax": "",
+          "examples": [
+            "import matplotlib.pyplot as plt\nimport seaborn as sns\n\n# Plotting the confusion matrix\nsns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')\nplt.xlabel('Predicted Label')\nplt.ylabel('True Label')\nplt.title('Confusion Matrix')\nplt.show()"
+          ],
+          "notes": [
+            "Plotting the confusion matrix"
+          ],
+          "source": "Week 8/Hyperparameter_Tuning_slides"
+        }
+      ]
+    },
+    {
+      "id": "deep_learning",
+      "title": "Deep Learning Operations",
+      "icon": "\ud83e\udde0",
+      "description": "PyTorch neural network models and operations",
+      "entries": [
+        {
+          "id": "week_10_lab_define_cnn_model_architecture_9",
+          "name": "Define CNN Model Architecture",
+          "category": "Deep Learning Operations",
+          "type": "model",
+          "description": "Define CNN Model Architecture",
+          "syntax": "",
+          "examples": [
+            "class CNN(nn.Module):\n    def __init__(self):\n        super(CNN, self).__init__()\n        self.conv1 = nn.Conv2d(in_channels=3, out_channels=16, kernel_size=3, padding=1)\n        self.conv2 = nn.Conv2d(16, 32, 3, padding=1)\n        self.conv3 = nn.Conv2d(32, 64, 3, padding=1)\n        self.conv4 = nn.Conv2d(64, 128, 3, padding=1)\n        self.pool = nn.MaxPool2d(2, 2)\n        self.fc1 = nn.Linear(128*2*2, 512)\n        self.fc2 = nn.Linear(512, 2)\n        self.dropout = nn.Dropout(0.2)\n        \n    def forward(self, x):\n        x = self.pool(F.relu(self.conv1(x)))\n        x = self.pool(F.relu(self.conv2(x)))\n        x = self.pool(F.relu(self.conv3(x)))\n        x = self.pool(F.relu(self.conv4(x)))\n        x = x.view(-1, 128 * 2 * 2)\n        x = self.dropout(x)\n        x = F.relu(self.fc1(x))\n        x = self.dropout(x)\n        x = self.fc2(x)\n        return x\n\ndevice = torch.cuda.is_available()\nmodel = CNN().cuda() if device else CNN()"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        }
+      ]
+    },
+    {
+      "id": "training",
+      "title": "Model Training",
+      "icon": "\ud83c\udfcb\ufe0f",
+      "description": "Training loops and optimization procedures",
+      "entries": [
+        {
+          "id": "week_10_lab_set_up_training_and_validation_loop_10",
+          "name": "Set Up Training and Validation Loop",
+          "category": "Model Training",
+          "type": "training",
+          "description": "Set Up Training and Validation Loop",
+          "syntax": "",
+          "examples": [
+            "criterion = nn.CrossEntropyLoss()\noptimizer = optim.Adamax(model.parameters(), lr=0.001)\n\nn_epochs = 30\n\nvalid_loss_min = np.Inf \n\ntrain_losses = []\nvalid_losses = []\n\nfor epoch in range(1, n_epochs+1):\n\n    train_loss = 0.0\n    valid_loss = 0.0\n    \n    model.train()\n    for data, target in train_loader:\n        if device:\n            data, target = data.cuda(), target.cuda()\n        optimizer.zero_grad()\n        output = model(data)\n        loss = criterion(output, target)\n        loss.backward()\n        optimizer.step()\n        train_loss += loss.item()*data.size(0)\n        \n    model.eval()\n    for data, target in valid_loader:\n        if device:\n            data, target = data.cuda(), target.cuda()\n        output = model(data)\n        loss = criterion(output, target)\n        valid_loss += loss.item()*data.size(0)\n    \n    train_loss = train_loss/len(train_loader.sampler)\n    valid_loss = valid_loss/len(valid_loader.sampler)\n    train_losses.append(train_loss)\n    valid_losses.append(valid_loss)\n        \n    print('Epoch: {} \\tTraining Loss: {:.6f} \\tValidation Loss: {:.6f}'.format(\n        epoch, train_loss, valid_loss))\n    \n    if valid_loss <= valid_loss_min:\n        print('Validation loss decreased ({:.6f} --> {:.6f}).  Saving model ...'.format(\n        valid_loss_min, valid_loss))\n        torch.save(model.state_dict(), 'best_model.pt')\n        valid_loss_min = valid_loss"
+          ],
+          "notes": [
+            "Example from Week 10 course materials",
+            "Practical lab exercise code"
+          ],
+          "source": "Week 10/lab"
+        }
+      ]
+    },
+    {
+      "id": "evaluation",
+      "title": "Model Evaluation",
+      "icon": "\ud83d\udcca",
+      "description": "Model evaluation metrics and performance assessment",
+      "entries": [
+        {
+          "id": "week_11_worked_example_training_the_models_19",
+          "name": "Training the models",
+          "category": "Model Evaluation",
+          "type": "evaluation",
+          "description": "Training the models",
+          "syntax": "",
+          "examples": [
+            "from sklearn.linear_model import LogisticRegression\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.metrics import accuracy_score, f1_score\n\n# Initializing models\nlogreg = LogisticRegression(max_iter=10000)\nrf = RandomForestClassifier(random_state=42)\n\n# Training the models\nlogreg.fit(X_train, y_train)\nrf.fit(X_train, y_train)"
+          ],
+          "notes": [
+            "Initializing models",
+            "Training the models"
+          ],
+          "source": "Week 11/worked_example"
+        },
+        {
+          "id": "week_11_worked_example_evaluating_models_20",
+          "name": "Evaluating models",
+          "category": "Model Evaluation",
+          "type": "evaluation",
+          "description": "Evaluating models",
+          "syntax": "",
+          "examples": [
+            "# Making predictions\ny_pred_logreg = logreg.predict(X_test)\ny_pred_rf = rf.predict(X_test)\n\n# Evaluating models\naccuracy_logreg = accuracy_score(y_test, y_pred_logreg)\nf1_logreg = f1_score(y_test, y_pred_logreg)\naccuracy_rf = accuracy_score(y_test, y_pred_rf)\nf1_rf = f1_score(y_test, y_pred_rf)\n\n(accuracy_logreg, f1_logreg), (accuracy_rf, f1_rf)"
+          ],
+          "notes": [
+            "Making predictions",
+            "Evaluating models"
+          ],
+          "source": "Week 11/worked_example"
+        },
+        {
+          "id": "week_8_hyperparameter_tuning_slides_printing_results_28",
+          "name": "Printing results",
+          "category": "Model Evaluation",
+          "type": "evaluation",
+          "description": "Printing results",
+          "syntax": "",
+          "examples": [
+            "from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix\n\n# Predictions\ny_pred = grid_search.predict(X_test)\n\n# Calculating metrics\naccuracy = accuracy_score(y_test, y_pred)\nprecision = precision_score(y_test, y_pred)\nrecall = recall_score(y_test, y_pred)\nf1 = f1_score(y_test, y_pred)\nconf_matrix = confusion_matrix(y_test, y_pred)\n\n# Printing results\nprint(f\"Accuracy: {accuracy}\")\nprint(f\"Precision: {precision}\")\nprint(f\"Recall: {recall}\")\nprint(f\"F1 Score: {f1}\")\nprint(f\"Confusion Matrix:\\n{conf_matrix}\")"
+          ],
+          "notes": [
+            "Predictions",
+            "Calculating metrics",
+            "Printing results"
+          ],
+          "source": "Week 8/Hyperparameter_Tuning_slides"
+        }
+      ]
+    },
+    {
+      "id": "ml_models",
+      "title": "Machine Learning Models",
+      "icon": "\ud83e\udd16",
+      "description": "Scikit-learn and other ML model implementations",
+      "entries": [
+        {
+          "id": "week_3_slides_predict_labels_for_the_entire_dataset_26",
+          "name": "Predict labels for the entire dataset",
+          "category": "Machine Learning Models",
+          "type": "model",
+          "description": "Predict labels for the entire dataset",
+          "syntax": "",
+          "examples": [
+            "# Create and fit the model\nlabel_spread = LabelSpreading(kernel='knn', alpha=0.8)\nlabel_spread.fit(X, y)\n\n# Predict labels for the entire dataset\ny_pred = label_spread.transduction_"
+          ],
+          "notes": [
+            "Create and fit the model",
+            "Predict labels for the entire dataset"
+          ],
+          "source": "Week 3/slides"
         }
       ]
     }
