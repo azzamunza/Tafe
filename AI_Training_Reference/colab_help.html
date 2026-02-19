@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Colab & FastAI – AI Training Reference</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap');
+
+  :root {
+    --bg-primary: #0d0f14;
+    --bg-secondary: #13161e;
+    --bg-panel: #181c26;
+    --bg-card: #1d2230;
+    --bg-code: #111520;
+    --accent-blue: #4a9eff;
+    --accent-cyan: #00d4ff;
+    --accent-orange: #ff7b2e;
+    --accent-green: #3ddc84;
+    --accent-purple: #a78bfa;
+    --accent-yellow: #ffd166;
+    --text-primary: #d8dde8;
+    --text-secondary: #8892a4;
+    --text-dim: #556070;
+    --border: #252b3a;
+    --border-active: #3d4f6e;
+    --sidebar-width: 280px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  #sidebar-header {
+    background: linear-gradient(135deg, #0a1628 0%, #0f1f3d 100%);
+    border-bottom: 2px solid var(--accent-blue);
+    padding: 14px 16px 12px;
+  }
+
+  #sidebar-header .app-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-cyan);
+  }
+
+  #sidebar-header .app-subtitle {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  #search-box {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-panel);
+  }
+
+  #search-input {
+    width: 100%;
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text-primary);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    padding: 6px 10px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  #search-input:focus { border-color: var(--accent-blue); }
+  #search-input::placeholder { color: var(--text-dim); }
+
+  #nav-tree {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0;
+  }
+
+  #nav-tree::-webkit-scrollbar { width: 4px; }
+  #nav-tree::-webkit-scrollbar-track { background: transparent; }
+  #nav-tree::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .nav-section-header {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 10px 16px 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+  }
+
+  .nav-section-header .arrow {
+    font-size: 8px;
+    transition: transform 0.2s;
+    color: var(--text-dim);
+  }
+
+  .nav-section-header.open .arrow { transform: rotate(90deg); }
+
+  .nav-section-items { display: none; }
+  .nav-section-items.open { display: block; }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    padding: 5px 16px 5px 28px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 12px;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .nav-item:hover { color: var(--text-primary); background: rgba(74,158,255,0.06); }
+  .nav-item.active { color: var(--accent-blue); border-left-color: var(--accent-blue); background: rgba(74,158,255,0.1); }
+
+  .nav-item .tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 2px;
+    background: rgba(74,158,255,0.15);
+    color: var(--accent-blue);
+    margin-left: auto;
+  }
+
+  .nav-item .tag.class { background: rgba(167,139,250,0.15); color: var(--accent-purple); }
+  .nav-item .tag.method { background: rgba(61,220,132,0.15); color: var(--accent-green); }
+  .nav-item .tag.widget { background: rgba(255,209,102,0.15); color: var(--accent-yellow); }
+  .nav-item .tag.func { background: rgba(74,158,255,0.15); color: var(--accent-cyan); }
+
+  /* ── MAIN CONTENT ── */
+  #main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  #toolbar {
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 42px;
+  }
+
+  .breadcrumb {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .breadcrumb .sep { color: var(--border-active); }
+  .breadcrumb .current { color: var(--accent-blue); }
+
+  #content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px 40px;
+    max-width: 900px;
+    width: 100%;
+  }
+
+  #content::-webkit-scrollbar { width: 6px; }
+  #content::-webkit-scrollbar-track { background: transparent; }
+  #content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── CONTENT SECTIONS ── */
+  .page { display: none; }
+  .page.active { display: block; animation: fadeIn 0.2s ease; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .page-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .page-category {
+    font-size: 11px;
+    color: var(--accent-blue);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  .page-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 28px;
+    border-left: 3px solid var(--accent-blue);
+    padding-left: 16px;
+    background: rgba(74,158,255,0.04);
+    padding: 14px 16px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* Entry card */
+  .entry {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .entry:hover { border-color: var(--border-active); }
+
+  .entry-header {
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .entry-name {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 16px;
+    color: var(--accent-orange);
+    font-weight: 400;
+  }
+
+  .entry-type-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+
+  .badge-class { background: rgba(167,139,250,0.2); color: var(--accent-purple); border: 1px solid rgba(167,139,250,0.3); }
+  .badge-function { background: rgba(74,158,255,0.2); color: var(--accent-cyan); border: 1px solid rgba(74,158,255,0.3); }
+  .badge-method { background: rgba(61,220,132,0.2); color: var(--accent-green); border: 1px solid rgba(61,220,132,0.3); }
+  .badge-widget { background: rgba(255,209,102,0.2); color: var(--accent-yellow); border: 1px solid rgba(255,209,102,0.3); }
+  .badge-app { background: rgba(255,123,46,0.2); color: var(--accent-orange); border: 1px solid rgba(255,123,46,0.3); }
+
+  .entry-body { padding: 18px; }
+
+  .entry-desc {
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    line-height: 1.75;
+  }
+
+  /* Syntax block */
+  .syntax-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .syntax-block {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 16px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--accent-cyan);
+    margin-bottom: 16px;
+    overflow-x: auto;
+    white-space: pre;
+    line-height: 1.7;
+  }
+
+  .syntax-block .kw { color: var(--accent-purple); }
+  .syntax-block .fn { color: var(--accent-orange); }
+  .syntax-block .cls { color: var(--accent-yellow); }
+  .syntax-block .param { color: var(--accent-green); }
+  .syntax-block .comment { color: var(--text-dim); font-style: italic; }
+  .syntax-block .string { color: #f9826c; }
+  .syntax-block .num { color: var(--accent-blue); }
+
+  /* Parameters table */
+  .params-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 12px;
+  }
+
+  .params-table th {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 6px 12px;
+    text-align: left;
+    background: var(--bg-code);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .params-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(37,43,58,0.6);
+    vertical-align: top;
+  }
+
+  .params-table tr:last-child td { border-bottom: none; }
+  .params-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .params-table .param-name {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--accent-green);
+    white-space: nowrap;
+  }
+
+  .params-table .param-type {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--accent-purple);
+    white-space: nowrap;
+  }
+
+  .params-table .param-desc { color: var(--text-secondary); }
+
+  /* Returns */
+  .returns-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .returns-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    min-width: 70px;
+  }
+
+  .returns-type {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--accent-yellow);
+    background: rgba(255,209,102,0.1);
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+
+  /* Notes */
+  .note-box {
+    background: rgba(74,158,255,0.07);
+    border: 1px solid rgba(74,158,255,0.25);
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .note-box .note-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 10px;
+    color: var(--accent-blue);
+    margin-bottom: 5px;
+  }
+
+  .warn-box {
+    background: rgba(255,123,46,0.07);
+    border: 1px solid rgba(255,123,46,0.25);
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .warn-box .note-title { color: var(--accent-orange); }
+
+  /* Links */
+  .see-also {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .see-also-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    width: 100%;
+  }
+
+  a.ref-link {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-blue);
+    text-decoration: none;
+    background: rgba(74,158,255,0.1);
+    padding: 3px 10px;
+    border-radius: 3px;
+    border: 1px solid rgba(74,158,255,0.2);
+    transition: all 0.15s;
+  }
+
+  a.ref-link:hover { background: rgba(74,158,255,0.2); border-color: var(--accent-blue); }
+
+  /* Home page */
+  .home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .home-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .home-card:hover {
+    border-color: var(--accent-blue);
+    background: rgba(74,158,255,0.06);
+    transform: translateY(-2px);
+  }
+
+  .home-card-icon { font-size: 22px; margin-bottom: 10px; }
+  .home-card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+
+  .home-card-desc { font-size: 11px; color: var(--text-dim); line-height: 1.6; }
+
+  h3.section-heading {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 24px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════ SIDEBAR ══════════════════════════════ -->
+<div id="sidebar">
+  <div id="sidebar-header">
+    <div class="app-title">🧠 AI Training Reference</div>
+    <div class="app-subtitle">Google Colab &amp; FastAI · v2025</div>
+  </div>
+
+  <div id="search-box">
+    <input type="text" id="search-input" placeholder="Search reference..." oninput="filterNav(this.value)">
+  </div>
+
+  <div id="nav-tree">
+    <!-- Home -->
+    <a class="nav-item active" onclick="showPage('home')" href="javascript:void(0)" id="nav-home">
+      🏠 Overview &amp; Quick Start
+    </a>
+
+    <!-- 1. Data Sourcing -->
+    <div class="nav-section-header open" onclick="toggleSection(this)">
+      <span class="arrow">▶</span> Data Sourcing &amp; Directories
+    </div>
+    <div class="nav-section-items open">
+      <a class="nav-item" onclick="showPage('untar_data')" href="javascript:void(0)">untar_data <span class="tag func">func</span></a>
+      <a class="nav-item" onclick="showPage('get_image_files')" href="javascript:void(0)">get_image_files <span class="tag func">func</span></a>
+      <a class="nav-item" onclick="showPage('get_text_files')" href="javascript:void(0)">get_text_files <span class="tag func">func</span></a>
+    </div>
+
+    <!-- 2. DataBlock -->
+    <div class="nav-section-header" onclick="toggleSection(this)">
+      <span class="arrow">▶</span> The DataBlock API
+    </div>
+    <div class="nav-section-items">
+      <a class="nav-item" onclick="showPage('DataBlock')" href="javascript:void(0)">DataBlock <span class="tag class">class</span></a>
+      <a class="nav-item" onclick="showPage('ImageDataLoaders')" href="javascript:void(0)">ImageDataLoaders <span class="tag class">class</span></a>
+    </div>
+
+    <!-- 3. Scikit-learn -->
+    <div class="nav-section-header" onclick="toggleSection(this)">
+      <span class="arrow">▶</span> Classical ML (Scikit-learn)
+    </div>
+    <div class="nav-section-items">
+      <a class="nav-item" onclick="showPage('LinearRegression')" href="javascript:void(0)">LinearRegression <span class="tag class">class</span></a>
+      <a class="nav-item" onclick="showPage('GridSearchCV')" href="javascript:void(0)">GridSearchCV <span class="tag func">func</span></a>
+    </div>
+
+    <!-- 4. Learners -->
+    <div class="nav-section-header" onclick="toggleSection(this)">
+      <span class="arrow">▶</span> Model Architectures &amp; Learners
+    </div>
+    <div class="nav-section-items">
+      <a class="nav-item" onclick="showPage('cnn_learner')" href="javascript:void(0)">cnn_learner <span class="tag func">func</span></a>
+      <a class="nav-item" onclick="showPage('text_classifier_learner')" href="javascript:void(0)">text_classifier_learner <span class="tag func">func</span></a>
+      <a class="nav-item" onclick="showPage('tabular_learner')" href="javascript:void(0)">tabular_learner <span class="tag func">func</span></a>
+      <a class="nav-item" onclick="showPage('collab_learner')" href="javascript:void(0)">collab_learner <span class="tag func">func</span></a>
+    </div>
+
+    <!-- 5. Training Loop -->
+    <div class="nav-section-header" onclick="toggleSection(this)">
+      <span class="arrow">▶</span> The Training Loop
+    </div>
+    <div class="nav-section-items">
+      <a class="nav-item" onclick="showPage('fine_tune')" href="javascript:void(0)">learn.fine_tune <span class="tag method">method</span></a>
+      <a class="nav-item" onclick="showPage('fit_one_cycle')" href="javascript:void(0)">learn.fit_one_cycle <span class="tag method">method</span></a>
+      <a class="nav-item" onclick="showPage('sgd_loop')" href="javascript:void(0)">SGD Loop (manual) <span class="tag method">method</span></a>
+    </div>
+
+    <!-- 6. Inference -->
+    <div class="nav-section-header" onclick="toggleSection(this)">
+      <span class="arrow">▶</span> Inference &amp; Model Export
+    </div>
+    <div class="nav-section-items">
+      <a class="nav-item" onclick="showPage('predict')" href="javascript:void(0)">learn.predict <span class="tag method">method</span></a>
+      <a class="nav-item" onclick="showPage('export')" href="javascript:void(0)">learn.export <span class="tag method">method</span></a>
+      <a class="nav-item" onclick="showPage('load_learner')" href="javascript:void(0)">load_learner <span class="tag func">func</span></a>
+    </div>
+
+    <!-- 7. Widgets -->
+    <div class="nav-section-header" onclick="toggleSection(this)">
+      <span class="arrow">▶</span> Widgets &amp; Web Deployment
+    </div>
+    <div class="nav-section-items">
+      <a class="nav-item" onclick="showPage('FileUpload')" href="javascript:void(0)">widgets.FileUpload <span class="tag widget">widget</span></a>
+      <a class="nav-item" onclick="showPage('Button')" href="javascript:void(0)">widgets.Button <span class="tag widget">widget</span></a>
+      <a class="nav-item" onclick="showPage('Output')" href="javascript:void(0)">widgets.Output <span class="tag widget">widget</span></a>
+      <a class="nav-item" onclick="showPage('VBox')" href="javascript:void(0)">VBox <span class="tag widget">widget</span></a>
+      <a class="nav-item" onclick="showPage('voila')" href="javascript:void(0)">Voilà <span class="tag widget">widget</span></a>
+    </div>
+
+    <!-- 8. Data Cleaning -->
+    <div class="nav-section-header" onclick="toggleSection(this)">
+      <span class="arrow">▶</span> Interactive Data Cleaning
+    </div>
+    <div class="nav-section-items">
+      <a class="nav-item" onclick="showPage('ImageClassifierCleaner')" href="javascript:void(0)">ImageClassifierCleaner <span class="tag widget">widget</span></a>
+      <a class="nav-item" onclick="showPage('plot_top_losses')" href="javascript:void(0)">interp.plot_top_losses <span class="tag method">method</span></a>
+      <a class="nav-item" onclick="showPage('most_confused')" href="javascript:void(0)">interp.most_confused <span class="tag method">method</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ MAIN ══════════════════════════════ -->
+<div id="main">
+  <div id="toolbar">
+    <div class="breadcrumb" id="breadcrumb">
+      <span>AI Training Reference</span>
+      <span class="sep">›</span>
+      <span class="current" id="breadcrumb-current">Overview</span>
+    </div>
+  </div>
+
+  <div id="content">
+
+    <!-- ════════════ HOME ════════════ -->
+    <div class="page active" id="page-home">
+      <div class="page-title">AI Training Reference</div>
+      <div class="page-category">Google Colab · FastAI · Scikit-learn · IPython Widgets</div>
+      <div class="page-desc">
+        This reference covers all scripts and APIs used in the AI Training Skillset Course. Use the sidebar to navigate between modules, or click a category card below to jump directly to a section.
+      </div>
+
+      <h3 class="section-heading">Getting Started in Colab</h3>
+      <div class="syntax-block"><span class="comment"># Install FastAI in Google Colab (run once per session)</span>
+<span class="kw">!pip install</span> fastai -q
+
+<span class="comment"># Standard imports used throughout this course</span>
+<span class="kw">from</span> fastai.vision.all <span class="kw">import</span> *
+<span class="kw">from</span> fastai.text.all <span class="kw">import</span> *
+<span class="kw">from</span> fastai.tabular.all <span class="kw">import</span> *
+<span class="kw">from</span> fastai.collab <span class="kw">import</span> *
+<span class="kw">import</span> ipywidgets <span class="kw">as</span> widgets
+<span class="kw">from</span> ipywidgets <span class="kw">import</span> VBox</div>
+
+      <div class="home-grid">
+        <a class="home-card" onclick="showPage('untar_data')" href="javascript:void(0)">
+          <div class="home-card-icon">📁</div>
+          <div class="home-card-title">Data Sourcing &amp; Directories</div>
+          <div class="home-card-desc">untar_data, get_image_files, get_text_files</div>
+        </a>
+        <a class="home-card" onclick="showPage('DataBlock')" href="javascript:void(0)">
+          <div class="home-card-icon">🧱</div>
+          <div class="home-card-title">DataBlock API</div>
+          <div class="home-card-desc">Blueprint for loading and transforming datasets into DataLoaders</div>
+        </a>
+        <a class="home-card" onclick="showPage('LinearRegression')" href="javascript:void(0)">
+          <div class="home-card-icon">📈</div>
+          <div class="home-card-title">Classical ML</div>
+          <div class="home-card-desc">Linear Regression, Grid Search with Scikit-learn</div>
+        </a>
+        <a class="home-card" onclick="showPage('cnn_learner')" href="javascript:void(0)">
+          <div class="home-card-icon">🤖</div>
+          <div class="home-card-title">Learners</div>
+          <div class="home-card-desc">cnn_learner, text_classifier_learner, tabular_learner, collab_learner</div>
+        </a>
+        <a class="home-card" onclick="showPage('fine_tune')" href="javascript:void(0)">
+          <div class="home-card-icon">🔁</div>
+          <div class="home-card-title">Training Loop</div>
+          <div class="home-card-desc">fine_tune, fit_one_cycle, and manual SGD</div>
+        </a>
+        <a class="home-card" onclick="showPage('predict')" href="javascript:void(0)">
+          <div class="home-card-icon">🚀</div>
+          <div class="home-card-title">Inference &amp; Export</div>
+          <div class="home-card-desc">predict, export, load_learner</div>
+        </a>
+        <a class="home-card" onclick="showPage('FileUpload')" href="javascript:void(0)">
+          <div class="home-card-icon">🖥️</div>
+          <div class="home-card-title">Widgets &amp; Voilà</div>
+          <div class="home-card-desc">Build interactive web apps from notebooks</div>
+        </a>
+        <a class="home-card" onclick="showPage('ImageClassifierCleaner')" href="javascript:void(0)">
+          <div class="home-card-icon">🧹</div>
+          <div class="home-card-title">Data Cleaning</div>
+          <div class="home-card-desc">ImageClassifierCleaner, plot_top_losses, most_confused</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ════════════ untar_data ════════════ -->
+    <div class="page" id="page-untar_data">
+      <div class="page-title">untar_data</div>
+      <div class="page-category">Data Sourcing &amp; Directory Management</div>
+      <div class="page-desc">Downloads and extracts a standard dataset from the fast.ai collection (or any URL) to a local cache directory. Returns a <code style="color:var(--accent-cyan)">Path</code> object pointing to the extracted folder. If the dataset has already been downloaded, the cached version is used automatically.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">untar_data</span>
+          <span class="entry-type-badge badge-function">Function</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block"><span class="fn">untar_data</span>(<span class="param">url</span>, <span class="param">archive</span>=<span class="kw">None</span>, <span class="param">data</span>=<span class="kw">True</span>, <span class="param">c_key</span>=<span class="string">'data'</span>, <span class="param">force_download</span>=<span class="kw">False</span>)</div>
+
+          <table class="params-table">
+            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+            <tr><td class="param-name">url</td><td class="param-type">URLs / str</td><td class="param-desc">A URL string or a <code style="color:var(--accent-yellow)">URLs</code> constant (e.g. <code>URLs.PETS</code>). Specifies the dataset to download.</td></tr>
+            <tr><td class="param-name">archive</td><td class="param-type">Path | None</td><td class="param-desc">Optional custom archive directory. Defaults to a fast.ai managed cache.</td></tr>
+            <tr><td class="param-name">force_download</td><td class="param-type">bool</td><td class="param-desc">If <code>True</code>, re-downloads even if cached. Default is <code>False</code>.</td></tr>
+          </table>
+
+          <div class="returns-row">
+            <span class="returns-label">Returns</span>
+            <span class="returns-type">Path</span>
+          </div>
+
+          <div class="syntax-label">Example Script</div>
+          <div class="syntax-block"><span class="kw">from</span> fastai.vision.all <span class="kw">import</span> *
+
+<span class="comment"># Download the Oxford-IIIT Pet dataset</span>
+path = <span class="fn">untar_data</span>(<span class="cls">URLs</span>.PETS)
+
+<span class="comment"># Inspect the returned Path object</span>
+<span class="fn">print</span>(path)          <span class="comment"># e.g. /root/.fastai/data/oxford-iiit-pet</span>
+<span class="fn">print</span>(path.ls())     <span class="comment"># lists contents of the directory</span>
+
+<span class="comment"># Common URLs constants available in fast.ai</span>
+<span class="comment"># URLs.PETS       – Oxford-IIIT Pet dataset (image classification)</span>
+<span class="comment"># URLs.MNIST      – MNIST handwritten digits</span>
+<span class="comment"># URLs.IMDB       – IMDb movie reviews (text classification)</span>
+<span class="comment"># URLs.ADULT_SAMPLE – Adult census income (tabular)</span>
+<span class="comment"># URLs.ML_SAMPLE  – MovieLens ratings (collaborative filtering)</span></div>
+
+          <div class="note-box">
+            <div class="note-title">📌 Note</div>
+            The <code>URLs</code> class contains constants for all standard fast.ai datasets. You can also pass any direct download URL as a string.
+          </div>
+
+          <div class="see-also">
+            <span class="see-also-label">See Also</span>
+            <a class="ref-link" onclick="showPage('get_image_files')" href="javascript:void(0)">get_image_files</a>
+            <a class="ref-link" onclick="showPage('get_text_files')" href="javascript:void(0)">get_text_files</a>
+            <a class="ref-link" onclick="showPage('DataBlock')" href="javascript:void(0)">DataBlock</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ get_image_files ════════════ -->
+    <div class="page" id="page-get_image_files">
+      <div class="page-title">get_image_files</div>
+      <div class="page-category">Data Sourcing &amp; Directory Management</div>
+      <div class="page-desc">Recursively retrieves all image files within a given directory path. Returns an <code style="color:var(--accent-cyan)">L</code> (fast.ai list) of <code>Path</code> objects, which is the required format for building DataLoaders.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">get_image_files</span>
+          <span class="entry-type-badge badge-function">Function</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block"><span class="fn">get_image_files</span>(<span class="param">path</span>, <span class="param">recurse</span>=<span class="kw">True</span>, <span class="param">folders</span>=<span class="kw">None</span>)</div>
+
+          <table class="params-table">
+            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+            <tr><td class="param-name">path</td><td class="param-type">Path | str</td><td class="param-desc">Root directory to search for image files.</td></tr>
+            <tr><td class="param-name">recurse</td><td class="param-type">bool</td><td class="param-desc">If <code>True</code> (default), searches all subdirectories recursively.</td></tr>
+            <tr><td class="param-name">folders</td><td class="param-type">list | None</td><td class="param-desc">Optional list of folder names to restrict the search.</td></tr>
+          </table>
+
+          <div class="returns-row"><span class="returns-label">Returns</span><span class="returns-type">L[Path]</span></div>
+
+          <div class="syntax-label">Example Script</div>
+          <div class="syntax-block"><span class="kw">from</span> fastai.vision.all <span class="kw">import</span> *
+
+path = <span class="fn">untar_data</span>(<span class="cls">URLs</span>.PETS)
+
+<span class="comment"># Get all image files recursively</span>
+fnames = <span class="fn">get_image_files</span>(path/<span class="string">"images"</span>)
+
+<span class="fn">print</span>(<span class="fn">len</span>(fnames))   <span class="comment"># e.g. 7390</span>
+<span class="fn">print</span>(fnames[<span class="num">0</span>])     <span class="comment"># Path('.../images/Abyssinian_1.jpg')</span>
+
+<span class="comment"># Restrict to specific subfolders only</span>
+train_files = <span class="fn">get_image_files</span>(path, folders=[<span class="string">'train'</span>])</div>
+
+          <div class="see-also">
+            <span class="see-also-label">See Also</span>
+            <a class="ref-link" onclick="showPage('get_text_files')" href="javascript:void(0)">get_text_files</a>
+            <a class="ref-link" onclick="showPage('DataBlock')" href="javascript:void(0)">DataBlock</a>
+            <a class="ref-link" onclick="showPage('untar_data')" href="javascript:void(0)">untar_data</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ get_text_files ════════════ -->
+    <div class="page" id="page-get_text_files">
+      <div class="page-title">get_text_files</div>
+      <div class="page-category">Data Sourcing &amp; Directory Management</div>
+      <div class="page-desc">Recursively retrieves all text files within a directory. The equivalent of <code style="color:var(--accent-cyan)">get_image_files</code> for NLP tasks.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">get_text_files</span>
+          <span class="entry-type-badge badge-function">Function</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block"><span class="fn">get_text_files</span>(<span class="param">path</span>, <span class="param">recurse</span>=<span class="kw">True</span>, <span class="param">folders</span>=<span class="kw">None</span>)</div>
+
+          <div class="syntax-label">Example Script</div>
+          <div class="syntax-block"><span class="kw">from</span> fastai.text.all <span class="kw">import</span> *
+
+path = <span class="fn">untar_data</span>(<span class="cls">URLs</span>.IMDB)
+
+<span class="comment"># Retrieve all text files in train/pos and train/neg</span>
+files = <span class="fn">get_text_files</span>(path, folders=[<span class="string">'train'</span>, <span class="string">'test'</span>])
+<span class="fn">print</span>(<span class="fn">len</span>(files))   <span class="comment"># e.g. 50000</span>
+<span class="fn">print</span>(files[<span class="num">0</span>].read()) <span class="comment"># read contents of first file</span></div>
+
+          <div class="see-also">
+            <span class="see-also-label">See Also</span>
+            <a class="ref-link" onclick="showPage('get_image_files')" href="javascript:void(0)">get_image_files</a>
+            <a class="ref-link" onclick="showPage('text_classifier_learner')" href="javascript:void(0)">text_classifier_learner</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ DataBlock ════════════ -->
+    <div class="page" id="page-DataBlock">
+      <div class="page-title">DataBlock</div>
+      <div class="page-category">The DataBlock API</div>
+      <div class="page-desc">The <code style="color:var(--accent-cyan)">DataBlock</code> class is the central blueprint for transforming raw data into <code>DataLoaders</code>. It decouples all the decisions about your data — what it is, how to label it, how to split it, and how to augment it — into a single, reusable specification.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">DataBlock</span>
+          <span class="entry-type-badge badge-class">Class</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Constructor Syntax</div>
+          <div class="syntax-block"><span class="cls">DataBlock</span>(
+    <span class="param">blocks</span>    = (<span class="cls">InputBlock</span>, <span class="cls">OutputBlock</span>),
+    <span class="param">get_items</span> = <span class="fn">get_items_func</span>,
+    <span class="param">get_y</span>     = <span class="fn">label_func</span>,
+    <span class="param">splitter</span>  = <span class="fn">splitter_func</span>,
+    <span class="param">item_tfms</span> = [<span class="cls">Resize</span>(<span class="num">460</span>)],
+    <span class="param">batch_tfms</span>= <span class="fn">aug_transforms</span>(size=<span class="num">224</span>)
+)</div>
+
+          <table class="params-table">
+            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+            <tr><td class="param-name">blocks</td><td class="param-type">Tuple</td><td class="param-desc">A tuple of block types defining input and output data. E.g. <code>(ImageBlock, CategoryBlock)</code> for image classification, <code>(TextBlock, CategoryBlock)</code> for NLP.</td></tr>
+            <tr><td class="param-name">get_items</td><td class="param-type">Function</td><td class="param-desc">A function that receives the path and returns a list of raw items (e.g. <code>get_image_files</code>).</td></tr>
+            <tr><td class="param-name">get_y</td><td class="param-type">Function</td><td class="param-desc">A labeling function applied to each item to extract its target/label. E.g. <code>parent_label</code> returns the folder name.</td></tr>
+            <tr><td class="param-name">splitter</td><td class="param-type">Function</td><td class="param-desc">Determines how to split items into training and validation sets. E.g. <code>RandomSplitter(valid_pct=0.2)</code> or <code>GrandparentSplitter</code>.</td></tr>
+            <tr><td class="param-name">item_tfms</td><td class="param-type">List</td><td class="param-desc">Transformations applied on the CPU to each individual item. Usually used for <code>Resize</code>.</td></tr>
+            <tr><td class="param-name">batch_tfms</td><td class="param-type">List</td><td class="param-desc">Transformations applied on the GPU to full mini-batches. Used for data augmentation via <code>aug_transforms()</code>.</td></tr>
+          </table>
+
+          <div class="returns-row"><span class="returns-label">Returns</span><span class="returns-type">DataBlock</span></div>
+
+          <div class="syntax-label">Example Script – Image Classification</div>
+          <div class="syntax-block"><span class="kw">from</span> fastai.vision.all <span class="kw">import</span> *
+
+path = <span class="fn">untar_data</span>(<span class="cls">URLs</span>.PETS)
+
+<span class="comment"># Define a regex function to extract label from filename</span>
+<span class="kw">def</span> <span class="fn">label_from_name</span>(fname):
+    <span class="kw">return</span> re.<span class="fn">search</span>(<span class="string">r'^([^_]+)_\d+\.jpg$'</span>, fname.name).group(<span class="num">1</span>)
+
+pets = <span class="cls">DataBlock</span>(
+    blocks    = (<span class="cls">ImageBlock</span>, <span class="cls">CategoryBlock</span>),
+    get_items = <span class="fn">get_image_files</span>,
+    get_y     = <span class="fn">label_from_name</span>,
+    splitter  = <span class="cls">RandomSplitter</span>(valid_pct=<span class="num">0.2</span>, seed=<span class="num">42</span>),
+    item_tfms = <span class="cls">Resize</span>(<span class="num">460</span>),
+    batch_tfms= <span class="fn">aug_transforms</span>(size=<span class="num">224</span>, min_scale=<span class="num">0.75</span>)
+)
+
+<span class="comment"># Create DataLoaders from the DataBlock</span>
+dls = pets.<span class="fn">dataloaders</span>(path/<span class="string">"images"</span>, bs=<span class="num">32</span>)
+dls.<span class="fn">show_batch</span>()</div>
+
+          <div class="note-box">
+            <div class="note-title">💡 item_tfms vs batch_tfms</div>
+            <strong>item_tfms</strong> run on the CPU on individual items — use these for resizing to a consistent size before batching. <strong>batch_tfms</strong> run on the GPU on entire batches — use these for random augmentation. This split is key for performance.
+          </div>
+
+          <div class="syntax-label">Common Block Types</div>
+          <div class="syntax-block"><span class="comment"># Vision</span>
+(<span class="cls">ImageBlock</span>, <span class="cls">CategoryBlock</span>)        <span class="comment"># Single-label classification</span>
+(<span class="cls">ImageBlock</span>, <span class="cls">MultiCategoryBlock</span>)   <span class="comment"># Multi-label classification</span>
+(<span class="cls">ImageBlock</span>, <span class="cls">ImageBlock</span>)           <span class="comment"># Image segmentation / style transfer</span>
+
+<span class="comment"># NLP</span>
+(<span class="cls">TextBlock</span>.<span class="fn">from_folder</span>(...), <span class="cls">CategoryBlock</span>)
+
+<span class="comment"># Tabular</span>
+<span class="cls">TabularDataLoaders</span>.<span class="fn">from_csv</span>(...)   <span class="comment"># more common for tabular</span></div>
+
+          <div class="see-also">
+            <span class="see-also-label">See Also</span>
+            <a class="ref-link" onclick="showPage('cnn_learner')" href="javascript:void(0)">cnn_learner</a>
+            <a class="ref-link" onclick="showPage('fine_tune')" href="javascript:void(0)">learn.fine_tune</a>
+            <a class="ref-link" onclick="showPage('untar_data')" href="javascript:void(0)">untar_data</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ ImageDataLoaders ════════════ -->
+    <div class="page" id="page-ImageDataLoaders">
+      <div class="page-title">ImageDataLoaders</div>
+      <div class="page-category">The DataBlock API</div>
+      <div class="page-desc">A convenience class with factory methods that wrap the DataBlock API for common vision tasks. Use when your data follows a standard folder structure.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">ImageDataLoaders</span>
+          <span class="entry-type-badge badge-class">Class</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Factory Methods</div>
+          <div class="syntax-block"><span class="comment"># Folder structure: path/class_a/img.jpg, path/class_b/img.jpg</span>
+dls = <span class="cls">ImageDataLoaders</span>.<span class="fn">from_folder</span>(path, valid_pct=<span class="num">0.2</span>, seed=<span class="num">42</span>,
+    item_tfms=<span class="cls">Resize</span>(<span class="num">224</span>))
+
+<span class="comment"># CSV file with filename and label columns</span>
+dls = <span class="cls">ImageDataLoaders</span>.<span class="fn">from_csv</span>(path, csv_fname=<span class="string">'labels.csv'</span>,
+    folder=<span class="string">'images'</span>, label_col=<span class="string">'label'</span>)
+
+<span class="comment"># DataFrame</span>
+dls = <span class="cls">ImageDataLoaders</span>.<span class="fn">from_df</span>(df, path, label_col=<span class="string">'label'</span>)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ LinearRegression ════════════ -->
+    <div class="page" id="page-LinearRegression">
+      <div class="page-title">LinearRegression</div>
+      <div class="page-category">Classical Machine Learning · Scikit-learn</div>
+      <div class="page-desc">Implements Ordinary Least Squares (OLS) linear regression. Fits a linear model to minimize the residual sum of squares between observed and predicted values. Used in early course weeks to build intuition before neural networks.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">LinearRegression</span>
+          <span class="entry-type-badge badge-class">Class</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block"><span class="kw">from</span> sklearn.linear_model <span class="kw">import</span> LinearRegression
+
+model = <span class="cls">LinearRegression</span>(fit_intercept=<span class="kw">True</span>)</div>
+
+          <table class="params-table">
+            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+            <tr><td class="param-name">fit_intercept</td><td class="param-type">bool</td><td class="param-desc">Whether to calculate the intercept. Default <code>True</code>.</td></tr>
+          </table>
+
+          <div class="syntax-label">Key Methods</div>
+          <div class="syntax-block"><span class="comment"># Fit the model</span>
+model.<span class="fn">fit</span>(X_train, y_train)
+
+<span class="comment"># Predict</span>
+y_pred = model.<span class="fn">predict</span>(X_test)
+
+<span class="comment"># Evaluate</span>
+score = model.<span class="fn">score</span>(X_test, y_test)   <span class="comment"># R² score</span>
+
+<span class="comment"># Inspect coefficients</span>
+<span class="fn">print</span>(model.coef_)      <span class="comment"># slope(s)</span>
+<span class="fn">print</span>(model.intercept_) <span class="comment"># intercept</span></div>
+
+          <div class="syntax-label">Full Example Script – OLS Regression</div>
+          <div class="syntax-block"><span class="kw">from</span> sklearn.linear_model <span class="kw">import</span> LinearRegression
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> train_test_split
+<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> mean_squared_error
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="comment"># Generate sample data</span>
+X = np.<span class="fn">random.rand</span>(<span class="num">100</span>, <span class="num">1</span>) * <span class="num">10</span>
+y = <span class="num">3.5</span> * X.flatten() + np.<span class="fn">random.randn</span>(<span class="num">100</span>) * <span class="num">2</span>
+
+<span class="comment"># Split into train / test sets</span>
+X_train, X_test, y_train, y_test = <span class="fn">train_test_split</span>(
+    X, y, test_size=<span class="num">0.2</span>, random_state=<span class="num">42</span>)
+
+<span class="comment"># Train the model</span>
+model = <span class="cls">LinearRegression</span>()
+model.<span class="fn">fit</span>(X_train, y_train)
+
+<span class="comment"># Predict and evaluate</span>
+y_pred = model.<span class="fn">predict</span>(X_test)
+mse = <span class="fn">mean_squared_error</span>(y_test, y_pred)
+<span class="fn">print</span>(<span class="string">f"MSE: {mse:.4f} | R²: {model.score(X_test, y_test):.4f}"</span>)</div>
+
+          <div class="see-also">
+            <span class="see-also-label">See Also</span>
+            <a class="ref-link" onclick="showPage('GridSearchCV')" href="javascript:void(0)">GridSearchCV</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ GridSearchCV ════════════ -->
+    <div class="page" id="page-GridSearchCV">
+      <div class="page-title">GridSearchCV</div>
+      <div class="page-category">Classical Machine Learning · Scikit-learn</div>
+      <div class="page-desc">Exhaustive search over a specified parameter grid. Tests every combination of hyperparameter values using cross-validation and selects the best performing configuration. Used in this course for optimising email spam filter models.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">GridSearchCV</span>
+          <span class="entry-type-badge badge-function">Function / Class</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block"><span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> GridSearchCV
+
+gs = <span class="cls">GridSearchCV</span>(
+    <span class="param">estimator</span>  = model,
+    <span class="param">param_grid</span> = param_dict,
+    <span class="param">cv</span>         = <span class="num">5</span>,
+    <span class="param">scoring</span>    = <span class="string">'accuracy'</span>,
+    <span class="param">n_jobs</span>     = <span class="num">-1</span>
+)</div>
+
+          <div class="syntax-label">Full Example – Email Spam Filter</div>
+          <div class="syntax-block"><span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> GridSearchCV
+<span class="kw">from</span> sklearn.svm <span class="kw">import</span> SVC
+<span class="kw">from</span> sklearn.pipeline <span class="kw">import</span> Pipeline
+<span class="kw">from</span> sklearn.feature_extraction.text <span class="kw">import</span> TfidfVectorizer
+
+<span class="comment"># Build a text classification pipeline</span>
+pipe = <span class="cls">Pipeline</span>([
+    (<span class="string">'tfidf'</span>, <span class="cls">TfidfVectorizer</span>()),
+    (<span class="string">'svc'</span>,   <span class="cls">SVC</span>())
+])
+
+<span class="comment"># Define the hyperparameter grid</span>
+param_grid = {
+    <span class="string">'tfidf__max_features'</span>: [<span class="num">1000</span>, <span class="num">5000</span>],
+    <span class="string">'svc__C'</span>:             [<span class="num">0.1</span>, <span class="num">1</span>, <span class="num">10</span>],
+    <span class="string">'svc__kernel'</span>:        [<span class="string">'linear'</span>, <span class="string">'rbf'</span>]
+}
+
+gs = <span class="cls">GridSearchCV</span>(pipe, param_grid, cv=<span class="num">5</span>, scoring=<span class="string">'f1'</span>, n_jobs=<span class="num">-1</span>)
+gs.<span class="fn">fit</span>(X_train_text, y_train)
+
+<span class="fn">print</span>(<span class="string">"Best params:"</span>,  gs.best_params_)
+<span class="fn">print</span>(<span class="string">"Best F1 score:"</span>, gs.best_score_)</div>
+
+          <div class="warn-box">
+            <div class="note-title">⚠️ Colab Warning</div>
+            GridSearchCV can be slow on Colab's free tier. Set <code>n_jobs=-1</code> to use all available CPUs, and consider using <code>RandomizedSearchCV</code> for large parameter spaces.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ cnn_learner ════════════ -->
+    <div class="page" id="page-cnn_learner">
+      <div class="page-title">cnn_learner</div>
+      <div class="page-category">Model Architectures &amp; Learners</div>
+      <div class="page-desc">Creates a <code>Learner</code> for image classification and regression tasks using a pretrained convolutional neural network (CNN) as its backbone. The network is automatically adapted for the number of classes in your dataset via a custom head appended to the pretrained body.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">cnn_learner</span>
+          <span class="entry-type-badge badge-function">Function</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block"><span class="fn">cnn_learner</span>(<span class="param">dls</span>, <span class="param">arch</span>, <span class="param">metrics</span>=<span class="kw">None</span>, <span class="param">pretrained</span>=<span class="kw">True</span>, ...)</div>
+
+          <table class="params-table">
+            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+            <tr><td class="param-name">dls</td><td class="param-type">DataLoaders</td><td class="param-desc">The DataLoaders object containing training and validation data.</td></tr>
+            <tr><td class="param-name">arch</td><td class="param-type">Function</td><td class="param-desc">The architecture function. E.g. <code>resnet34</code>, <code>resnet50</code>, <code>vgg16_bn</code>.</td></tr>
+            <tr><td class="param-name">metrics</td><td class="param-type">list</td><td class="param-desc">List of metric functions to display during training. E.g. <code>[error_rate, accuracy]</code>.</td></tr>
+            <tr><td class="param-name">pretrained</td><td class="param-type">bool</td><td class="param-desc">If <code>True</code> (default), loads ImageNet pretrained weights. Set <code>False</code> to train from scratch.</td></tr>
+          </table>
+
+          <div class="returns-row"><span class="returns-label">Returns</span><span class="returns-type">Learner</span></div>
+
+          <div class="syntax-label">Example Script</div>
+          <div class="syntax-block"><span class="kw">from</span> fastai.vision.all <span class="kw">import</span> *
+
+path = <span class="fn">untar_data</span>(<span class="cls">URLs</span>.PETS)
+
+dls = <span class="cls">ImageDataLoaders</span>.<span class="fn">from_folder</span>(path/<span class="string">"images"</span>,
+    valid_pct=<span class="num">0.2</span>, item_tfms=<span class="cls">Resize</span>(<span class="num">224</span>))
+
+<span class="comment"># Create a ResNet-34 learner</span>
+learn = <span class="fn">cnn_learner</span>(dls, <span class="fn">resnet34</span>, metrics=[<span class="fn">error_rate</span>, <span class="fn">accuracy</span>])
+
+<span class="comment"># Common architectures available:</span>
+<span class="comment"># resnet18, resnet34, resnet50  – speed/accuracy tradeoff</span>
+<span class="comment"># vgg16_bn                      – older but reliable</span>
+<span class="comment"># xresnet50                     – fast.ai optimized ResNet</span>
+<span class="comment"># efficientnet_b0 to b7         – via timm integration</span></div>
+
+          <div class="see-also">
+            <span class="see-also-label">See Also</span>
+            <a class="ref-link" onclick="showPage('DataBlock')" href="javascript:void(0)">DataBlock</a>
+            <a class="ref-link" onclick="showPage('fine_tune')" href="javascript:void(0)">learn.fine_tune</a>
+            <a class="ref-link" onclick="showPage('predict')" href="javascript:void(0)">learn.predict</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ text_classifier_learner ════════════ -->
+    <div class="page" id="page-text_classifier_learner">
+      <div class="page-title">text_classifier_learner</div>
+      <div class="page-category">Model Architectures &amp; Learners</div>
+      <div class="page-desc">Creates a <code>Learner</code> for text classification using a pretrained language model. The default architecture is <code>AWD_LSTM</code>. Typically, this follows a two-stage training: first fine-tune a language model, then train the classifier head.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">text_classifier_learner</span>
+          <span class="entry-type-badge badge-function">Function</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block"><span class="fn">text_classifier_learner</span>(<span class="param">dls</span>, <span class="param">arch</span>, <span class="param">drop_mult</span>=<span class="num">0.5</span>, <span class="param">metrics</span>=<span class="kw">None</span>)</div>
+
+          <div class="syntax-label">Example Script – IMDb Sentiment</div>
+          <div class="syntax-block"><span class="kw">from</span> fastai.text.all <span class="kw">import</span> *
+
+path = <span class="fn">untar_data</span>(<span class="cls">URLs</span>.IMDB)
+
+<span class="comment"># Step 1: Build DataLoaders for language model fine-tuning</span>
+dls_lm = <span class="cls">TextDataLoaders</span>.<span class="fn">from_folder</span>(path, is_lm=<span class="kw">True</span>)
+learn_lm = <span class="fn">language_model_learner</span>(dls_lm, <span class="cls">AWD_LSTM</span>, drop_mult=<span class="num">0.3</span>,
+    metrics=accuracy)
+learn_lm.<span class="fn">fine_tune</span>(<span class="num">1</span>, <span class="num">2e-2</span>)
+learn_lm.<span class="fn">save_encoder</span>(<span class="string">'finetuned'</span>)
+
+<span class="comment"># Step 2: Build classifier DataLoaders</span>
+dls_cls = <span class="cls">TextDataLoaders</span>.<span class="fn">from_folder</span>(path, valid=<span class="string">'test'</span>)
+learn = <span class="fn">text_classifier_learner</span>(dls_cls, <span class="cls">AWD_LSTM</span>, drop_mult=<span class="num">0.5</span>,
+    metrics=accuracy)
+learn.<span class="fn">load_encoder</span>(<span class="string">'finetuned'</span>)
+learn.<span class="fn">fine_tune</span>(<span class="num">4</span>, <span class="num">1e-2</span>)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ tabular_learner ════════════ -->
+    <div class="page" id="page-tabular_learner">
+      <div class="page-title">tabular_learner</div>
+      <div class="page-category">Model Architectures &amp; Learners</div>
+      <div class="page-desc">Creates a <code>Learner</code> for tabular (structured) data. Uses a fully connected neural network with batch normalization and dropout. Handles both categorical (embedding) and continuous features automatically.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">tabular_learner</span>
+          <span class="entry-type-badge badge-function">Function</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block"><span class="fn">tabular_learner</span>(<span class="param">dls</span>, <span class="param">layers</span>, <span class="param">metrics</span>=<span class="kw">None</span>, <span class="param">y_range</span>=<span class="kw">None</span>)</div>
+
+          <div class="syntax-label">Example Script – Adult Income</div>
+          <div class="syntax-block"><span class="kw">from</span> fastai.tabular.all <span class="kw">import</span> *
+
+path = <span class="fn">untar_data</span>(<span class="cls">URLs</span>.ADULT_SAMPLE)
+df = pd.<span class="fn">read_csv</span>(path/<span class="string">'adult.csv'</span>)
+
+<span class="comment"># Define column roles</span>
+cat_names = [<span class="string">'workclass'</span>, <span class="string">'education'</span>, <span class="string">'occupation'</span>]
+cont_names = [<span class="string">'age'</span>, <span class="string">'education-num'</span>, <span class="string">'hours-per-week'</span>]
+
+dls = <span class="cls">TabularDataLoaders</span>.<span class="fn">from_df</span>(
+    df, path, y_names=<span class="string">'salary'</span>, y_block=<span class="cls">CategoryBlock</span>(),
+    cat_names=cat_names, cont_names=cont_names,
+    procs=[<span class="cls">Categorify</span>, <span class="cls">FillMissing</span>, <span class="cls">Normalize</span>]
+)
+
+learn = <span class="fn">tabular_learner</span>(dls, layers=[<span class="num">200</span>, <span class="num">100</span>], metrics=accuracy)
+learn.<span class="fn">fit_one_cycle</span>(<span class="num">3</span>, <span class="num">1e-3</span>)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ collab_learner ════════════ -->
+    <div class="page" id="page-collab_learner">
+      <div class="page-title">collab_learner</div>
+      <div class="page-category">Model Architectures &amp; Learners</div>
+      <div class="page-desc">Creates a <code>Learner</code> for collaborative filtering — predicting user ratings of items using latent factor embeddings. Used for recommendation systems.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">collab_learner</span>
+          <span class="entry-type-badge badge-function">Function</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Example Script – Movie Ratings</div>
+          <div class="syntax-block"><span class="kw">from</span> fastai.collab <span class="kw">import</span> *
+
+path = <span class="fn">untar_data</span>(<span class="cls">URLs</span>.ML_SAMPLE)
+df = pd.<span class="fn">read_csv</span>(path/<span class="string">'ratings.csv'</span>)
+
+dls = <span class="cls">CollabDataLoaders</span>.<span class="fn">from_df</span>(df, item_name=<span class="string">'title'</span>, rating_name=<span class="string">'rating'</span>, bs=<span class="num">64</span>)
+
+learn = <span class="fn">collab_learner</span>(dls, n_factors=<span class="num">50</span>, y_range=(<span class="num">0.5</span>, <span class="num">5.5</span>))
+learn.<span class="fn">fit_one_cycle</span>(<span class="num">5</span>, <span class="num">5e-3</span>)
+
+<span class="comment"># Get recommendations for a user</span>
+learn.<span class="fn">get_preds</span>(dl=dls.test_dl(test_df))</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ fine_tune ════════════ -->
+    <div class="page" id="page-fine_tune">
+      <div class="page-title">learn.fine_tune</div>
+      <div class="page-category">The Training Loop</div>
+      <div class="page-desc">The primary method for transfer learning. First freezes the pretrained body and trains only the newly added head for one epoch, then unfreezes all layers and trains the full network for the specified number of epochs using discriminative learning rates.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">learn.fine_tune</span>
+          <span class="entry-type-badge badge-method">Method</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block">learn.<span class="fn">fine_tune</span>(<span class="param">epochs</span>, <span class="param">base_lr</span>=<span class="num">2e-3</span>, <span class="param">freeze_epochs</span>=<span class="num">1</span>)</div>
+
+          <table class="params-table">
+            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+            <tr><td class="param-name">epochs</td><td class="param-type">int</td><td class="param-desc">Number of epochs to train after the freeze phase (full network).</td></tr>
+            <tr><td class="param-name">base_lr</td><td class="param-type">float | slice</td><td class="param-desc">Learning rate. Use <code>slice(lr_min, lr_max)</code> for discriminative learning rates across layer groups.</td></tr>
+            <tr><td class="param-name">freeze_epochs</td><td class="param-type">int</td><td class="param-desc">Number of epochs to train with the body frozen (head only). Default is 1.</td></tr>
+          </table>
+
+          <div class="syntax-label">Example Script</div>
+          <div class="syntax-block"><span class="kw">from</span> fastai.vision.all <span class="kw">import</span> *
+
+path = <span class="fn">untar_data</span>(<span class="cls">URLs</span>.PETS)
+dls = <span class="cls">ImageDataLoaders</span>.<span class="fn">from_folder</span>(path/<span class="string">"images"</span>, item_tfms=<span class="cls">Resize</span>(<span class="num">224</span>))
+learn = <span class="fn">cnn_learner</span>(dls, <span class="fn">resnet34</span>, metrics=error_rate)
+
+<span class="comment"># Find the optimal learning rate first</span>
+learn.<span class="fn">lr_find</span>()
+
+<span class="comment"># Fine-tune: 1 epoch frozen → 4 epochs unfrozen</span>
+learn.<span class="fn">fine_tune</span>(<span class="num">4</span>, base_lr=<span class="num">3e-3</span>)
+
+<span class="comment"># Optional: use discriminative learning rates</span>
+learn.<span class="fn">fine_tune</span>(<span class="num">4</span>, base_lr=<span class="fn">slice</span>(<span class="num">1e-5</span>, <span class="num">1e-3</span>))</div>
+
+          <div class="note-box">
+            <div class="note-title">📌 When to use fine_tune vs fit_one_cycle</div>
+            Use <code>fine_tune</code> when you have a <strong>pretrained model</strong> and want to adapt it to new data. Use <a onclick="showPage('fit_one_cycle')" href="javascript:void(0)" style="color:var(--accent-blue)">fit_one_cycle</a> when training from scratch (tabular, collab) or when you've manually managed freezing with <code>learn.freeze()</code> / <code>learn.unfreeze()</code>.
+          </div>
+
+          <div class="see-also">
+            <span class="see-also-label">See Also</span>
+            <a class="ref-link" onclick="showPage('fit_one_cycle')" href="javascript:void(0)">learn.fit_one_cycle</a>
+            <a class="ref-link" onclick="showPage('cnn_learner')" href="javascript:void(0)">cnn_learner</a>
+            <a class="ref-link" onclick="showPage('export')" href="javascript:void(0)">learn.export</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ fit_one_cycle ════════════ -->
+    <div class="page" id="page-fit_one_cycle">
+      <div class="page-title">learn.fit_one_cycle</div>
+      <div class="page-category">The Training Loop</div>
+      <div class="page-desc">Implements the 1-cycle learning rate policy, which gradually increases the learning rate then decreases it over training epochs. Produces better results in fewer epochs compared to a fixed learning rate.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">learn.fit_one_cycle</span>
+          <span class="entry-type-badge badge-method">Method</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block">learn.<span class="fn">fit_one_cycle</span>(<span class="param">n_epoch</span>, <span class="param">lr_max</span>=<span class="kw">None</span>, <span class="param">div</span>=<span class="num">25.0</span>)</div>
+
+          <div class="syntax-label">Example Script – Tabular from Scratch</div>
+          <div class="syntax-block"><span class="comment"># After creating tabular_learner...</span>
+learn.<span class="fn">fit_one_cycle</span>(<span class="num">5</span>, <span class="num">1e-3</span>)
+
+<span class="comment"># Typical training output columns:</span>
+<span class="comment"># epoch | train_loss | valid_loss | accuracy | time</span>
+
+<span class="comment"># Show training curve</span>
+learn.recorder.<span class="fn">plot_loss</span>()</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ SGD Loop ════════════ -->
+    <div class="page" id="page-sgd_loop">
+      <div class="page-title">Manual SGD Loop</div>
+      <div class="page-category">The Training Loop</div>
+      <div class="page-desc">The low-level training loop using Stochastic Gradient Descent. Understanding this loop builds intuition for how all deep learning frameworks work under the hood. Covered in advanced units.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">SGD Training Loop</span>
+          <span class="entry-type-badge badge-method">Pattern</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">The Three Core Operations</div>
+          <div class="syntax-block"><span class="comment"># loss.backward()  — compute gradients via backpropagation</span>
+<span class="comment"># opt.step()        — update parameters using gradients</span>
+<span class="comment"># opt.zero_grad()   — reset gradients to zero for next batch</span></div>
+
+          <div class="syntax-label">Full Manual Training Loop</div>
+          <div class="syntax-block"><span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+
+<span class="comment"># Simple 2-layer network</span>
+model = nn.<span class="cls">Sequential</span>(
+    nn.<span class="cls">Linear</span>(<span class="num">10</span>, <span class="num">32</span>), nn.<span class="cls">ReLU</span>(),
+    nn.<span class="cls">Linear</span>(<span class="num">32</span>, <span class="num">1</span>)
+)
+
+opt  = torch.optim.<span class="cls">SGD</span>(model.parameters(), lr=<span class="num">0.01</span>)
+loss_fn = nn.<span class="cls">MSELoss</span>()
+
+<span class="kw">for</span> epoch <span class="kw">in</span> <span class="fn">range</span>(<span class="num">100</span>):
+    <span class="kw">for</span> X_batch, y_batch <span class="kw">in</span> dataloader:
+        <span class="comment"># 1. Forward pass</span>
+        y_pred = model(X_batch)
+        loss   = loss_fn(y_pred.squeeze(), y_batch)
+
+        <span class="comment"># 2. Backward pass — compute gradients</span>
+        loss.<span class="fn">backward</span>()
+
+        <span class="comment"># 3. Update weights</span>
+        opt.<span class="fn">step</span>()
+
+        <span class="comment"># 4. Reset gradients BEFORE next batch</span>
+        opt.<span class="fn">zero_grad</span>()
+
+    <span class="fn">print</span>(<span class="string">f"Epoch {epoch+1}: loss = {loss.item():.4f}"</span>)</div>
+
+          <div class="warn-box">
+            <div class="note-title">⚠️ Common Mistake</div>
+            Always call <code>opt.zero_grad()</code>. If you forget, gradients accumulate across batches and your model will not train correctly.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ predict ════════════ -->
+    <div class="page" id="page-predict">
+      <div class="page-title">learn.predict</div>
+      <div class="page-category">Inference &amp; Model Export</div>
+      <div class="page-desc">Applies a trained <code>Learner</code> to a single new item and returns the decoded prediction, the predicted class index, and the raw probability tensor.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">learn.predict</span>
+          <span class="entry-type-badge badge-method">Method</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block">learn.<span class="fn">predict</span>(<span class="param">item</span>)</div>
+
+          <div class="returns-row"><span class="returns-label">Returns</span><span class="returns-type">Tuple[decoded, index, probabilities]</span></div>
+
+          <div class="syntax-label">Example Script</div>
+          <div class="syntax-block"><span class="comment"># Predict on a single image file</span>
+pred_class, pred_idx, probs = learn.<span class="fn">predict</span>(<span class="cls">PILImage</span>.<span class="fn">create</span>(<span class="string">'cat.jpg'</span>))
+
+<span class="fn">print</span>(<span class="string">f"Prediction : {pred_class}"</span>)
+<span class="fn">print</span>(<span class="string">f"Class index: {pred_idx}"</span>)
+<span class="fn">print</span>(<span class="string">f"Confidence : {probs[pred_idx]:.2%}"</span>)
+
+<span class="comment"># Predict on a batch (get_preds is faster for multiple items)</span>
+preds, targets = learn.<span class="fn">get_preds</span>(dl=test_dl)</div>
+
+          <div class="see-also">
+            <span class="see-also-label">See Also</span>
+            <a class="ref-link" onclick="showPage('export')" href="javascript:void(0)">learn.export</a>
+            <a class="ref-link" onclick="showPage('load_learner')" href="javascript:void(0)">load_learner</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ export ════════════ -->
+    <div class="page" id="page-export">
+      <div class="page-title">learn.export</div>
+      <div class="page-category">Inference &amp; Model Export</div>
+      <div class="page-desc">Saves the entire <code>Learner</code> — including model architecture, trained weights, and the DataLoaders configuration — into a single <code>export.pkl</code> file that can be loaded later for deployment.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">learn.export</span>
+          <span class="entry-type-badge badge-method">Method</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block">learn.<span class="fn">export</span>(<span class="param">fname</span>=<span class="string">'export.pkl'</span>)</div>
+
+          <div class="syntax-label">Example Script</div>
+          <div class="syntax-block"><span class="comment"># After training is complete...</span>
+learn.<span class="fn">export</span>(<span class="string">'my_model.pkl'</span>)
+
+<span class="comment"># Download from Colab to local machine</span>
+<span class="kw">from</span> google.colab <span class="kw">import</span> files
+files.<span class="fn">download</span>(<span class="string">'my_model.pkl'</span>)</div>
+
+          <div class="see-also">
+            <span class="see-also-label">See Also</span>
+            <a class="ref-link" onclick="showPage('load_learner')" href="javascript:void(0)">load_learner</a>
+            <a class="ref-link" onclick="showPage('predict')" href="javascript:void(0)">learn.predict</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ load_learner ════════════ -->
+    <div class="page" id="page-load_learner">
+      <div class="page-title">load_learner</div>
+      <div class="page-category">Inference &amp; Model Export</div>
+      <div class="page-desc">Reloads a previously exported <code>Learner</code> from a <code>.pkl</code> file for use in production or deployment environments. The loaded learner is immediately ready for inference without any retraining.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">load_learner</span>
+          <span class="entry-type-badge badge-function">Function</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block"><span class="fn">load_learner</span>(<span class="param">fname</span>, <span class="param">cpu</span>=<span class="kw">True</span>)</div>
+
+          <div class="syntax-label">Example – Full Inference Pipeline</div>
+          <div class="syntax-block"><span class="kw">from</span> fastai.vision.all <span class="kw">import</span> *
+
+<span class="comment"># Load the exported model</span>
+learn_inf = <span class="fn">load_learner</span>(<span class="string">'my_model.pkl'</span>)
+
+<span class="comment"># Run prediction on a new image</span>
+img = <span class="cls">PILImage</span>.<span class="fn">create</span>(<span class="string">'new_cat.jpg'</span>)
+pred, idx, probs = learn_inf.<span class="fn">predict</span>(img)
+
+<span class="fn">print</span>(<span class="string">f"Predicted: {pred} ({probs.max():.1%} confident)"</span>)</div>
+
+          <div class="note-box">
+            <div class="note-title">📌 Deployment Note</div>
+            Set <code>cpu=True</code> when loading in environments without a GPU (e.g. HuggingFace Spaces, Render). For Voilà apps, always load the learner outside the widget callback to avoid reloading on every button press.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ FileUpload ════════════ -->
+    <div class="page" id="page-FileUpload">
+      <div class="page-title">widgets.FileUpload</div>
+      <div class="page-category">Interactive Widgets &amp; Web Deployment</div>
+      <div class="page-desc">An IPython widget that renders an upload button in the notebook, allowing users to upload files from their local machine. The uploaded file data is accessible via the widget's <code>.value</code> attribute.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">widgets.FileUpload</span>
+          <span class="entry-type-badge badge-widget">Widget</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block"><span class="fn">widgets.FileUpload</span>(<span class="param">accept</span>=<span class="string">''</span>, <span class="param">multiple</span>=<span class="kw">False</span>)</div>
+
+          <div class="syntax-label">Example Script – Image Upload Widget</div>
+          <div class="syntax-block"><span class="kw">import</span> ipywidgets <span class="kw">as</span> widgets
+<span class="kw">from</span> IPython.display <span class="kw">import</span> display
+<span class="kw">from</span> fastai.vision.all <span class="kw">import</span> *
+
+<span class="comment"># Create widget components</span>
+upload  = widgets.<span class="fn">FileUpload</span>(accept=<span class="string">'image/*'</span>, multiple=<span class="kw">False</span>)
+btn     = widgets.<span class="fn">Button</span>(description=<span class="string">'Classify'</span>)
+out     = widgets.<span class="fn">Output</span>()
+
+<span class="kw">def</span> <span class="fn">on_click</span>(change):
+    <span class="kw">with</span> out:
+        out.<span class="fn">clear_output</span>()
+        img_data = upload.value[<span class="num">0</span>][<span class="string">'content'</span>]
+        img = <span class="cls">PILImage</span>.<span class="fn">create</span>(img_data)
+        pred, _, probs = learn.<span class="fn">predict</span>(img)
+        <span class="fn">print</span>(<span class="string">f"Prediction: {pred} ({probs.max():.1%})"</span>)
+
+btn.on_click(on_click)
+<span class="fn">display</span>(<span class="cls">VBox</span>([upload, btn, out]))</div>
+
+          <div class="see-also">
+            <span class="see-also-label">See Also</span>
+            <a class="ref-link" onclick="showPage('Button')" href="javascript:void(0)">widgets.Button</a>
+            <a class="ref-link" onclick="showPage('Output')" href="javascript:void(0)">widgets.Output</a>
+            <a class="ref-link" onclick="showPage('VBox')" href="javascript:void(0)">VBox</a>
+            <a class="ref-link" onclick="showPage('voila')" href="javascript:void(0)">Voilà</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ Button ════════════ -->
+    <div class="page" id="page-Button">
+      <div class="page-title">widgets.Button</div>
+      <div class="page-category">Interactive Widgets &amp; Web Deployment</div>
+      <div class="page-desc">An IPython widget that renders a clickable button. Functionality is attached via the <code>.on_click(callback)</code> method.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">widgets.Button</span>
+          <span class="entry-type-badge badge-widget">Widget</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax &amp; Key Properties</div>
+          <div class="syntax-block">btn = widgets.<span class="fn">Button</span>(
+    description = <span class="string">'Click Me'</span>,
+    button_style = <span class="string">'primary'</span>,  <span class="comment"># 'success', 'info', 'warning', 'danger', ''</span>
+    icon         = <span class="string">'check'</span>     <span class="comment"># Font Awesome icon names</span>
+)
+
+<span class="kw">def</span> <span class="fn">handler</span>(b):
+    <span class="fn">print</span>(<span class="string">"Button clicked!"</span>)
+
+btn.<span class="fn">on_click</span>(handler)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ Output ════════════ -->
+    <div class="page" id="page-Output">
+      <div class="page-title">widgets.Output</div>
+      <div class="page-category">Interactive Widgets &amp; Web Deployment</div>
+      <div class="page-desc">A widget that captures and displays output (print statements, plots, images) inside a defined area in the notebook. Used as a display container for widget-based apps.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">widgets.Output</span>
+          <span class="entry-type-badge badge-widget">Widget</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Pattern</div>
+          <div class="syntax-block">out = widgets.<span class="fn">Output</span>()
+
+<span class="kw">with</span> out:
+    out.<span class="fn">clear_output</span>()  <span class="comment"># Clear previous output</span>
+    <span class="fn">print</span>(<span class="string">"Result displayed here"</span>)
+    <span class="fn">display</span>(some_image)   <span class="comment"># Any IPython display-compatible object</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ VBox ════════════ -->
+    <div class="page" id="page-VBox">
+      <div class="page-title">VBox</div>
+      <div class="page-category">Interactive Widgets &amp; Web Deployment</div>
+      <div class="page-desc">A layout widget that stacks other widgets vertically into a single column. The primary tool for building simple GUIs in notebooks. <code>HBox</code> is the horizontal equivalent.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">VBox</span>
+          <span class="entry-type-badge badge-widget">Widget</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block"><span class="kw">from</span> ipywidgets <span class="kw">import</span> VBox, HBox
+
+<span class="comment"># Stack widgets vertically</span>
+app = <span class="cls">VBox</span>([upload_widget, classify_btn, output_area])
+<span class="fn">display</span>(app)
+
+<span class="comment"># Combine VBox and HBox for layout</span>
+row1 = <span class="cls">HBox</span>([widget_a, widget_b])
+full = <span class="cls">VBox</span>([row1, output_area])
+<span class="fn">display</span>(full)</div>
+
+          <div class="see-also">
+            <span class="see-also-label">See Also</span>
+            <a class="ref-link" onclick="showPage('voila')" href="javascript:void(0)">Voilà</a>
+            <a class="ref-link" onclick="showPage('FileUpload')" href="javascript:void(0)">widgets.FileUpload</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ Voila ════════════ -->
+    <div class="page" id="page-voila">
+      <div class="page-title">Voilà</div>
+      <div class="page-category">Interactive Widgets &amp; Web Deployment</div>
+      <div class="page-desc">Converts a Jupyter notebook into a standalone interactive web application by hiding all code cells and exposing only widget outputs. Integrates with HuggingFace Spaces and Binder for free deployment.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">voila</span>
+          <span class="entry-type-badge badge-app">Application</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Installation &amp; Launch</div>
+          <div class="syntax-block"><span class="comment"># Install in Colab</span>
+<span class="kw">!pip install</span> voila -q
+
+<span class="comment"># Launch from terminal</span>
+<span class="kw">!</span>voila my_notebook.ipynb --port=<span class="num">8866</span>
+
+<span class="comment"># Or use the Jupyter Lab extension (Voilà button in toolbar)</span></div>
+
+          <div class="syntax-label">Complete Deployable App Template</div>
+          <div class="syntax-block"><span class="kw">from</span> fastai.vision.all <span class="kw">import</span> *
+<span class="kw">import</span> ipywidgets <span class="kw">as</span> widgets
+<span class="kw">from</span> ipywidgets <span class="kw">import</span> VBox
+
+<span class="comment"># Load model ONCE (outside callback for performance)</span>
+learn = <span class="fn">load_learner</span>(<span class="string">'export.pkl'</span>)
+
+upload = widgets.<span class="fn">FileUpload</span>(accept=<span class="string">'image/*'</span>)
+btn    = widgets.<span class="fn">Button</span>(description=<span class="string">'Classify Image'</span>, button_style=<span class="string">'primary'</span>)
+out    = widgets.<span class="fn">Output</span>()
+lbl    = widgets.<span class="fn">Label</span>()
+
+<span class="kw">def</span> <span class="fn">classify</span>(b):
+    <span class="kw">with</span> out:
+        out.<span class="fn">clear_output</span>()
+        img  = <span class="cls">PILImage</span>.<span class="fn">create</span>(upload.value[<span class="num">0</span>][<span class="string">'content'</span>])
+        pred, _, probs = learn.<span class="fn">predict</span>(img)
+        lbl.value = <span class="string">f"Result: {pred}  ·  Confidence: {probs.max():.1%}"</span>
+        img.<span class="fn">to_thumb</span>(<span class="num">224</span>).<span class="fn">show</span>()
+
+btn.<span class="fn">on_click</span>(classify)
+<span class="fn">display</span>(<span class="cls">VBox</span>([upload, btn, lbl, out]))</div>
+
+          <div class="note-box">
+            <div class="note-title">🚀 Free Hosting Options</div>
+            Deploy to <strong>HuggingFace Spaces</strong> (Gradio or Voilà SDK), <strong>Render</strong>, or <strong>Binder</strong>. For Spaces, push your <code>.ipynb</code> and <code>export.pkl</code> to a Spaces repo and set the SDK to Voilà.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ ImageClassifierCleaner ════════════ -->
+    <div class="page" id="page-ImageClassifierCleaner">
+      <div class="page-title">ImageClassifierCleaner</div>
+      <div class="page-category">Interactive Data Cleaning</div>
+      <div class="page-desc">A GUI widget that displays images sorted by model confidence (lowest first) so you can interactively remove mislabeled or corrupted images from your dataset. Works with a trained learner to provide model-driven cleaning.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">ImageClassifierCleaner</span>
+          <span class="entry-type-badge badge-widget">Widget</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block">cleaner = <span class="cls">ImageClassifierCleaner</span>(<span class="param">learn</span>)</div>
+
+          <div class="syntax-label">Full Data Cleaning Workflow</div>
+          <div class="syntax-block"><span class="kw">from</span> fastai.vision.widgets <span class="kw">import</span> *
+
+<span class="comment"># Step 1: Train an initial model on your (potentially noisy) data</span>
+learn = <span class="fn">cnn_learner</span>(dls, <span class="fn">resnet18</span>, metrics=error_rate)
+learn.<span class="fn">fine_tune</span>(<span class="num">2</span>)
+
+<span class="comment"># Step 2: Display the cleaner widget</span>
+cleaner = <span class="cls">ImageClassifierCleaner</span>(learn)
+cleaner  <span class="comment"># Just running this cell shows the GUI</span></div>
+
+          <div class="syntax-block"><span class="comment"># Step 3 (next cell): Apply the changes from the GUI</span>
+<span class="kw">for</span> idx <span class="kw">in</span> cleaner.<span class="fn">delete</span>():
+    cleaner.fns[idx].<span class="fn">unlink</span>()      <span class="comment"># Delete the file</span>
+
+<span class="kw">for</span> idx, cat <span class="kw">in</span> cleaner.<span class="fn">change</span>():
+    shutil.<span class="fn">move</span>(<span class="fn">str</span>(cleaner.fns[idx]),
+                path/<span class="string">'train'</span>/cat)   <span class="comment"># Move to correct folder</span>
+
+<span class="comment"># Step 4: Retrain on the cleaned dataset</span>
+learn.<span class="fn">fine_tune</span>(<span class="num">3</span>)</div>
+
+          <div class="see-also">
+            <span class="see-also-label">See Also</span>
+            <a class="ref-link" onclick="showPage('plot_top_losses')" href="javascript:void(0)">interp.plot_top_losses</a>
+            <a class="ref-link" onclick="showPage('most_confused')" href="javascript:void(0)">interp.most_confused</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ plot_top_losses ════════════ -->
+    <div class="page" id="page-plot_top_losses">
+      <div class="page-title">interp.plot_top_losses</div>
+      <div class="page-category">Interactive Data Cleaning</div>
+      <div class="page-desc">Displays the images where the model made its highest-loss predictions — i.e. cases where it was most wrong. This visual diagnostic reveals which images are mislabeled or genuinely ambiguous.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">interp.plot_top_losses</span>
+          <span class="entry-type-badge badge-method">Method</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block">interp = <span class="cls">ClassificationInterpretation</span>.<span class="fn">from_learner</span>(learn)
+interp.<span class="fn">plot_top_losses</span>(<span class="param">k</span>, <span class="param">largest</span>=<span class="kw">True</span>)</div>
+
+          <div class="syntax-label">Example Script</div>
+          <div class="syntax-block"><span class="kw">from</span> fastai.vision.all <span class="kw">import</span> *
+
+<span class="comment"># Build interpretation object from trained learner</span>
+interp = <span class="cls">ClassificationInterpretation</span>.<span class="fn">from_learner</span>(learn)
+
+<span class="comment"># Show the 9 highest-loss predictions</span>
+<span class="comment"># Each panel shows: actual label / predicted label / loss / probability</span>
+interp.<span class="fn">plot_top_losses</span>(<span class="num">9</span>, figsize=(<span class="num">15</span>, <span class="num">10</span>))</div>
+
+          <div class="see-also">
+            <span class="see-also-label">See Also</span>
+            <a class="ref-link" onclick="showPage('most_confused')" href="javascript:void(0)">interp.most_confused</a>
+            <a class="ref-link" onclick="showPage('ImageClassifierCleaner')" href="javascript:void(0)">ImageClassifierCleaner</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ most_confused ════════════ -->
+    <div class="page" id="page-most_confused">
+      <div class="page-title">interp.most_confused</div>
+      <div class="page-category">Interactive Data Cleaning</div>
+      <div class="page-desc">Returns the pairs of classes that the model most frequently confuses, sorted by frequency. Also accessible visually via <code>interp.plot_confusion_matrix()</code>.</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-name">interp.most_confused</span>
+          <span class="entry-type-badge badge-method">Method</span>
+        </div>
+        <div class="entry-body">
+          <div class="syntax-label">Syntax</div>
+          <div class="syntax-block">interp.<span class="fn">most_confused</span>(<span class="param">min_val</span>=<span class="num">1</span>)</div>
+
+          <div class="syntax-label">Example Script</div>
+          <div class="syntax-block"><span class="kw">from</span> fastai.vision.all <span class="kw">import</span> *
+
+interp = <span class="cls">ClassificationInterpretation</span>.<span class="fn">from_learner</span>(learn)
+
+<span class="comment"># Returns list of (actual, predicted, count) tuples</span>
+confused = interp.<span class="fn">most_confused</span>(min_val=<span class="num">5</span>)
+<span class="fn">print</span>(confused)
+<span class="comment"># e.g. [('american_pit_bull_terrier', 'staffordshire_bull_terrier', 12), ...]</span>
+
+<span class="comment"># Plot full confusion matrix</span>
+interp.<span class="fn">plot_confusion_matrix</span>(figsize=(<span class="num">12</span>,<span class="num">12</span>), dpi=<span class="num">60</span>)</div>
+
+          <div class="note-box">
+            <div class="note-title">💡 Interpretation Tip</div>
+            High confusion between two classes usually means the classes are visually similar (a genuine classification challenge), there is label noise in your dataset, or you need more training data for those specific classes. Use <code>plot_top_losses</code> to inspect individual cases.
+          </div>
+
+          <div class="see-also">
+            <span class="see-also-label">See Also</span>
+            <a class="ref-link" onclick="showPage('plot_top_losses')" href="javascript:void(0)">interp.plot_top_losses</a>
+            <a class="ref-link" onclick="showPage('ImageClassifierCleaner')" href="javascript:void(0)">ImageClassifierCleaner</a>
+            <a class="ref-link" onclick="showPage('fine_tune')" href="javascript:void(0)">learn.fine_tune</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+  // ── Page routing ──
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const page = document.getElementById('page-' + id);
+    if (page) page.classList.add('active');
+    const navItem = [...document.querySelectorAll('.nav-item')]
+      .find(el => el.getAttribute('onclick')?.includes("'" + id + "'"));
+    if (navItem) {
+      navItem.classList.add('active');
+      // Open parent section
+      const section = navItem.closest('.nav-section-items');
+      if (section && !section.classList.contains('open')) {
+        section.classList.add('open');
+        const header = section.previousElementSibling;
+        if (header) header.classList.add('open');
+      }
+    }
+    // Breadcrumb
+    const labels = {
+      home: 'Overview', untar_data: 'untar_data', get_image_files: 'get_image_files',
+      get_text_files: 'get_text_files', DataBlock: 'DataBlock', ImageDataLoaders: 'ImageDataLoaders',
+      LinearRegression: 'LinearRegression', GridSearchCV: 'GridSearchCV',
+      cnn_learner: 'cnn_learner', text_classifier_learner: 'text_classifier_learner',
+      tabular_learner: 'tabular_learner', collab_learner: 'collab_learner',
+      fine_tune: 'learn.fine_tune', fit_one_cycle: 'learn.fit_one_cycle', sgd_loop: 'SGD Loop',
+      predict: 'learn.predict', export: 'learn.export', load_learner: 'load_learner',
+      FileUpload: 'widgets.FileUpload', Button: 'widgets.Button', Output: 'widgets.Output',
+      VBox: 'VBox', voila: 'Voilà',
+      ImageClassifierCleaner: 'ImageClassifierCleaner',
+      plot_top_losses: 'interp.plot_top_losses', most_confused: 'interp.most_confused'
+    };
+    document.getElementById('breadcrumb-current').textContent = labels[id] || id;
+    document.getElementById('content').scrollTop = 0;
+  }
+
+  // ── Section toggle ──
+  function toggleSection(header) {
+    header.classList.toggle('open');
+    const items = header.nextElementSibling;
+    if (items) items.classList.toggle('open');
+  }
+
+  // ── Search filter ──
+  function filterNav(query) {
+    const q = query.toLowerCase();
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.style.display = (!q || item.textContent.toLowerCase().includes(q)) ? '' : 'none';
+    });
+    if (q) {
+      document.querySelectorAll('.nav-section-items').forEach(s => {
+        s.classList.add('open');
+        s.previousElementSibling?.classList.add('open');
+      });
+    }
+  }
+</script>
+</body>
+</html>
