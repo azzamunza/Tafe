@@ -174,7 +174,7 @@
         },
         {
           "id": "week_10_lab_import_libraries_2",
-          "name": "Import Libraries",
+          "name": "Import Libraries - Week 10 Lab",
           "category": "Common Library Imports",
           "type": "import",
           "description": "Import statements for numpy, pandas, os libraries used in ML/AI development.",
@@ -683,7 +683,7 @@
           "name": "CNN Guide - Data Loading (1)",
           "category": "Data Loading & Preprocessing",
           "type": "data_loading",
-          "description": "linear algebra",
+          "description": "Import libraries for data processing, visualization, and PyTorch deep learning operations",
           "syntax": "",
           "examples": [
             "import numpy as np # linear algebra\nimport pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)\n\nimport os\nprint(os.listdir('../input/'))\n\nimport matplotlib.pyplot as plt\nplt.style.use(\"ggplot\")\n\n# OpenCV Image Library\nimport cv2\n\n# Import PyTorch\nimport torchvision.transforms as transforms\nfrom torch.utils.data.sampler import SubsetRandomSampler\nimport torch\nimport torch.nn as nn\nimport torch.nn.functional as F\nfrom torch.utils.data import TensorDataset, DataLoader, Dataset\nimport torchvision\nimport torch.optim as optim"
@@ -755,7 +755,7 @@
       "entries": [
         {
           "id": "week_10_lab_define_custom_dataset_class_5",
-          "name": "Define Custom Dataset Class",
+          "name": "Configure Dataset Paths",
           "category": "General Operations",
           "type": "code",
           "description": "Define Custom Dataset Class",
@@ -785,11 +785,11 @@
           "source": "Week 3/slides"
         },
         {
-          "id": "week_3_slides_let_s_unlabel_most_of_the_data_to_simulate_a_la____25",
-          "name": "Let's unlabel most of the data to simulate a large",
+          "id": "week_3_slides_let_s_unlabel_most_of_the_data_to_simulate_a_la_25",
+          "name": "Unlabel Data for Semi-Supervised Learning",
           "category": "General Operations",
           "type": "code",
-          "description": "Let's unlabel most of the data to simulate a large amount of unlabeled data with some small set of labels",
+          "description": "Unlabels the majority of data to simulate a semi-supervised learning scenario with limited labeled examples",
           "syntax": "",
           "examples": [
             "y[50:] = -1  # Unlabel majority of the data"
