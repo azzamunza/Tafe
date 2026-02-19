@@ -1,0 +1,501 @@
+{
+  "metadata": {
+    "title": "Google Colab & FastAI – AI Training Reference",
+    "version": "2025",
+    "description": "Comprehensive Python scripting reference for AI/ML training in Google Colab",
+    "target": "AI LLM Training Knowledgebase"
+  },
+  "sections": [
+    {
+      "id": "imports",
+      "title": "Common Library Imports",
+      "icon": "📚",
+      "description": "Standard library import statements for AI/ML development in Google Colab",
+      "entries": [
+        {
+          "id": "numpy_import",
+          "name": "NumPy Import",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "NumPy is the fundamental package for scientific computing with Python, providing support for arrays, matrices, and mathematical functions.",
+          "syntax": "import numpy as np",
+          "examples": [
+            "import numpy as np\n\n# Create arrays\narr = np.array([1, 2, 3, 4, 5])\nmatrix = np.array([[1, 2], [3, 4]])\n\n# Basic operations\nprint(np.mean(arr))  # Calculate mean\nprint(np.std(arr))   # Calculate standard deviation"
+          ],
+          "notes": [
+            "NumPy is typically aliased as 'np' by convention",
+            "Required for most scientific computing tasks",
+            "Foundation for many other libraries like Pandas and TensorFlow"
+          ]
+        },
+        {
+          "id": "pandas_import",
+          "name": "Pandas Import",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "Pandas is a powerful data manipulation and analysis library, providing DataFrame and Series objects for structured data.",
+          "syntax": "import pandas as pd",
+          "examples": [
+            "import pandas as pd\n\n# Create DataFrame\ndf = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})\n\n# Read data\ndf = pd.read_csv('data.csv')\ndf = pd.read_excel('data.xlsx')\n\n# Basic operations\nprint(df.head())      # First 5 rows\nprint(df.describe())  # Statistical summary"
+          ],
+          "notes": [
+            "Pandas is typically aliased as 'pd' by convention",
+            "Essential for data analysis and preprocessing",
+            "Works seamlessly with NumPy arrays"
+          ]
+        },
+        {
+          "id": "matplotlib_import",
+          "name": "Matplotlib Import",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "Matplotlib is a comprehensive plotting library for creating static, animated, and interactive visualizations.",
+          "syntax": "import matplotlib.pyplot as plt",
+          "examples": [
+            "import matplotlib.pyplot as plt\nimport numpy as np\n\n# Simple line plot\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\nplt.plot(x, y)\nplt.xlabel('X axis')\nplt.ylabel('Y axis')\nplt.title('Sine Wave')\nplt.show()\n\n# Multiple plots\nfig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))\nax1.plot(x, np.sin(x))\nax2.plot(x, np.cos(x))\nplt.show()"
+          ],
+          "notes": [
+            "pyplot module is typically aliased as 'plt'",
+            "Use plt.show() to display plots in Colab",
+            "Integrates well with Pandas DataFrames"
+          ]
+        },
+        {
+          "id": "seaborn_import",
+          "name": "Seaborn Import",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "Seaborn is a statistical data visualization library based on matplotlib with high-level interface for attractive graphics.",
+          "syntax": "import seaborn as sns",
+          "examples": [
+            "import seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Set style\nsns.set_style('darkgrid')\n\n# Distribution plot\nsns.histplot(data, kde=True)\nplt.show()\n\n# Correlation heatmap\nsns.heatmap(df.corr(), annot=True, cmap='coolwarm')\nplt.show()"
+          ],
+          "notes": [
+            "Built on top of matplotlib",
+            "Provides beautiful default styles",
+            "Excellent for statistical visualizations"
+          ]
+        },
+        {
+          "id": "sklearn_import",
+          "name": "Scikit-learn Import",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "Scikit-learn is the most widely used machine learning library for classical ML algorithms, preprocessing, and model evaluation.",
+          "syntax": "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LinearRegression",
+          "examples": [
+            "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error, r2_score\n\n# Split data\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42\n)\n\n# Scale features\nscaler = StandardScaler()\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)\n\n# Train model\nmodel = LinearRegression()\nmodel.fit(X_train_scaled, y_train)\n\n# Evaluate\ny_pred = model.predict(X_test_scaled)\nprint(f'R² Score: {r2_score(y_test, y_pred)}')"
+          ],
+          "notes": [
+            "Use specific imports rather than wildcard imports",
+            "Consistent API across all algorithms",
+            "Excellent documentation and examples"
+          ]
+        },
+        {
+          "id": "tensorflow_import",
+          "name": "TensorFlow Import",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "TensorFlow is Google's open-source deep learning framework for building and training neural networks.",
+          "syntax": "import tensorflow as tf\nfrom tensorflow import keras\nfrom tensorflow.keras import layers",
+          "examples": [
+            "import tensorflow as tf\nfrom tensorflow import keras\nfrom tensorflow.keras import layers\n\n# Check version\nprint(f'TensorFlow version: {tf.__version__}')\n\n# Build simple model\nmodel = keras.Sequential([\n    layers.Dense(64, activation='relu', input_shape=(10,)),\n    layers.Dropout(0.5),\n    layers.Dense(32, activation='relu'),\n    layers.Dense(1, activation='sigmoid')\n])\n\n# Compile\nmodel.compile(\n    optimizer='adam',\n    loss='binary_crossentropy',\n    metrics=['accuracy']\n)\n\n# Train\nhistory = model.fit(X_train, y_train, epochs=10, validation_split=0.2)"
+          ],
+          "notes": [
+            "TensorFlow 2.x uses Keras as high-level API",
+            "GPU support automatic if CUDA available",
+            "Use tf.config to manage GPU memory"
+          ]
+        },
+        {
+          "id": "pytorch_import",
+          "name": "PyTorch Import",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "PyTorch is Facebook's open-source deep learning framework with dynamic computational graphs and intuitive Python-first design.",
+          "syntax": "import torch\nimport torch.nn as nn\nimport torch.optim as optim\nfrom torch.utils.data import DataLoader, Dataset",
+          "examples": [
+            "import torch\nimport torch.nn as nn\nimport torch.optim as optim\nfrom torch.utils.data import DataLoader, TensorDataset\n\n# Check version and GPU\nprint(f'PyTorch version: {torch.__version__}')\nprint(f'CUDA available: {torch.cuda.is_available()}')\n\n# Create simple neural network\nclass Net(nn.Module):\n    def __init__(self):\n        super(Net, self).__init__()\n        self.fc1 = nn.Linear(10, 64)\n        self.fc2 = nn.Linear(64, 32)\n        self.fc3 = nn.Linear(32, 1)\n        self.relu = nn.ReLU()\n        self.sigmoid = nn.Sigmoid()\n    \n    def forward(self, x):\n        x = self.relu(self.fc1(x))\n        x = self.relu(self.fc2(x))\n        x = self.sigmoid(self.fc3(x))\n        return x\n\n# Initialize\nmodel = Net()\ncriterion = nn.BCELoss()\noptimizer = optim.Adam(model.parameters(), lr=0.001)"
+          ],
+          "notes": [
+            "More Pythonic and flexible than TensorFlow",
+            "Preferred by research community",
+            "Dynamic computation graphs"
+          ]
+        },
+        {
+          "id": "fastai_import",
+          "name": "FastAI Import",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "FastAI is a high-level deep learning library built on PyTorch, designed for rapid prototyping and state-of-the-art results.",
+          "syntax": "from fastai.vision.all import *\nfrom fastai.text.all import *\nfrom fastai.tabular.all import *",
+          "examples": [
+            "from fastai.vision.all import *\n\n# Vision tasks\npath = untar_data(URLs.PETS)\ndls = ImageDataLoaders.from_name_re(\n    path, get_image_files(path/'images'),\n    pat=r'([^/]+)_\\d+.jpg$',\n    item_tfms=Resize(224)\n)\nlearn = cnn_learner(dls, resnet34, metrics=error_rate)\nlearn.fine_tune(3)\n\n# Text classification\nfrom fastai.text.all import *\ndls = TextDataLoaders.from_folder(path, valid='test')\nlearn = text_classifier_learner(dls, AWD_LSTM, metrics=accuracy)\nlearn.fine_tune(4, 1e-2)\n\n# Tabular data\nfrom fastai.tabular.all import *\ndls = TabularDataLoaders.from_csv(\n    path/'adult.csv', y_names='salary',\n    cat_names=cat_cols, cont_names=cont_cols\n)\nlearn = tabular_learner(dls, metrics=accuracy)\nlearn.fit_one_cycle(3)"
+          ],
+          "notes": [
+            "Wildcard imports are standard in FastAI",
+            "Built on top of PyTorch",
+            "Excellent for rapid prototyping"
+          ]
+        },
+        {
+          "id": "scipy_import",
+          "name": "SciPy Import",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "SciPy provides algorithms for optimization, integration, interpolation, eigenvalue problems, and other advanced mathematical operations.",
+          "syntax": "import scipy\nfrom scipy import stats, optimize, integrate",
+          "examples": [
+            "from scipy import stats, optimize, integrate\nimport numpy as np\n\n# Statistical tests\nt_stat, p_value = stats.ttest_ind(group1, group2)\nprint(f'T-statistic: {t_stat}, P-value: {p_value}')\n\n# Optimization\ndef objective(x):\n    return x**2 + 5*x + 10\n\nresult = optimize.minimize(objective, x0=0)\nprint(f'Minimum at x = {result.x[0]}')\n\n# Integration\ndef integrand(x):\n    return np.exp(-x**2)\n\nresult, error = integrate.quad(integrand, 0, np.inf)\nprint(f'Integral: {result}')"
+          ],
+          "notes": [
+            "Built on NumPy",
+            "Essential for scientific computing",
+            "Wide range of mathematical algorithms"
+          ]
+        },
+        {
+          "id": "opencv_import",
+          "name": "OpenCV Import",
+          "category": "Common Library Imports",
+          "type": "import",
+          "description": "OpenCV is the leading computer vision library for image and video processing operations.",
+          "syntax": "import cv2\nfrom google.colab.patches import cv2_imshow",
+          "examples": [
+            "import cv2\nfrom google.colab.patches import cv2_imshow\nimport numpy as np\n\n# Read image\nimg = cv2.imread('image.jpg')\n\n# Convert color space\nimg_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)\n\n# Resize image\nresized = cv2.resize(img, (300, 300))\n\n# Apply blur\nblurred = cv2.GaussianBlur(img, (5, 5), 0)\n\n# Edge detection\nedges = cv2.Canny(img, 100, 200)\n\n# Display in Colab (use cv2_imshow instead of cv2.imshow)\ncv2_imshow(img)\n\n# Save image\ncv2.imwrite('output.jpg', img)"
+          ],
+          "notes": [
+            "Use cv2_imshow() in Colab instead of cv2.imshow()",
+            "BGR color format by default (not RGB)",
+            "Extensive image processing capabilities"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "math_methods",
+      "title": "Mathematical Methods",
+      "icon": "🔢",
+      "description": "Core mathematical operations for numerical computing and scientific analysis",
+      "entries": [
+        {
+          "id": "numpy_array_creation",
+          "name": "NumPy Array Creation",
+          "category": "Mathematical Methods",
+          "type": "function",
+          "description": "Functions for creating NumPy arrays with various initialization methods.",
+          "syntax": "np.array(object)\nnp.zeros(shape)\nnp.ones(shape)\nnp.arange(start, stop, step)\nnp.linspace(start, stop, num)",
+          "parameters": [
+            {"name": "object", "type": "array_like", "description": "Array-like object (list, tuple, etc.)"},
+            {"name": "shape", "type": "tuple", "description": "Shape of the array (rows, columns)"},
+            {"name": "start", "type": "number", "description": "Start of interval"},
+            {"name": "stop", "type": "number", "description": "End of interval"},
+            {"name": "step", "type": "number", "description": "Spacing between values"},
+            {"name": "num", "type": "int", "description": "Number of samples to generate"}
+          ],
+          "returns": "ndarray",
+          "examples": [
+            "import numpy as np\n\n# From list\narr = np.array([1, 2, 3, 4, 5])\nmatrix = np.array([[1, 2, 3], [4, 5, 6]])\n\n# Zeros and ones\nzeros = np.zeros((3, 4))  # 3x4 matrix of zeros\nones = np.ones((2, 3))    # 2x3 matrix of ones\n\n# Identity matrix\neye = np.eye(4)  # 4x4 identity matrix\n\n# Range arrays\narr = np.arange(0, 10, 2)  # [0, 2, 4, 6, 8]\nlinspace = np.linspace(0, 1, 5)  # [0, 0.25, 0.5, 0.75, 1]\n\n# Random arrays\nrandom = np.random.rand(3, 3)  # 3x3 random [0,1)\nrandn = np.random.randn(3, 3)  # 3x3 standard normal\nrandint = np.random.randint(0, 10, (3, 3))  # 3x3 random integers"
+          ],
+          "notes": [
+            "NumPy arrays are more efficient than Python lists",
+            "All elements must be the same data type",
+            "Use np.random.seed() for reproducible random numbers"
+          ]
+        },
+        {
+          "id": "numpy_math_operations",
+          "name": "NumPy Mathematical Operations",
+          "category": "Mathematical Methods",
+          "type": "function",
+          "description": "Universal functions (ufuncs) for element-wise mathematical operations on arrays.",
+          "syntax": "np.add(x1, x2)\nnp.subtract(x1, x2)\nnp.multiply(x1, x2)\nnp.divide(x1, x2)\nnp.power(x1, x2)\nnp.sqrt(x)\nnp.exp(x)\nnp.log(x)\nnp.sin(x)\nnp.cos(x)\nnp.tan(x)",
+          "examples": [
+            "import numpy as np\n\na = np.array([1, 2, 3, 4])\nb = np.array([5, 6, 7, 8])\n\n# Basic arithmetic\nprint(a + b)  # or np.add(a, b)\nprint(a - b)  # or np.subtract(a, b)\nprint(a * b)  # or np.multiply(a, b)\nprint(a / b)  # or np.divide(a, b)\n\n# Power and roots\nprint(a ** 2)      # or np.power(a, 2)\nprint(np.sqrt(a))  # Square root\n\n# Exponential and logarithmic\nprint(np.exp(a))   # e^x\nprint(np.log(a))   # Natural log\nprint(np.log10(a)) # Base-10 log\n\n# Trigonometric\nx = np.linspace(0, 2*np.pi, 100)\nprint(np.sin(x))\nprint(np.cos(x))\nprint(np.tan(x))\n\n# Inverse trig\nprint(np.arcsin(0.5))\nprint(np.arccos(0.5))\nprint(np.arctan(0.5))"
+          ],
+          "notes": [
+            "Operations are element-wise by default",
+            "Broadcasting rules apply for different shaped arrays",
+            "Use np.matmul() or @ for matrix multiplication"
+          ]
+        },
+        {
+          "id": "numpy_statistics",
+          "name": "NumPy Statistical Functions",
+          "category": "Mathematical Methods",
+          "type": "function",
+          "description": "Functions for computing statistical measures and aggregations on arrays.",
+          "syntax": "np.mean(a, axis=None)\nnp.median(a, axis=None)\nnp.std(a, axis=None)\nnp.var(a, axis=None)\nnp.min(a, axis=None)\nnp.max(a, axis=None)\nnp.sum(a, axis=None)\nnp.prod(a, axis=None)",
+          "parameters": [
+            {"name": "a", "type": "array_like", "description": "Input array"},
+            {"name": "axis", "type": "int or tuple", "description": "Axis along which to compute (None for all)"}
+          ],
+          "examples": [
+            "import numpy as np\n\ndata = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])\n\n# Central tendency\nprint(f'Mean: {np.mean(data)}')          # 5.0\nprint(f'Median: {np.median(data)}')      # 5.0\n\n# Dispersion\nprint(f'Std Dev: {np.std(data)}')       # 2.58\nprint(f'Variance: {np.var(data)}')      # 6.67\n\n# Range\nprint(f'Min: {np.min(data)}')           # 1\nprint(f'Max: {np.max(data)}')           # 9\nprint(f'Range: {np.ptp(data)}')         # 8 (peak-to-peak)\n\n# Aggregations\nprint(f'Sum: {np.sum(data)}')           # 45\nprint(f'Product: {np.prod(data)}')      # 362880\n\n# Along axis\nprint(f'Mean per row: {np.mean(data, axis=1)}')  # [2, 5, 8]\nprint(f'Mean per col: {np.mean(data, axis=0)}')  # [4, 5, 6]\n\n# Percentiles\nprint(f'25th percentile: {np.percentile(data, 25)}')\nprint(f'75th percentile: {np.percentile(data, 75)}')\n\n# Correlation\nx = np.array([1, 2, 3, 4, 5])\ny = np.array([2, 4, 6, 8, 10])\nprint(f'Correlation: {np.corrcoef(x, y)[0, 1]}')"
+          ],
+          "notes": [
+            "axis=0 operates on rows, axis=1 on columns",
+            "Use ddof parameter for sample vs population statistics",
+            "np.nanmean(), np.nanstd() ignore NaN values"
+          ]
+        },
+        {
+          "id": "numpy_linear_algebra",
+          "name": "NumPy Linear Algebra",
+          "category": "Mathematical Methods",
+          "type": "function",
+          "description": "Linear algebra operations including matrix operations, decompositions, and solving systems.",
+          "syntax": "np.dot(a, b)\nnp.matmul(a, b)  # or a @ b\nnp.linalg.inv(a)\nnp.linalg.det(a)\nnp.linalg.eig(a)\nnp.linalg.svd(a)\nnp.linalg.solve(a, b)",
+          "examples": [
+            "import numpy as np\n\nA = np.array([[1, 2], [3, 4]])\nB = np.array([[5, 6], [7, 8]])\n\n# Matrix multiplication\nC = np.matmul(A, B)  # or A @ B\nprint('Matrix product:\\n', C)\n\n# Transpose\nprint('Transpose:\\n', A.T)\n\n# Determinant\ndet = np.linalg.det(A)\nprint(f'Determinant: {det}')\n\n# Inverse\ninv = np.linalg.inv(A)\nprint('Inverse:\\n', inv)\nprint('Verification A @ inv(A):\\n', A @ inv)\n\n# Eigenvalues and eigenvectors\neigenvalues, eigenvectors = np.linalg.eig(A)\nprint(f'Eigenvalues: {eigenvalues}')\nprint(f'Eigenvectors:\\n{eigenvectors}')\n\n# Singular Value Decomposition\nU, S, Vt = np.linalg.svd(A)\nprint(f'SVD - U:\\n{U}\\nS: {S}\\nVt:\\n{Vt}')\n\n# Solve linear system Ax = b\nb = np.array([1, 2])\nx = np.linalg.solve(A, b)\nprint(f'Solution to Ax=b: {x}')\nprint(f'Verification: {A @ x}')\n\n# Norm\nprint(f'Frobenius norm: {np.linalg.norm(A)}')\nprint(f'L1 norm: {np.linalg.norm(A, 1)}')\nprint(f'L-infinity norm: {np.linalg.norm(A, np.inf)}')"
+          ],
+          "notes": [
+            "Use @ operator for matrix multiplication (Python 3.5+)",
+            "Matrix must be square for determinant and inverse",
+            "np.linalg.lstsq() for least squares solutions"
+          ]
+        },
+        {
+          "id": "scipy_optimization",
+          "name": "SciPy Optimization",
+          "category": "Mathematical Methods",
+          "type": "function",
+          "description": "Optimization algorithms for finding minima, maxima, and roots of functions.",
+          "syntax": "from scipy.optimize import minimize, root, curve_fit",
+          "examples": [
+            "from scipy.optimize import minimize, root, curve_fit\nimport numpy as np\n\n# Minimize function\ndef objective(x):\n    return x[0]**2 + x[1]**2 + 5*x[0] + 10*x[1]\n\nresult = minimize(objective, x0=[0, 0])\nprint(f'Minimum at: {result.x}')\nprint(f'Minimum value: {result.fun}')\n\n# With constraints\nfrom scipy.optimize import minimize\n\ndef constraint1(x):\n    return x[0] + x[1] - 1\n\nconstraints = {'type': 'eq', 'fun': constraint1}\nresult = minimize(objective, x0=[0, 0], constraints=constraints)\n\n# Find root of equation\ndef equation(x):\n    return x**3 - 2*x - 5\n\nroot_result = root(equation, x0=2)\nprint(f'Root: {root_result.x[0]}')\n\n# Curve fitting\ndef func(x, a, b, c):\n    return a * np.exp(-b * x) + c\n\n# Generate noisy data\nxdata = np.linspace(0, 4, 50)\ny = func(xdata, 2.5, 1.3, 0.5)\nydata = y + 0.2 * np.random.normal(size=len(xdata))\n\n# Fit curve\npopt, pcov = curve_fit(func, xdata, ydata)\nprint(f'Fitted parameters: {popt}')\nprint(f'Covariance: {pcov}')"
+          ],
+          "notes": [
+            "Many optimization methods available (Nelder-Mead, BFGS, etc.)",
+            "Can handle constrained and unconstrained problems",
+            "Use bounds parameter to set variable bounds"
+          ]
+        },
+        {
+          "id": "scipy_integration",
+          "name": "SciPy Integration",
+          "category": "Mathematical Methods",
+          "type": "function",
+          "description": "Numerical integration (quadrature) for computing definite integrals.",
+          "syntax": "from scipy.integrate import quad, dblquad, odeint",
+          "examples": [
+            "from scipy.integrate import quad, dblquad, odeint\nimport numpy as np\n\n# Single integral\ndef integrand(x):\n    return np.exp(-x**2)\n\nresult, error = quad(integrand, 0, np.inf)\nprint(f'Integral from 0 to inf: {result} ± {error}')\n\n# Integral with parameters\ndef integrand_param(x, a, b):\n    return a * x**2 + b * x\n\nresult, error = quad(integrand_param, 0, 1, args=(2, 3))\nprint(f'Parametric integral: {result}')\n\n# Double integral\ndef integrand_2d(y, x):\n    return x * y**2\n\nresult, error = dblquad(\n    integrand_2d,\n    0, 1,  # x bounds\n    lambda x: 0, lambda x: 1  # y bounds\n)\nprint(f'Double integral: {result}')\n\n# Solve ODE dy/dt = -k*y\ndef dydt(y, t, k):\n    return -k * y\n\ny0 = 5  # Initial condition\nt = np.linspace(0, 5, 50)\nk = 0.5\n\nsolution = odeint(dydt, y0, t, args=(k,))\nprint(f'ODE solution at t=5: {solution[-1][0]}')"
+          ],
+          "notes": [
+            "quad() uses adaptive quadrature",
+            "Can handle infinite bounds",
+            "odeint() for ordinary differential equations"
+          ]
+        },
+        {
+          "id": "scipy_stats",
+          "name": "SciPy Statistical Functions",
+          "category": "Mathematical Methods",
+          "type": "function",
+          "description": "Statistical distributions, hypothesis tests, and probability functions.",
+          "syntax": "from scipy import stats",
+          "examples": [
+            "from scipy import stats\nimport numpy as np\n\n# Distributions\n# Normal distribution\nmu, sigma = 0, 1\nnorm_dist = stats.norm(loc=mu, scale=sigma)\n\n# PDF and CDF\nx = np.linspace(-3, 3, 100)\npdf = norm_dist.pdf(x)\ncdf = norm_dist.cdf(x)\n\n# Generate random samples\nsamples = norm_dist.rvs(size=1000)\n\n# Other distributions\nt_dist = stats.t(df=10)\nchi2_dist = stats.chi2(df=5)\nbinom_dist = stats.binom(n=10, p=0.5)\npoisson_dist = stats.poisson(mu=3)\n\n# Hypothesis tests\n# T-test (independent samples)\ngroup1 = np.random.normal(100, 15, 50)\ngroup2 = np.random.normal(105, 15, 50)\nt_stat, p_value = stats.ttest_ind(group1, group2)\nprint(f'T-test: t={t_stat:.3f}, p={p_value:.3f}')\n\n# Paired t-test\nbefore = np.random.normal(100, 15, 30)\nafter = before + np.random.normal(5, 10, 30)\nt_stat, p_value = stats.ttest_rel(before, after)\nprint(f'Paired t-test: t={t_stat:.3f}, p={p_value:.3f}')\n\n# Chi-square test\nobserved = np.array([40, 60, 30, 70])\nexpected = np.array([50, 50, 50, 50])\nchi2, p_value = stats.chisquare(observed, expected)\nprint(f'Chi-square: χ²={chi2:.3f}, p={p_value:.3f}')\n\n# Correlation test\nx = np.random.normal(0, 1, 100)\ny = 2*x + np.random.normal(0, 0.5, 100)\nr, p_value = stats.pearsonr(x, y)\nprint(f'Pearson r={r:.3f}, p={p_value:.3f}')\n\n# Spearman correlation (non-parametric)\nrho, p_value = stats.spearmanr(x, y)\nprint(f'Spearman ρ={rho:.3f}, p={p_value:.3f}')\n\n# ANOVA\ngroup1 = np.random.normal(100, 15, 30)\ngroup2 = np.random.normal(105, 15, 30)\ngroup3 = np.random.normal(110, 15, 30)\nf_stat, p_value = stats.f_oneway(group1, group2, group3)\nprint(f'ANOVA: F={f_stat:.3f}, p={p_value:.3f}')\n\n# Normality test\nw_stat, p_value = stats.shapiro(group1)\nprint(f'Shapiro-Wilk: W={w_stat:.3f}, p={p_value:.3f}')"
+          ],
+          "notes": [
+            "Wide variety of distributions available",
+            "Both parametric and non-parametric tests",
+            "Use alpha=0.05 as typical significance level"
+          ]
+        },
+        {
+          "id": "scipy_interpolation",
+          "name": "SciPy Interpolation",
+          "category": "Mathematical Methods",
+          "type": "function",
+          "description": "Interpolation methods for estimating values between data points.",
+          "syntax": "from scipy.interpolate import interp1d, griddata, UnivariateSpline",
+          "examples": [
+            "from scipy.interpolate import interp1d, griddata, UnivariateSpline\nimport numpy as np\nimport matplotlib.pyplot as plt\n\n# 1D interpolation\nx = np.array([0, 1, 2, 3, 4, 5])\ny = np.array([0, 1, 4, 9, 16, 25])\n\n# Linear interpolation\nf_linear = interp1d(x, y, kind='linear')\n\n# Cubic interpolation\nf_cubic = interp1d(x, y, kind='cubic')\n\n# Evaluate at new points\nx_new = np.linspace(0, 5, 50)\ny_linear = f_linear(x_new)\ny_cubic = f_cubic(x_new)\n\nplt.plot(x, y, 'o', label='Data')\nplt.plot(x_new, y_linear, '-', label='Linear')\nplt.plot(x_new, y_cubic, '-', label='Cubic')\nplt.legend()\nplt.show()\n\n# Spline interpolation\nspl = UnivariateSpline(x, y, s=0)  # s=0 for exact fit\ny_spline = spl(x_new)\n\n# 2D interpolation\npoints = np.random.rand(100, 2)\nvalues = np.sin(points[:, 0]) * np.cos(points[:, 1])\n\ngrid_x, grid_y = np.mgrid[0:1:100j, 0:1:100j]\ngrid_z = griddata(points, values, (grid_x, grid_y), method='cubic')\n\nplt.imshow(grid_z.T, extent=(0,1,0,1), origin='lower')\nplt.colorbar()\nplt.show()"
+          ],
+          "notes": [
+            "kind parameter: 'linear', 'quadratic', 'cubic'",
+            "UnivariateSpline allows smoothing with s parameter",
+            "griddata for scattered 2D/3D data"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "data_processing",
+      "title": "Data Processing Methods",
+      "icon": "📊",
+      "description": "Comprehensive data manipulation, transformation, and preprocessing techniques",
+      "entries": [
+        {
+          "id": "pandas_dataframe_creation",
+          "name": "Pandas DataFrame Creation",
+          "category": "Data Processing Methods",
+          "type": "function",
+          "description": "Methods for creating and loading DataFrames from various sources.",
+          "syntax": "pd.DataFrame(data)\npd.read_csv(filepath)\npd.read_excel(filepath)\npd.read_json(filepath)\npd.read_sql(query, connection)",
+          "examples": [
+            "import pandas as pd\nimport numpy as np\n\n# From dictionary\ndf = pd.DataFrame({\n    'name': ['Alice', 'Bob', 'Charlie'],\n    'age': [25, 30, 35],\n    'salary': [50000, 60000, 70000]\n})\n\n# From list of lists\ndata = [['Alice', 25, 50000],\n        ['Bob', 30, 60000],\n        ['Charlie', 35, 70000]]\ndf = pd.DataFrame(data, columns=['name', 'age', 'salary'])\n\n# From NumPy array\narr = np.random.rand(5, 3)\ndf = pd.DataFrame(arr, columns=['A', 'B', 'C'])\n\n# Read CSV\ndf = pd.read_csv('data.csv')\n# With options\ndf = pd.read_csv('data.csv',\n                 sep=',',\n                 header=0,\n                 index_col=0,\n                 parse_dates=['date_column'],\n                 na_values=['NA', 'null'])\n\n# Read Excel\ndf = pd.read_excel('data.xlsx', sheet_name='Sheet1')\n\n# Read JSON\ndf = pd.read_json('data.json')\n\n# From URL\nurl = 'https://example.com/data.csv'\ndf = pd.read_csv(url)\n\n# From clipboard\ndf = pd.read_clipboard()"
+          ],
+          "notes": [
+            "CSV is the most common format for data exchange",
+            "Use parse_dates parameter for automatic date parsing",
+            "Set index_col to use a column as index"
+          ]
+        },
+        {
+          "id": "pandas_data_inspection",
+          "name": "Pandas Data Inspection",
+          "category": "Data Processing Methods",
+          "type": "method",
+          "description": "Methods for examining DataFrame structure, content, and statistics.",
+          "syntax": "df.head(n)\ndf.tail(n)\ndf.info()\ndf.describe()\ndf.shape\ndf.columns\ndf.dtypes\ndf.isnull().sum()",
+          "examples": [
+            "import pandas as pd\n\ndf = pd.read_csv('data.csv')\n\n# View first/last rows\nprint(df.head())      # First 5 rows\nprint(df.head(10))    # First 10 rows\nprint(df.tail())      # Last 5 rows\n\n# DataFrame info\nprint(df.info())      # Column types, non-null counts\nprint(df.shape)       # (rows, columns)\nprint(df.columns)     # Column names\nprint(df.dtypes)      # Data types\nprint(df.index)       # Index information\n\n# Statistical summary\nprint(df.describe())  # Mean, std, min, max, quartiles\nprint(df.describe(include='all'))  # Include non-numeric\n\n# Missing values\nprint(df.isnull().sum())     # Count of nulls per column\nprint(df.isna().sum())       # Same as isnull()\nprint(df.notna().sum())      # Count of non-nulls\n\n# Unique values\nprint(df['column'].nunique())         # Count unique\nprint(df['column'].unique())          # Array of unique\nprint(df['column'].value_counts())    # Frequency count\n\n# Memory usage\nprint(df.memory_usage(deep=True))\n\n# Sample random rows\nprint(df.sample(5))              # 5 random rows\nprint(df.sample(frac=0.1))       # 10% of data"
+          ],
+          "notes": [
+            "describe() excludes non-numeric columns by default",
+            "Use include parameter to specify which types to include",
+            "value_counts() useful for categorical data analysis"
+          ]
+        },
+        {
+          "id": "pandas_selection_filtering",
+          "name": "Pandas Selection and Filtering",
+          "category": "Data Processing Methods",
+          "type": "method",
+          "description": "Methods for selecting, filtering, and indexing DataFrame data.",
+          "syntax": "df['column']\ndf[['col1', 'col2']]\ndf.loc[row, col]\ndf.iloc[row, col]\ndf[df['column'] > value]\ndf.query('condition')",
+          "examples": [
+            "import pandas as pd\n\ndf = pd.DataFrame({\n    'name': ['Alice', 'Bob', 'Charlie', 'David'],\n    'age': [25, 30, 35, 40],\n    'salary': [50000, 60000, 70000, 80000],\n    'department': ['HR', 'IT', 'IT', 'HR']\n})\n\n# Column selection\nages = df['age']                    # Series\nsubset = df[['name', 'age']]        # DataFrame\n\n# Row selection by label (.loc)\nrow = df.loc[0]                     # First row by index\nrows = df.loc[0:2]                  # Rows 0 to 2\ncell = df.loc[0, 'name']            # Single cell\nblock = df.loc[0:2, ['name', 'age']] # Block\n\n# Row selection by position (.iloc)\nrow = df.iloc[0]                    # First row\nrows = df.iloc[0:3]                 # First 3 rows\ncell = df.iloc[0, 0]                # First cell\nblock = df.iloc[0:3, 0:2]           # Block\n\n# Boolean indexing\nyoung = df[df['age'] < 35]\nit_dept = df[df['department'] == 'IT']\nhigh_earners = df[df['salary'] > 65000]\n\n# Multiple conditions\nresult = df[(df['age'] > 25) & (df['salary'] < 70000)]\nresult = df[(df['department'] == 'IT') | (df['age'] > 35)]\n\n# Query method (more readable)\nresult = df.query('age > 25 and salary < 70000')\nresult = df.query('department == \"IT\" or age > 35')\n\n# isin() for multiple values\nselected = df[df['name'].isin(['Alice', 'Bob'])]\n\n# String methods\nstarts_with_a = df[df['name'].str.startswith('A')]\ncontains = df[df['name'].str.contains('ar')]\n\n# Not null\nno_nulls = df[df['age'].notna()]"
+          ],
+          "notes": [
+            "Use .loc for label-based indexing",
+            "Use .iloc for position-based indexing",
+            "& for AND, | for OR in boolean indexing (not 'and'/'or')",
+            "Use parentheses around each condition"
+          ]
+        },
+        {
+          "id": "pandas_data_manipulation",
+          "name": "Pandas Data Manipulation",
+          "category": "Data Processing Methods",
+          "type": "method",
+          "description": "Methods for modifying, transforming, and reshaping DataFrame data.",
+          "syntax": "df['new_col'] = values\ndf.drop(columns)\ndf.rename(columns=mapping)\ndf.sort_values(by)\ndf.groupby(by)\ndf.merge(other)\ndf.pivot_table()",
+          "examples": [
+            "import pandas as pd\nimport numpy as np\n\ndf = pd.DataFrame({\n    'name': ['Alice', 'Bob', 'Charlie'],\n    'age': [25, 30, 35],\n    'salary': [50000, 60000, 70000]\n})\n\n# Add new column\ndf['bonus'] = df['salary'] * 0.1\ndf['experience'] = [2, 5, 8]\n\n# Modify existing column\ndf['salary'] = df['salary'] * 1.05  # 5% raise\ndf['age'] = df['age'] + 1\n\n# Apply function\ndf['salary_category'] = df['salary'].apply(\n    lambda x: 'High' if x > 60000 else 'Low'\n)\n\n# Map values\ndf['level'] = df['age'].map({25: 'Junior', 30: 'Mid', 35: 'Senior'})\n\n# Drop columns\ndf = df.drop('bonus', axis=1)              # Single column\ndf = df.drop(['bonus', 'experience'], axis=1)  # Multiple\n\n# Drop rows\ndf = df.drop(0, axis=0)                    # By index\ndf = df.drop([0, 1], axis=0)               # Multiple\n\n# Rename columns\ndf = df.rename(columns={'name': 'employee_name', 'age': 'employee_age'})\ndf.columns = ['Name', 'Age', 'Salary']  # Rename all\n\n# Sort\ndf = df.sort_values('age')                 # Ascending\ndf = df.sort_values('age', ascending=False) # Descending\ndf = df.sort_values(['age', 'salary'])     # Multiple columns\n\n# Reset index\ndf = df.reset_index(drop=True)\n\n# Set index\ndf = df.set_index('name')\n\n# Replace values\ndf['age'] = df['age'].replace(25, 26)\ndf = df.replace({'age': {25: 26, 30: 31}})\n\n# Fill missing values\ndf['age'] = df['age'].fillna(0)\ndf = df.fillna(method='ffill')  # Forward fill\ndf = df.fillna(df.mean())       # Fill with mean\n\n# Drop missing values\ndf = df.dropna()                # Drop any row with NaN\ndf = df.dropna(subset=['age'])  # Drop if age is NaN\ndf = df.dropna(axis=1)          # Drop columns with NaN"
+          ],
+          "notes": [
+            "Most operations return new DataFrame (not in-place)",
+            "Use inplace=True parameter to modify DataFrame directly",
+            "apply() is flexible but can be slow on large data"
+          ]
+        },
+        {
+          "id": "pandas_groupby_aggregation",
+          "name": "Pandas GroupBy and Aggregation",
+          "category": "Data Processing Methods",
+          "type": "method",
+          "description": "Group data and compute aggregate statistics for analysis.",
+          "syntax": "df.groupby(by).agg(func)\ndf.groupby(by).mean()\ndf.groupby(by).sum()\ndf.pivot_table(values, index, columns, aggfunc)",
+          "examples": [
+            "import pandas as pd\nimport numpy as np\n\ndf = pd.DataFrame({\n    'department': ['IT', 'HR', 'IT', 'HR', 'IT'],\n    'name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve'],\n    'age': [25, 30, 35, 40, 28],\n    'salary': [50000, 60000, 70000, 65000, 55000]\n})\n\n# Basic groupby\ngrouped = df.groupby('department')\nprint(grouped['salary'].mean())     # Mean salary per dept\nprint(grouped['age'].max())         # Max age per dept\n\n# Multiple aggregations\nresult = df.groupby('department').agg({\n    'salary': ['mean', 'min', 'max'],\n    'age': ['mean', 'count']\n})\n\n# Named aggregations (Pandas 0.25+)\nresult = df.groupby('department').agg(\n    avg_salary=('salary', 'mean'),\n    min_salary=('salary', 'min'),\n    max_age=('age', 'max'),\n    count=('name', 'count')\n)\n\n# Multiple grouping columns\ndf['level'] = ['Junior', 'Senior', 'Senior', 'Senior', 'Junior']\nresult = df.groupby(['department', 'level'])['salary'].mean()\n\n# Custom aggregation function\ndef salary_range(x):\n    return x.max() - x.min()\n\nresult = df.groupby('department')['salary'].agg(salary_range)\n\n# Transform (same shape as input)\ndf['dept_avg_salary'] = df.groupby('department')['salary'].transform('mean')\ndf['salary_vs_dept_avg'] = df['salary'] - df['dept_avg_salary']\n\n# Filter groups\nhigh_salary_depts = df.groupby('department').filter(\n    lambda x: x['salary'].mean() > 60000\n)\n\n# Pivot table\npivot = df.pivot_table(\n    values='salary',\n    index='department',\n    columns='level',\n    aggfunc='mean',\n    fill_value=0\n)\n\n# Multiple aggregation functions in pivot\npivot = df.pivot_table(\n    values='salary',\n    index='department',\n    aggfunc=['mean', 'count', 'sum']\n)\n\n# Crosstab (frequency table)\nct = pd.crosstab(df['department'], df['level'])"
+          ],
+          "notes": [
+            "groupby() returns GroupBy object, not DataFrame",
+            "Use agg() for multiple aggregation functions",
+            "transform() keeps original shape, useful for broadcasting"
+          ]
+        },
+        {
+          "id": "pandas_merge_join",
+          "name": "Pandas Merge and Join",
+          "category": "Data Processing Methods",
+          "type": "method",
+          "description": "Combine DataFrames using database-style joins and concatenation.",
+          "syntax": "pd.merge(left, right, on, how)\npd.concat([df1, df2], axis)\ndf1.join(df2)",
+          "examples": [
+            "import pandas as pd\n\n# Sample DataFrames\nemployees = pd.DataFrame({\n    'emp_id': [1, 2, 3, 4],\n    'name': ['Alice', 'Bob', 'Charlie', 'David'],\n    'dept_id': [10, 20, 10, 30]\n})\n\ndepartments = pd.DataFrame({\n    'dept_id': [10, 20, 30],\n    'dept_name': ['IT', 'HR', 'Sales']\n})\n\n# Inner join (default)\nmerged = pd.merge(employees, departments, on='dept_id')\n\n# Left join (keep all from left)\nmerged = pd.merge(employees, departments, on='dept_id', how='left')\n\n# Right join (keep all from right)\nmerged = pd.merge(employees, departments, on='dept_id', how='right')\n\n# Outer join (keep all from both)\nmerged = pd.merge(employees, departments, on='dept_id', how='outer')\n\n# Different column names\ndf1 = pd.DataFrame({'id': [1, 2], 'value': [10, 20]})\ndf2 = pd.DataFrame({'emp_id': [1, 2], 'salary': [50000, 60000]})\nmerged = pd.merge(df1, df2, left_on='id', right_on='emp_id')\n\n# Multiple keys\ndf1 = pd.DataFrame({\n    'key1': ['A', 'A', 'B'],\n    'key2': [1, 2, 1],\n    'value1': [10, 20, 30]\n})\ndf2 = pd.DataFrame({\n    'key1': ['A', 'B', 'B'],\n    'key2': [1, 1, 2],\n    'value2': [100, 200, 300]\n})\nmerged = pd.merge(df1, df2, on=['key1', 'key2'])\n\n# Concatenate vertically (stack rows)\ndf1 = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})\ndf2 = pd.DataFrame({'A': [5, 6], 'B': [7, 8]})\ncombined = pd.concat([df1, df2], axis=0, ignore_index=True)\n\n# Concatenate horizontally (side by side)\ndf1 = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})\ndf2 = pd.DataFrame({'C': [5, 6], 'D': [7, 8]})\ncombined = pd.concat([df1, df2], axis=1)\n\n# Join on index\ndf1 = pd.DataFrame({'A': [1, 2]}, index=['a', 'b'])\ndf2 = pd.DataFrame({'B': [3, 4]}, index=['a', 'b'])\njoined = df1.join(df2)\n\n# Append (deprecated, use concat)\n# df1.append(df2, ignore_index=True)\ncombined = pd.concat([df1, df2], ignore_index=True)"
+          ],
+          "notes": [
+            "merge() is similar to SQL JOIN operations",
+            "how parameter: 'inner', 'left', 'right', 'outer'",
+            "concat() can combine along rows (axis=0) or columns (axis=1)",
+            "Use ignore_index=True to reset index after concat"
+          ]
+        },
+        {
+          "id": "pandas_datetime",
+          "name": "Pandas DateTime Operations",
+          "category": "Data Processing Methods",
+          "type": "method",
+          "description": "Working with dates, times, and time series data in Pandas.",
+          "syntax": "pd.to_datetime()\ndf['date'].dt.accessor\npd.date_range()\ndf.resample()",
+          "examples": [
+            "import pandas as pd\nimport numpy as np\n\n# Convert to datetime\ndf = pd.DataFrame({\n    'date_str': ['2024-01-01', '2024-01-02', '2024-01-03'],\n    'value': [10, 20, 30]\n})\ndf['date'] = pd.to_datetime(df['date_str'])\n\n# Parse different formats\ndates = pd.to_datetime(['1/1/2024', '2024-01-02', 'Jan 3, 2024'])\ndates = pd.to_datetime(['01-01-2024'], format='%d-%m-%Y')\n\n# DateTime accessors\ndf['year'] = df['date'].dt.year\ndf['month'] = df['date'].dt.month\ndf['day'] = df['date'].dt.day\ndf['dayofweek'] = df['date'].dt.dayofweek  # Monday=0\ndf['dayname'] = df['date'].dt.day_name()\ndf['quarter'] = df['date'].dt.quarter\ndf['week'] = df['date'].dt.isocalendar().week\n\n# Time components\ndf['date'] = pd.to_datetime('2024-01-01 14:30:45')\ndf['hour'] = df['date'].dt.hour\ndf['minute'] = df['date'].dt.minute\ndf['second'] = df['date'].dt.second\n\n# Date arithmetic\ndf['tomorrow'] = df['date'] + pd.Timedelta(days=1)\ndf['next_week'] = df['date'] + pd.Timedelta(weeks=1)\ndf['yesterday'] = df['date'] - pd.DateOffset(days=1)\n\n# Date range\ndates = pd.date_range(start='2024-01-01', end='2024-01-31', freq='D')\ndates = pd.date_range(start='2024-01-01', periods=30, freq='D')\nbusiness_days = pd.bdate_range(start='2024-01-01', end='2024-01-31')\nhourly = pd.date_range(start='2024-01-01', periods=24, freq='H')\n\n# Time series with datetime index\nts = pd.Series(\n    np.random.randn(365),\n    index=pd.date_range('2024-01-01', periods=365, freq='D')\n)\n\n# Indexing by date\nvalue = ts['2024-01-15']\njan_data = ts['2024-01']\nq1_data = ts['2024-01':'2024-03']\n\n# Resampling (aggregate by time period)\n# Daily data to monthly\nmonthly = ts.resample('M').mean()\n# Daily to weekly\nweekly = ts.resample('W').sum()\n# Hourly to daily\ndaily = ts.resample('D').agg(['mean', 'min', 'max'])\n\n# Rolling windows\ndf['rolling_mean'] = ts.rolling(window=7).mean()  # 7-day moving average\ndf['rolling_std'] = ts.rolling(window=7).std()\n\n# Shifting\ndf['prev_value'] = ts.shift(1)    # Lag 1 period\ndf['next_value'] = ts.shift(-1)   # Lead 1 period\ndf['pct_change'] = ts.pct_change() # Percentage change\n\n# Time zone handling\ndf['date_utc'] = df['date'].dt.tz_localize('UTC')\ndf['date_ny'] = df['date_utc'].dt.tz_convert('America/New_York')"
+          ],
+          "notes": [
+            "Use .dt accessor for datetime operations on Series",
+            "Set datetime column as index for time series operations",
+            "Resampling requires datetime index",
+            "Common freq codes: 'D' (day), 'W' (week), 'M' (month), 'Y' (year), 'H' (hour)"
+          ]
+        },
+        {
+          "id": "pandas_string_operations",
+          "name": "Pandas String Operations",
+          "category": "Data Processing Methods",
+          "type": "method",
+          "description": "String manipulation and text processing methods for Series.",
+          "syntax": "df['col'].str.accessor\ndf['col'].str.contains(pattern)\ndf['col'].str.replace(old, new)\ndf['col'].str.split(sep)",
+          "examples": [
+            "import pandas as pd\n\ndf = pd.DataFrame({\n    'name': ['Alice Johnson', 'Bob Smith', 'Charlie Brown'],\n    'email': ['alice@example.com', 'bob@test.com', 'charlie@example.com'],\n    'code': ['  A123  ', 'B456', 'C789  ']\n})\n\n# Case conversion\ndf['name_upper'] = df['name'].str.upper()\ndf['name_lower'] = df['name'].str.lower()\ndf['name_title'] = df['name'].str.title()\ndf['name_swap'] = df['name'].str.swapcase()\n\n# Whitespace handling\ndf['code_stripped'] = df['code'].str.strip()      # Both sides\ndf['code_lstrip'] = df['code'].str.lstrip()       # Left side\ndf['code_rstrip'] = df['code'].str.rstrip()       # Right side\n\n# Splitting\ndf[['first_name', 'last_name']] = df['name'].str.split(' ', expand=True)\nemail_parts = df['email'].str.split('@', expand=True)\ndf['username'] = email_parts[0]\ndf['domain'] = email_parts[1]\n\n# Joining\ndf['full_name'] = df['first_name'].str.cat(df['last_name'], sep=' ')\n\n# Substring operations\ndf['first_3'] = df['name'].str[:3]                # First 3 chars\ndf['last_3'] = df['name'].str[-3:]                # Last 3 chars\ndf['slice'] = df['name'].str[2:5]                 # Slice\n\n# Contains (boolean)\nhas_example = df['email'].str.contains('example')\nstarts_with_a = df['name'].str.startswith('A')\nends_with_n = df['name'].str.endswith('n')\n\n# Replace\ndf['email_masked'] = df['email'].str.replace(r'@.*', '@***', regex=True)\ndf['code_fixed'] = df['code'].str.replace('A', 'X')\n\n# Extract with regex\ndf['numbers'] = df['code'].str.extract(r'(\\d+)')\ndf['letters'] = df['code'].str.extract(r'([A-Z]+)')\n\n# Multiple captures\npattern = r'(\\w+)@(\\w+)\\.(\\w+)'\ndf[['user', 'domain', 'tld']] = df['email'].str.extract(pattern)\n\n# Find and count\ndf['at_position'] = df['email'].str.find('@')\ndf['char_count'] = df['name'].str.len()\ndf['space_count'] = df['name'].str.count(' ')\n\n# Padding\ndf['code_padded'] = df['code'].str.pad(10, fillchar='0')  # Right pad\ndf['code_zfill'] = df['code'].str.zfill(10)               # Left pad zeros\n\n# Filter by string condition\nfiltered = df[df['name'].str.contains('Johnson')]\nfiltered = df[df['email'].str.endswith('.com')]\nfiltered = df[~df['name'].str.contains('Smith')]  # NOT contains\n\n# Regular expressions\nimport re\npattern = r'[A-Z]\\d{3}'\nvalid_codes = df[df['code'].str.strip().str.match(pattern)]\n\n# Get dummies (one-hot encoding)\ndf_encoded = df['name'].str.get_dummies(sep=' ')"
+          ],
+          "notes": [
+            "Use .str accessor for string operations on Series",
+            "Many methods support regex with regex=True parameter",
+            "String methods return None for NaN values",
+            "Use expand=True with split() to create multiple columns"
+          ]
+        },
+        {
+          "id": "numpy_array_manipulation",
+          "name": "NumPy Array Manipulation",
+          "category": "Data Processing Methods",
+          "type": "function",
+          "description": "Reshaping, stacking, splitting, and transforming NumPy arrays.",
+          "syntax": "arr.reshape(shape)\nnp.concatenate([arr1, arr2])\nnp.stack([arr1, arr2])\nnp.split(arr, indices)",
+          "examples": [
+            "import numpy as np\n\n# Reshape\narr = np.arange(12)\nreshaped = arr.reshape(3, 4)       # 1D to 2D (3x4)\nreshaped = arr.reshape(2, 2, 3)    # 1D to 3D\nreshaped = arr.reshape(-1, 4)      # Auto-calculate dimension\nflattened = reshaped.flatten()     # Back to 1D (copy)\nravel = reshaped.ravel()           # Back to 1D (view)\n\n# Transpose\nA = np.array([[1, 2, 3], [4, 5, 6]])\nB = A.T                            # Transpose\nB = A.transpose()                  # Same\nB = np.transpose(A)\n\n# Swap axes\narr3d = np.random.rand(2, 3, 4)\nswapped = np.swapaxes(arr3d, 0, 1) # Swap first two axes\n\n# Concatenate\na = np.array([1, 2, 3])\nb = np.array([4, 5, 6])\nc = np.concatenate([a, b])         # [1,2,3,4,5,6]\n\n# 2D concatenate\nA = np.array([[1, 2], [3, 4]])\nB = np.array([[5, 6], [7, 8]])\nvert = np.concatenate([A, B], axis=0)  # Vertical stack\nhoriz = np.concatenate([A, B], axis=1) # Horizontal stack\n\n# Convenient stacking\nvstack = np.vstack([A, B])         # Vertical\nhstack = np.hstack([A, B])         # Horizontal\ndstack = np.dstack([A, B])         # Depth\n\n# Column/row stack\nrow = np.array([1, 2, 3])\ncol = np.array([4, 5, 6])\ncstacked = np.column_stack([row, col])  # [[1,4], [2,5], [3,6]]\nrstacked = np.row_stack([row, col])     # [[1,2,3], [4,5,6]]\n\n# Split\narr = np.arange(10)\nsplit = np.split(arr, 5)           # Split into 5 equal parts\nsplit = np.array_split(arr, 3)     # Split into 3 (allows unequal)\n\n# Split 2D\nA = np.arange(12).reshape(3, 4)\nvsplit = np.vsplit(A, 3)           # Split vertically into 3\nhsplit = np.hsplit(A, 2)           # Split horizontally into 2\n\n# Tile and repeat\narr = np.array([1, 2, 3])\ntiled = np.tile(arr, 3)            # [1,2,3,1,2,3,1,2,3]\ntiled = np.tile(arr, (2, 3))       # 2D tiling\nrepeated = np.repeat(arr, 3)       # [1,1,1,2,2,2,3,3,3]\n\n# Expand dimensions\narr = np.array([1, 2, 3])\nexpanded = np.expand_dims(arr, axis=0)  # Shape (1, 3)\nexpanded = np.expand_dims(arr, axis=1)  # Shape (3, 1)\nexpanded = arr[np.newaxis, :]           # Same as axis=0\nexpanded = arr[:, np.newaxis]           # Same as axis=1\n\n# Squeeze (remove single dimensions)\narr = np.array([[[1], [2], [3]]])\nsqueezed = np.squeeze(arr)         # Shape (3,)\n\n# Add/delete elements\narr = np.array([1, 2, 3])\nappended = np.append(arr, [4, 5])  # [1,2,3,4,5]\ninserted = np.insert(arr, 1, 99)   # [1,99,2,3]\ndeleted = np.delete(arr, 1)        # [1,3]"
+          ],
+          "notes": [
+            "reshape() returns view when possible, flatten() always copies",
+            "Use -1 in reshape() to auto-calculate dimension",
+            "Stack functions are convenient wrappers around concatenate",
+            "Most operations return new arrays (not in-place)"
+          ]
+        },
+        {
+          "id": "sklearn_preprocessing",
+          "name": "Scikit-learn Preprocessing",
+          "category": "Data Processing Methods",
+          "type": "class",
+          "description": "Data preprocessing and transformation for machine learning.",
+          "syntax": "from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder, OneHotEncoder",
+          "examples": [
+            "from sklearn.preprocessing import StandardScaler, MinMaxScaler\nfrom sklearn.preprocessing import LabelEncoder, OneHotEncoder\nfrom sklearn.preprocessing import PolynomialFeatures\nimport numpy as np\nimport pandas as pd\n\n# Standardization (zero mean, unit variance)\nscaler = StandardScaler()\nX = np.array([[1, 2], [3, 4], [5, 6]])\nX_scaled = scaler.fit_transform(X)\nprint(f'Mean: {X_scaled.mean(axis=0)}')\nprint(f'Std: {X_scaled.std(axis=0)}')\n\n# For new data\nX_new = np.array([[7, 8]])\nX_new_scaled = scaler.transform(X_new)\n\n# Min-Max scaling (range 0-1)\nscaler = MinMaxScaler()\nX_scaled = scaler.fit_transform(X)\nprint(f'Min: {X_scaled.min()}, Max: {X_scaled.max()}')\n\n# Custom range\nscaler = MinMaxScaler(feature_range=(0, 10))\nX_scaled = scaler.fit_transform(X)\n\n# Robust scaling (for outliers)\nfrom sklearn.preprocessing import RobustScaler\nscaler = RobustScaler()\nX_scaled = scaler.fit_transform(X)\n\n# Label encoding (categorical to numeric)\nle = LabelEncoder()\nlabels = ['cat', 'dog', 'cat', 'bird', 'dog']\nencoded = le.fit_transform(labels)  # [0, 1, 0, 2, 1]\ndecoded = le.inverse_transform(encoded)\nprint(f'Classes: {le.classes_}')\n\n# One-hot encoding\nencoder = OneHotEncoder(sparse=False)\ncategories = np.array([['cat'], ['dog'], ['bird']])\nencoded = encoder.fit_transform(categories)\nprint(f'Encoded shape: {encoded.shape}')\n\n# One-hot with pandas\ndf = pd.DataFrame({'animal': ['cat', 'dog', 'cat', 'bird']})\nencoded = pd.get_dummies(df['animal'], prefix='animal')\n\n# Polynomial features\npoly = PolynomialFeatures(degree=2, include_bias=False)\nX = np.array([[1, 2], [3, 4]])\nX_poly = poly.fit_transform(X)\nprint(f'Features: {poly.get_feature_names_out()}')\n\n# Binarization\nfrom sklearn.preprocessing import Binarizer\nbinarizer = Binarizer(threshold=3.0)\nX = np.array([[1, 2, 3], [4, 5, 6]])\nX_binary = binarizer.transform(X)  # 0 if <=3, 1 if >3\n\n# Normalization (unit norm)\nfrom sklearn.preprocessing import Normalizer\nnormalizer = Normalizer(norm='l2')\nX_normalized = normalizer.transform(X)\n\n# Missing value imputation\nfrom sklearn.impute import SimpleImputer\nimputer = SimpleImputer(strategy='mean')  # or 'median', 'most_frequent'\nX = np.array([[1, 2], [np.nan, 3], [7, 6]])\nX_imputed = imputer.fit_transform(X)"
+          ],
+          "notes": [
+            "Always fit on training data only, then transform test data",
+            "StandardScaler assumes normal distribution",
+            "RobustScaler better for data with outliers",
+            "OneHotEncoder creates binary columns for each category"
+          ]
+        }
+      ]
+    }
+  ]
+}
