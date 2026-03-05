@@ -1778,6 +1778,7 @@ interp.<span class="fn">plot_confusion_matrix</span>(figsize=(<span class="num">
 <script>
   // ── Data storage ──
   let helpData = null;
+  let searchIndex = [];
   let breadcrumbLabels = {
     home: 'Overview', untar_data: 'untar_data', get_image_files: 'get_image_files',
     get_text_files: 'get_text_files', DataBlock: 'DataBlock', ImageDataLoaders: 'ImageDataLoaders',
@@ -1967,16 +1968,42 @@ interp.<span class="fn">plot_confusion_matrix</span>(figsize=(<span class="num">
 
   // ── Search filter ──
   function filterNav(query) {
-    const q = query.toLowerCase();
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.style.display = (!q || item.textContent.toLowerCase().includes(q)) ? '' : 'none';
-    });
-    if (q) {
-      document.querySelectorAll('.nav-section-items').forEach(s => {
-        s.classList.add('open');
-        s.previousElementSibling?.classList.add('open');
+    const q = query.toLowerCase().trim();
+    if (!q) {
+      document.querySelectorAll('.nav-item').forEach(item => { item.style.display = ''; });
+      return;
+    }
+
+    // Build a set of matching entry IDs by searching name, description, keywords, notes
+    const matchingIds = new Set();
+    if (helpData && helpData.sections) {
+      helpData.sections.forEach(section => {
+        section.entries.forEach(entry => {
+          const searchText = [
+            entry.name,
+            entry.description || '',
+            (entry.keywords || []).join(' '),
+            (entry.notes || []).join(' '),
+            entry.category || '',
+            entry.syntax || ''
+          ].join(' ').toLowerCase();
+          if (searchText.includes(q)) matchingIds.add(entry.id);
+        });
       });
     }
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+      const onclick = item.getAttribute('onclick') || '';
+      const idMatch = onclick.match(/showPage\('([^']+)'\)/);
+      const entryId = idMatch ? idMatch[1] : null;
+      const nameMatch = item.textContent.toLowerCase().includes(q);
+      item.style.display = (nameMatch || (entryId && matchingIds.has(entryId))) ? '' : 'none';
+    });
+
+    document.querySelectorAll('.nav-section-items').forEach(s => {
+      s.classList.add('open');
+      s.previousElementSibling?.classList.add('open');
+    });
   }
 
   // ── Initialize on page load ──

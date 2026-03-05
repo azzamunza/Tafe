@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "Google Colab & FastAI \u2013 AI Training Reference",
+    "title": "Google Colab & FastAI – AI Training Reference",
     "version": "2025",
     "description": "Comprehensive Python scripting reference for AI/ML training in Google Colab",
     "target": "AI LLM Training Knowledgebase"
@@ -9,7 +9,7 @@
     {
       "id": "imports",
       "title": "Common Library Imports",
-      "icon": "\ud83d\udcda",
+      "icon": "📚",
       "description": "Standard library import statements for AI/ML development in Google Colab",
       "entries": [
         {
@@ -84,7 +84,7 @@
           "description": "Scikit-learn is the most widely used machine learning library for classical ML algorithms, preprocessing, and model evaluation.",
           "syntax": "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LinearRegression",
           "examples": [
-            "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error, r2_score\n\n# Split data\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42\n)\n\n# Scale features\nscaler = StandardScaler()\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)\n\n# Train model\nmodel = LinearRegression()\nmodel.fit(X_train_scaled, y_train)\n\n# Evaluate\ny_pred = model.predict(X_test_scaled)\nprint(f'R\u00b2 Score: {r2_score(y_test, y_pred)}')"
+            "from sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error, r2_score\n\n# Split data\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42\n)\n\n# Scale features\nscaler = StandardScaler()\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)\n\n# Train model\nmodel = LinearRegression()\nmodel.fit(X_train_scaled, y_train)\n\n# Evaluate\ny_pred = model.predict(X_test_scaled)\nprint(f'R² Score: {r2_score(y_test, y_pred)}')"
           ],
           "notes": [
             "Use specific imports rather than wildcard imports",
@@ -240,7 +240,7 @@
     {
       "id": "math_methods",
       "title": "Mathematical Methods",
-      "icon": "\ud83d\udd22",
+      "icon": "🔢",
       "description": "Core mathematical operations for numerical computing and scientific analysis",
       "entries": [
         {
@@ -376,7 +376,7 @@
           "description": "Numerical integration (quadrature) for computing definite integrals.",
           "syntax": "from scipy.integrate import quad, dblquad, odeint",
           "examples": [
-            "from scipy.integrate import quad, dblquad, odeint\nimport numpy as np\n\n# Single integral\ndef integrand(x):\n    return np.exp(-x**2)\n\nresult, error = quad(integrand, 0, np.inf)\nprint(f'Integral from 0 to inf: {result} \u00b1 {error}')\n\n# Integral with parameters\ndef integrand_param(x, a, b):\n    return a * x**2 + b * x\n\nresult, error = quad(integrand_param, 0, 1, args=(2, 3))\nprint(f'Parametric integral: {result}')\n\n# Double integral\ndef integrand_2d(y, x):\n    return x * y**2\n\nresult, error = dblquad(\n    integrand_2d,\n    0, 1,  # x bounds\n    lambda x: 0, lambda x: 1  # y bounds\n)\nprint(f'Double integral: {result}')\n\n# Solve ODE dy/dt = -k*y\ndef dydt(y, t, k):\n    return -k * y\n\ny0 = 5  # Initial condition\nt = np.linspace(0, 5, 50)\nk = 0.5\n\nsolution = odeint(dydt, y0, t, args=(k,))\nprint(f'ODE solution at t=5: {solution[-1][0]}')"
+            "from scipy.integrate import quad, dblquad, odeint\nimport numpy as np\n\n# Single integral\ndef integrand(x):\n    return np.exp(-x**2)\n\nresult, error = quad(integrand, 0, np.inf)\nprint(f'Integral from 0 to inf: {result} ± {error}')\n\n# Integral with parameters\ndef integrand_param(x, a, b):\n    return a * x**2 + b * x\n\nresult, error = quad(integrand_param, 0, 1, args=(2, 3))\nprint(f'Parametric integral: {result}')\n\n# Double integral\ndef integrand_2d(y, x):\n    return x * y**2\n\nresult, error = dblquad(\n    integrand_2d,\n    0, 1,  # x bounds\n    lambda x: 0, lambda x: 1  # y bounds\n)\nprint(f'Double integral: {result}')\n\n# Solve ODE dy/dt = -k*y\ndef dydt(y, t, k):\n    return -k * y\n\ny0 = 5  # Initial condition\nt = np.linspace(0, 5, 50)\nk = 0.5\n\nsolution = odeint(dydt, y0, t, args=(k,))\nprint(f'ODE solution at t=5: {solution[-1][0]}')"
           ],
           "notes": [
             "quad() uses adaptive quadrature",
@@ -392,7 +392,7 @@
           "description": "Statistical distributions, hypothesis tests, and probability functions.",
           "syntax": "from scipy import stats",
           "examples": [
-            "from scipy import stats\nimport numpy as np\n\n# Distributions\n# Normal distribution\nmu, sigma = 0, 1\nnorm_dist = stats.norm(loc=mu, scale=sigma)\n\n# PDF and CDF\nx = np.linspace(-3, 3, 100)\npdf = norm_dist.pdf(x)\ncdf = norm_dist.cdf(x)\n\n# Generate random samples\nsamples = norm_dist.rvs(size=1000)\n\n# Other distributions\nt_dist = stats.t(df=10)\nchi2_dist = stats.chi2(df=5)\nbinom_dist = stats.binom(n=10, p=0.5)\npoisson_dist = stats.poisson(mu=3)\n\n# Hypothesis tests\n# T-test (independent samples)\ngroup1 = np.random.normal(100, 15, 50)\ngroup2 = np.random.normal(105, 15, 50)\nt_stat, p_value = stats.ttest_ind(group1, group2)\nprint(f'T-test: t={t_stat:.3f}, p={p_value:.3f}')\n\n# Paired t-test\nbefore = np.random.normal(100, 15, 30)\nafter = before + np.random.normal(5, 10, 30)\nt_stat, p_value = stats.ttest_rel(before, after)\nprint(f'Paired t-test: t={t_stat:.3f}, p={p_value:.3f}')\n\n# Chi-square test\nobserved = np.array([40, 60, 30, 70])\nexpected = np.array([50, 50, 50, 50])\nchi2, p_value = stats.chisquare(observed, expected)\nprint(f'Chi-square: \u03c7\u00b2={chi2:.3f}, p={p_value:.3f}')\n\n# Correlation test\nx = np.random.normal(0, 1, 100)\ny = 2*x + np.random.normal(0, 0.5, 100)\nr, p_value = stats.pearsonr(x, y)\nprint(f'Pearson r={r:.3f}, p={p_value:.3f}')\n\n# Spearman correlation (non-parametric)\nrho, p_value = stats.spearmanr(x, y)\nprint(f'Spearman \u03c1={rho:.3f}, p={p_value:.3f}')\n\n# ANOVA\ngroup1 = np.random.normal(100, 15, 30)\ngroup2 = np.random.normal(105, 15, 30)\ngroup3 = np.random.normal(110, 15, 30)\nf_stat, p_value = stats.f_oneway(group1, group2, group3)\nprint(f'ANOVA: F={f_stat:.3f}, p={p_value:.3f}')\n\n# Normality test\nw_stat, p_value = stats.shapiro(group1)\nprint(f'Shapiro-Wilk: W={w_stat:.3f}, p={p_value:.3f}')"
+            "from scipy import stats\nimport numpy as np\n\n# Distributions\n# Normal distribution\nmu, sigma = 0, 1\nnorm_dist = stats.norm(loc=mu, scale=sigma)\n\n# PDF and CDF\nx = np.linspace(-3, 3, 100)\npdf = norm_dist.pdf(x)\ncdf = norm_dist.cdf(x)\n\n# Generate random samples\nsamples = norm_dist.rvs(size=1000)\n\n# Other distributions\nt_dist = stats.t(df=10)\nchi2_dist = stats.chi2(df=5)\nbinom_dist = stats.binom(n=10, p=0.5)\npoisson_dist = stats.poisson(mu=3)\n\n# Hypothesis tests\n# T-test (independent samples)\ngroup1 = np.random.normal(100, 15, 50)\ngroup2 = np.random.normal(105, 15, 50)\nt_stat, p_value = stats.ttest_ind(group1, group2)\nprint(f'T-test: t={t_stat:.3f}, p={p_value:.3f}')\n\n# Paired t-test\nbefore = np.random.normal(100, 15, 30)\nafter = before + np.random.normal(5, 10, 30)\nt_stat, p_value = stats.ttest_rel(before, after)\nprint(f'Paired t-test: t={t_stat:.3f}, p={p_value:.3f}')\n\n# Chi-square test\nobserved = np.array([40, 60, 30, 70])\nexpected = np.array([50, 50, 50, 50])\nchi2, p_value = stats.chisquare(observed, expected)\nprint(f'Chi-square: χ²={chi2:.3f}, p={p_value:.3f}')\n\n# Correlation test\nx = np.random.normal(0, 1, 100)\ny = 2*x + np.random.normal(0, 0.5, 100)\nr, p_value = stats.pearsonr(x, y)\nprint(f'Pearson r={r:.3f}, p={p_value:.3f}')\n\n# Spearman correlation (non-parametric)\nrho, p_value = stats.spearmanr(x, y)\nprint(f'Spearman ρ={rho:.3f}, p={p_value:.3f}')\n\n# ANOVA\ngroup1 = np.random.normal(100, 15, 30)\ngroup2 = np.random.normal(105, 15, 30)\ngroup3 = np.random.normal(110, 15, 30)\nf_stat, p_value = stats.f_oneway(group1, group2, group3)\nprint(f'ANOVA: F={f_stat:.3f}, p={p_value:.3f}')\n\n# Normality test\nw_stat, p_value = stats.shapiro(group1)\nprint(f'Shapiro-Wilk: W={w_stat:.3f}, p={p_value:.3f}')"
           ],
           "notes": [
             "Wide variety of distributions available",
@@ -421,7 +421,7 @@
     {
       "id": "data_processing",
       "title": "Data Processing Methods",
-      "icon": "\ud83d\udcca",
+      "icon": "📊",
       "description": "Comprehensive data manipulation, transformation, and preprocessing techniques",
       "entries": [
         {
@@ -595,7 +595,7 @@
     {
       "id": "data_loading",
       "title": "Data Loading & Preprocessing",
-      "icon": "\ud83d\udcca",
+      "icon": "📊",
       "description": "Methods for loading, preparing, and preprocessing datasets",
       "entries": [
         {
@@ -750,7 +750,7 @@
     {
       "id": "general",
       "title": "General Operations",
-      "icon": "\u2699\ufe0f",
+      "icon": "⚙️",
       "description": "General Python operations and utilities",
       "entries": [
         {
@@ -969,7 +969,7 @@
     {
       "id": "visualization",
       "title": "Data Visualization",
-      "icon": "\ud83d\udcc8",
+      "icon": "📈",
       "description": "Visualization methods using matplotlib and seaborn",
       "entries": [
         {
@@ -1218,7 +1218,7 @@
     {
       "id": "deep_learning",
       "title": "Deep Learning Operations",
-      "icon": "\ud83e\udde0",
+      "icon": "🧠",
       "description": "PyTorch neural network models and operations",
       "entries": [
         {
@@ -1242,7 +1242,7 @@
     {
       "id": "training",
       "title": "Model Training",
-      "icon": "\ud83c\udfcb\ufe0f",
+      "icon": "🏋️",
       "description": "Training loops and optimization procedures",
       "entries": [
         {
@@ -1283,7 +1283,7 @@
     {
       "id": "evaluation",
       "title": "Model Evaluation",
-      "icon": "\ud83d\udcca",
+      "icon": "📊",
       "description": "Model evaluation metrics and performance assessment",
       "entries": [
         {
@@ -1440,7 +1440,7 @@
     {
       "id": "ml_models",
       "title": "Machine Learning Models",
-      "icon": "\ud83e\udd16",
+      "icon": "🤖",
       "description": "Scikit-learn and other ML model implementations",
       "entries": [
         {
@@ -1492,6 +1492,2066 @@
             "Predict on test data"
           ],
           "source": "Week 8/worked example (notebook)"
+        }
+      ]
+    },
+    {
+      "id": "python_builtins",
+      "title": "Python Built-in Functions",
+      "icon": "🔧",
+      "description": "Core Python built-in functions available without any import",
+      "entries": [
+        {
+          "id": "builtin_print",
+          "name": "print()",
+          "category": "Python Built-in Functions",
+          "type": "builtin",
+          "description": "Prints objects to the text stream or console. Supports sep, end, file, and flush arguments.",
+          "syntax": "print(*objects, sep=' ', end='\\n', file=sys.stdout, flush=False)",
+          "examples": [
+            "print('Hello, World!')\nprint('a', 'b', 'c', sep='-')  # a-b-c\nprint('no newline', end='')\nprint(f'Value: {42}')  # f-string"
+          ],
+          "notes": [
+            "Use f-strings for formatted output",
+            "sep controls what goes between multiple arguments",
+            "end controls what is appended after the last value"
+          ],
+          "keywords": [
+            "output",
+            "display",
+            "console",
+            "log",
+            "show",
+            "write",
+            "stdout",
+            "debug"
+          ]
+        },
+        {
+          "id": "builtin_len",
+          "name": "len()",
+          "category": "Python Built-in Functions",
+          "type": "builtin",
+          "description": "Returns the number of items in an object such as a string, list, tuple, dict, or set.",
+          "syntax": "len(s)",
+          "examples": [
+            "len([1, 2, 3])       # 3\nlen('hello')         # 5\nlen({'a': 1, 'b': 2})  # 2\nlen((1, 2))          # 2"
+          ],
+          "notes": [
+            "Works on any object that implements __len__",
+            "For NumPy arrays, len() returns only the first dimension"
+          ],
+          "keywords": [
+            "size",
+            "count",
+            "length",
+            "number of items",
+            "how many",
+            "measure"
+          ]
+        },
+        {
+          "id": "builtin_range",
+          "name": "range()",
+          "category": "Python Built-in Functions",
+          "type": "builtin",
+          "description": "Returns an immutable sequence of numbers, commonly used in for loops.",
+          "syntax": "range(stop) | range(start, stop[, step])",
+          "examples": [
+            "list(range(5))          # [0, 1, 2, 3, 4]\nlist(range(1, 6))       # [1, 2, 3, 4, 5]\nlist(range(0, 10, 2))   # [0, 2, 4, 6, 8]\nfor i in range(3):\n    print(i)"
+          ],
+          "notes": [
+            "range() is memory-efficient — it does not store all values",
+            "Use list(range(...)) to get an actual list",
+            "Negative step creates a descending sequence"
+          ],
+          "keywords": [
+            "loop",
+            "iterate",
+            "sequence",
+            "count",
+            "numbers",
+            "for loop",
+            "step"
+          ]
+        },
+        {
+          "id": "builtin_type",
+          "name": "type()",
+          "category": "Python Built-in Functions",
+          "type": "builtin",
+          "description": "Returns the type of an object, or creates a new type when called with three arguments.",
+          "syntax": "type(object)",
+          "examples": [
+            "type(42)          # <class 'int'>\ntype('hello')     # <class 'str'>\ntype([1, 2])      # <class 'list'>\ntype(3.14)        # <class 'float'>\nprint(type(x).__name__)"
+          ],
+          "notes": [
+            "Use isinstance() for type checking in practice",
+            "type(x) is int is stricter than isinstance(x, int)"
+          ],
+          "keywords": [
+            "check type",
+            "data type",
+            "class",
+            "isinstance",
+            "what type",
+            "inspect"
+          ]
+        },
+        {
+          "id": "builtin_int_float_str",
+          "name": "int() / float() / str()",
+          "category": "Python Built-in Functions",
+          "type": "builtin",
+          "description": "Convert values to integer, float, or string types respectively.",
+          "syntax": "int(x[, base]) | float(x) | str(object)",
+          "examples": [
+            "int('42')      # 42\nint(3.9)       # 3  (truncates)\nfloat('3.14')  # 3.14\nstr(100)       # '100'\nint('ff', 16)  # 255 (hex to int)"
+          ],
+          "notes": [
+            "int() truncates floats, it does not round",
+            "str() calls __str__ on the object",
+            "Use int(x, base) to parse strings in different bases"
+          ],
+          "keywords": [
+            "convert",
+            "cast",
+            "parse",
+            "type conversion",
+            "number",
+            "string",
+            "transform"
+          ]
+        },
+        {
+          "id": "builtin_list_dict_tuple_set",
+          "name": "list() / dict() / tuple() / set()",
+          "category": "Python Built-in Functions",
+          "type": "builtin",
+          "description": "Create or convert objects to list, dictionary, tuple, or set types.",
+          "syntax": "list(iterable) | dict(**kwargs) | tuple(iterable) | set(iterable)",
+          "examples": [
+            "list('abc')           # ['a', 'b', 'c']\nlist(range(3))        # [0, 1, 2]\ntuple([1, 2, 3])      # (1, 2, 3)\nset([1, 2, 2, 3])     # {1, 2, 3}\ndict(a=1, b=2)        # {'a': 1, 'b': 2}"
+          ],
+          "notes": [
+            "set() removes duplicate values",
+            "dict() can take keyword arguments or an iterable of key-value pairs",
+            "tuple() creates an immutable sequence"
+          ],
+          "keywords": [
+            "convert",
+            "create collection",
+            "constructor",
+            "cast",
+            "container",
+            "data structure"
+          ]
+        },
+        {
+          "id": "builtin_enumerate_zip",
+          "name": "enumerate() / zip()",
+          "category": "Python Built-in Functions",
+          "type": "builtin",
+          "description": "enumerate() adds an index counter to an iterable. zip() combines multiple iterables element-by-element.",
+          "syntax": "enumerate(iterable, start=0) | zip(*iterables)",
+          "examples": [
+            "for i, val in enumerate(['a', 'b', 'c']):\n    print(i, val)  # 0 a, 1 b, 2 c\n\nfor x, y in zip([1, 2], ['a', 'b']):\n    print(x, y)  # 1 a, 2 b\n\npairs = list(zip([1, 2, 3], ['a', 'b', 'c']))"
+          ],
+          "notes": [
+            "zip() stops at the shortest iterable",
+            "Use zip_longest from itertools to fill missing values",
+            "enumerate() is preferred over using a counter variable"
+          ],
+          "keywords": [
+            "index",
+            "counter",
+            "pair",
+            "combine",
+            "iterate",
+            "loop",
+            "parallel",
+            "unpack"
+          ]
+        },
+        {
+          "id": "builtin_map_filter",
+          "name": "map() / filter()",
+          "category": "Python Built-in Functions",
+          "type": "builtin",
+          "description": "map() applies a function to every item of an iterable. filter() selects items for which a function returns True.",
+          "syntax": "map(function, iterable) | filter(function, iterable)",
+          "examples": [
+            "list(map(str, [1, 2, 3]))        # ['1', '2', '3']\nlist(map(lambda x: x**2, range(5))) # [0, 1, 4, 9, 16]\nlist(filter(lambda x: x > 2, [1,2,3,4]))  # [3, 4]\nnums = list(map(int, input().split()))"
+          ],
+          "notes": [
+            "Both return lazy iterators — wrap in list() to materialise",
+            "List comprehensions are often more readable than map/filter",
+            "map() with multiple iterables works like zip()"
+          ],
+          "keywords": [
+            "transform",
+            "apply",
+            "select",
+            "functional",
+            "lambda",
+            "iterate",
+            "process each"
+          ]
+        },
+        {
+          "id": "builtin_sorted_reversed",
+          "name": "sorted() / reversed()",
+          "category": "Python Built-in Functions",
+          "type": "builtin",
+          "description": "sorted() returns a new sorted list from an iterable. reversed() returns a reverse iterator.",
+          "syntax": "sorted(iterable, key=None, reverse=False) | reversed(seq)",
+          "examples": [
+            "sorted([3, 1, 2])                  # [1, 2, 3]\nsorted([3, 1, 2], reverse=True)    # [3, 2, 1]\nsorted(['banana', 'apple'], key=len)  # by length\nlist(reversed([1, 2, 3]))          # [3, 2, 1]"
+          ],
+          "notes": [
+            "sorted() always returns a new list; list.sort() modifies in-place",
+            "Use key= for custom sort order",
+            "reversed() works on sequences with __len__ and __getitem__"
+          ],
+          "keywords": [
+            "order",
+            "sort",
+            "arrange",
+            "reverse",
+            "ascending",
+            "descending",
+            "key function"
+          ]
+        },
+        {
+          "id": "builtin_isinstance_hasattr",
+          "name": "isinstance() / hasattr() / getattr()",
+          "category": "Python Built-in Functions",
+          "type": "builtin",
+          "description": "isinstance() checks if an object is an instance of a class. hasattr()/getattr() inspect object attributes.",
+          "syntax": "isinstance(obj, classinfo) | hasattr(obj, name) | getattr(obj, name[, default])",
+          "examples": [
+            "isinstance(42, int)           # True\nisinstance(42, (int, float))  # True\nhasattr(obj, 'method')        # True/False\ngetattr(obj, 'attr', None)    # safe attribute access\nsetattr(obj, 'x', 10)        # obj.x = 10"
+          ],
+          "notes": [
+            "Prefer isinstance() over type() for type checking",
+            "getattr() with a default avoids AttributeError",
+            "Use hasattr() for duck typing checks"
+          ],
+          "keywords": [
+            "type check",
+            "attribute",
+            "inspect",
+            "reflection",
+            "introspection",
+            "duck typing"
+          ]
+        },
+        {
+          "id": "builtin_abs_round_max_min_sum",
+          "name": "abs() / round() / max() / min() / sum()",
+          "category": "Python Built-in Functions",
+          "type": "builtin",
+          "description": "Numeric built-ins for absolute value, rounding, maximum, minimum, and summation.",
+          "syntax": "abs(x) | round(x[, n]) | max(iterable) | min(iterable) | sum(iterable, start=0)",
+          "examples": [
+            "abs(-5)             # 5\nround(3.14159, 2)   # 3.14\nmax([1, 5, 3])      # 5\nmin([1, 5, 3])      # 1\nsum([1, 2, 3])      # 6\nsum(range(101))     # 5050"
+          ],
+          "notes": [
+            "max()/min() accept a key= argument for custom comparisons",
+            "sum() with a start value: sum([1,2], 10) → 13",
+            "round() uses banker's rounding (round half to even)"
+          ],
+          "keywords": [
+            "math",
+            "numeric",
+            "calculate",
+            "total",
+            "largest",
+            "smallest",
+            "absolute"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "python_string",
+      "title": "String Methods",
+      "icon": "🔤",
+      "description": "Python string manipulation methods and formatting techniques",
+      "entries": [
+        {
+          "id": "str_split_join",
+          "name": "str.split() / str.join()",
+          "category": "String Methods",
+          "type": "method",
+          "description": "split() divides a string into a list of substrings. join() concatenates an iterable of strings with a separator.",
+          "syntax": "str.split(sep=None, maxsplit=-1) | sep.join(iterable)",
+          "examples": [
+            "'hello world'.split()          # ['hello', 'world']\n'a,b,c'.split(',')             # ['a', 'b', 'c']\n', '.join(['a', 'b', 'c'])     # 'a, b, c'\n'\\n'.join(['line1', 'line2'])  # multiline string"
+          ],
+          "notes": [
+            "split() with no argument splits on any whitespace",
+            "join() is faster than string concatenation in a loop",
+            "Use rsplit() to split from the right"
+          ],
+          "keywords": [
+            "split",
+            "join",
+            "separate",
+            "delimiter",
+            "combine",
+            "concatenate",
+            "tokenize",
+            "parse"
+          ]
+        },
+        {
+          "id": "str_strip",
+          "name": "str.strip() / lstrip() / rstrip()",
+          "category": "String Methods",
+          "type": "method",
+          "description": "Remove leading and/or trailing whitespace (or specified characters) from a string.",
+          "syntax": "str.strip([chars]) | str.lstrip([chars]) | str.rstrip([chars])",
+          "examples": [
+            "'  hello  '.strip()     # 'hello'\n'  hello'.lstrip()     # 'hello'\n'hello  '.rstrip()     # 'hello'\n'##hello##'.strip('#') # 'hello'"
+          ],
+          "notes": [
+            "chars argument is a set of characters to remove, not a substring",
+            "Commonly used when reading user input or file lines",
+            "Returns a new string; strings are immutable"
+          ],
+          "keywords": [
+            "trim",
+            "whitespace",
+            "clean",
+            "remove spaces",
+            "leading",
+            "trailing",
+            "pad"
+          ]
+        },
+        {
+          "id": "str_replace_find",
+          "name": "str.replace() / str.find() / str.index()",
+          "category": "String Methods",
+          "type": "method",
+          "description": "replace() substitutes substrings. find() returns the index of the first occurrence or -1. index() is like find() but raises ValueError.",
+          "syntax": "str.replace(old, new[, count]) | str.find(sub[, start[, end]])",
+          "examples": [
+            "'hello world'.replace('world', 'Python')  # 'hello Python'\n'abcabc'.replace('a', 'X', 1)             # 'Xbcabc'\n'hello'.find('ll')   # 2\n'hello'.find('xyz')  # -1\n'hello'.index('ll')  # 2"
+          ],
+          "notes": [
+            "find() is safer than index() as it won't raise exceptions",
+            "Use 'in' operator for a simple membership test",
+            "replace() replaces all occurrences by default"
+          ],
+          "keywords": [
+            "substitute",
+            "search",
+            "locate",
+            "find position",
+            "swap",
+            "occurrence",
+            "contains"
+          ]
+        },
+        {
+          "id": "str_format_fstring",
+          "name": "str.format() / f-strings",
+          "category": "String Methods",
+          "type": "method",
+          "description": "Format strings by inserting values. f-strings (formatted string literals) are the modern preferred approach.",
+          "syntax": "f'{expression}' | '{placeholder}'.format(value)",
+          "examples": [
+            "name = 'Alice'\nage = 30\nf'Name: {name}, Age: {age}'   # 'Name: Alice, Age: 30'\nf'{3.14159:.2f}'               # '3.14'\nf'{1000000:,}'                 # '1,000,000'\n'{} and {}'.format('a', 'b')  # 'a and b'"
+          ],
+          "notes": [
+            "f-strings are evaluated at runtime and faster than .format()",
+            "Supports format specifiers: {value:.2f}, {value:>10}, {value:,}",
+            "Use f'{expr!r}' for repr() representation"
+          ],
+          "keywords": [
+            "format",
+            "template",
+            "interpolate",
+            "placeholder",
+            "string formatting",
+            "f-string",
+            "display value"
+          ]
+        },
+        {
+          "id": "str_upper_lower_case",
+          "name": "str.upper() / lower() / title() / capitalize()",
+          "category": "String Methods",
+          "type": "method",
+          "description": "Convert string case: upper/lower/title/capitalize.",
+          "syntax": "str.upper() | str.lower() | str.title() | str.capitalize()",
+          "examples": [
+            "'hello'.upper()       # 'HELLO'\n'HELLO'.lower()       # 'hello'\n'hello world'.title() # 'Hello World'\n'hello'.capitalize()  # 'Hello'\n'Hello World'.swapcase()  # 'hELLO wORLD'"
+          ],
+          "notes": [
+            "Use lower() for case-insensitive comparisons",
+            "title() capitalises every word",
+            "casefold() is more aggressive than lower() for Unicode"
+          ],
+          "keywords": [
+            "uppercase",
+            "lowercase",
+            "case",
+            "capitalize",
+            "transform",
+            "title case"
+          ]
+        },
+        {
+          "id": "str_startswith_endswith",
+          "name": "str.startswith() / str.endswith()",
+          "category": "String Methods",
+          "type": "method",
+          "description": "Check if a string starts or ends with a specified prefix or suffix.",
+          "syntax": "str.startswith(prefix[, start[, end]]) | str.endswith(suffix[, start[, end]])",
+          "examples": [
+            "'hello.py'.endswith('.py')         # True\n'https://'.startswith('http')       # True\n'hello'.startswith(('hi', 'hello')) # True (tuple of options)\nfiltered = [f for f in files if f.endswith('.csv')]"
+          ],
+          "notes": [
+            "Both accept a tuple of prefixes/suffixes",
+            "Equivalent to slicing but more readable",
+            "Useful for filtering file lists by extension"
+          ],
+          "keywords": [
+            "prefix",
+            "suffix",
+            "begins with",
+            "ends with",
+            "check",
+            "validate",
+            "extension"
+          ]
+        },
+        {
+          "id": "str_count_isdigit_isalpha",
+          "name": "str.count() / isdigit() / isalpha() / isalnum()",
+          "category": "String Methods",
+          "type": "method",
+          "description": "count() counts non-overlapping occurrences. is*() methods validate string content.",
+          "syntax": "str.count(sub) | str.isdigit() | str.isalpha() | str.isalnum()",
+          "examples": [
+            "'banana'.count('a')    # 3\n'123'.isdigit()        # True\n'abc'.isalpha()        # True\n'abc123'.isalnum()     # True\n'hello world'.isalpha()  # False (has space)\n' '.isspace()          # True"
+          ],
+          "notes": [
+            "isdigit() returns False for negative numbers or decimals",
+            "Use isnumeric() for broader numeric character support",
+            "isspace() checks for whitespace-only strings"
+          ],
+          "keywords": [
+            "validate",
+            "check",
+            "digits",
+            "letters",
+            "alphanumeric",
+            "count occurrences",
+            "inspect"
+          ]
+        },
+        {
+          "id": "str_encode_decode",
+          "name": "str.encode() / bytes.decode()",
+          "category": "String Methods",
+          "type": "method",
+          "description": "encode() converts a string to bytes using a specified encoding. decode() converts bytes back to a string.",
+          "syntax": "str.encode(encoding='utf-8', errors='strict') | bytes.decode(encoding='utf-8')",
+          "examples": [
+            "'hello'.encode('utf-8')            # b'hello'\n'hello'.encode('ascii')            # b'hello'\nb'hello'.decode('utf-8')           # 'hello'\n'café'.encode('utf-8')             # b'caf\\xc3\\xa9'"
+          ],
+          "notes": [
+            "UTF-8 is the recommended encoding for most use cases",
+            "Use errors='ignore' or errors='replace' to handle encoding errors",
+            "Bytes objects are immutable sequences of integers"
+          ],
+          "keywords": [
+            "encoding",
+            "bytes",
+            "utf-8",
+            "ascii",
+            "decode",
+            "unicode",
+            "binary"
+          ]
+        },
+        {
+          "id": "str_ljust_rjust_zfill_center",
+          "name": "str.ljust() / rjust() / center() / zfill()",
+          "category": "String Methods",
+          "type": "method",
+          "description": "Pad a string to a specified width with alignment: left, right, centered, or zero-padded.",
+          "syntax": "str.ljust(width[, fillchar]) | str.rjust(width[, fillchar]) | str.center(width[, fillchar]) | str.zfill(width)",
+          "examples": [
+            "'42'.zfill(5)          # '00042'\n'hi'.ljust(10, '-')    # 'hi--------'\n'hi'.rjust(10, '-')    # '--------hi'\n'hi'.center(10, '*')   # '****hi****'"
+          ],
+          "notes": [
+            "Useful for formatting tabular console output",
+            "zfill() is specifically for numeric strings",
+            "f-string format specifiers are generally preferred: f'{x:>10}'"
+          ],
+          "keywords": [
+            "pad",
+            "align",
+            "fill",
+            "width",
+            "format",
+            "leading zeros",
+            "table",
+            "column"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "python_list",
+      "title": "List Operations",
+      "icon": "📋",
+      "description": "Python list creation, manipulation, and comprehension techniques",
+      "entries": [
+        {
+          "id": "list_append_extend_insert",
+          "name": "list.append() / extend() / insert()",
+          "category": "List Operations",
+          "type": "method",
+          "description": "append() adds one item to the end. extend() adds multiple items. insert() adds an item at a specific index.",
+          "syntax": "list.append(x) | list.extend(iterable) | list.insert(i, x)",
+          "examples": [
+            "lst = [1, 2, 3]\nlst.append(4)         # [1, 2, 3, 4]\nlst.extend([5, 6])    # [1, 2, 3, 4, 5, 6]\nlst.insert(0, 0)      # [0, 1, 2, 3, 4, 5, 6]\nlst.append([7, 8])    # adds nested list"
+          ],
+          "notes": [
+            "append() adds one element; extend() unpacks an iterable",
+            "+= operator is equivalent to extend()",
+            "insert(0, x) prepends to the list (slow for large lists)"
+          ],
+          "keywords": [
+            "add",
+            "push",
+            "append",
+            "extend",
+            "insert",
+            "grow",
+            "add to list"
+          ]
+        },
+        {
+          "id": "list_remove_pop_clear",
+          "name": "list.remove() / pop() / clear()",
+          "category": "List Operations",
+          "type": "method",
+          "description": "remove() deletes the first matching value. pop() removes by index and returns the item. clear() empties the list.",
+          "syntax": "list.remove(x) | list.pop([i]) | list.clear()",
+          "examples": [
+            "lst = [1, 2, 3, 2]\nlst.remove(2)   # [1, 3, 2] — removes first 2\nitem = lst.pop()   # removes and returns last\nitem = lst.pop(0)  # removes and returns first\nlst.clear()        # []"
+          ],
+          "notes": [
+            "remove() raises ValueError if the item is not found",
+            "pop() with no argument removes the last element (O(1))",
+            "del lst[i] also removes by index without returning"
+          ],
+          "keywords": [
+            "delete",
+            "remove",
+            "pop",
+            "clear",
+            "empty",
+            "discard",
+            "take out"
+          ]
+        },
+        {
+          "id": "list_sort_reverse",
+          "name": "list.sort() / list.reverse()",
+          "category": "List Operations",
+          "type": "method",
+          "description": "sort() sorts the list in-place. reverse() reverses the list in-place.",
+          "syntax": "list.sort(key=None, reverse=False) | list.reverse()",
+          "examples": [
+            "lst = [3, 1, 2]\nlst.sort()                    # [1, 2, 3]\nlst.sort(reverse=True)        # [3, 2, 1]\nlst.sort(key=lambda x: -x)   # sort by negative\nwords = ['banana', 'apple']\nwords.sort(key=len)           # sort by length\nlst.reverse()                 # reverses in-place"
+          ],
+          "notes": [
+            "sort() modifies in-place; use sorted() for a new list",
+            "Python uses Timsort — stable and O(n log n)",
+            "key function is applied once per element for efficiency"
+          ],
+          "keywords": [
+            "sort",
+            "order",
+            "reverse",
+            "arrange",
+            "ascending",
+            "descending",
+            "in-place"
+          ]
+        },
+        {
+          "id": "list_index_count_copy",
+          "name": "list.index() / count() / copy()",
+          "category": "List Operations",
+          "type": "method",
+          "description": "index() finds the position of a value. count() counts occurrences. copy() creates a shallow copy.",
+          "syntax": "list.index(x[, start[, end]]) | list.count(x) | list.copy()",
+          "examples": [
+            "[1, 2, 3, 2].index(2)   # 1 (first occurrence)\n[1, 2, 2, 3].count(2)   # 2\nlst2 = lst.copy()       # shallow copy\nlst2 = lst[:]           # also a shallow copy\nimport copy; deep = copy.deepcopy(lst)"
+          ],
+          "notes": [
+            "index() raises ValueError if not found — use 'in' to check first",
+            "copy() creates a shallow copy; nested objects are shared",
+            "Use copy.deepcopy() to clone nested lists fully"
+          ],
+          "keywords": [
+            "find index",
+            "position",
+            "count",
+            "shallow copy",
+            "duplicate",
+            "locate"
+          ]
+        },
+        {
+          "id": "list_comprehension",
+          "name": "List Comprehensions",
+          "category": "List Operations",
+          "type": "syntax",
+          "description": "A concise way to create lists by applying an expression to each item in an iterable, optionally filtering with a condition.",
+          "syntax": "[expression for item in iterable if condition]",
+          "examples": [
+            "squares = [x**2 for x in range(10)]\nevens = [x for x in range(20) if x % 2 == 0]\nflat = [n for row in matrix for n in row]\npairs = [(x, y) for x in [1,2] for y in [3,4]]\nwords_upper = [w.upper() for w in words]"
+          ],
+          "notes": [
+            "More readable and faster than equivalent for loops",
+            "Can include multiple for clauses and conditions",
+            "Use generator expressions for memory-efficiency: (x**2 for x in ...)"
+          ],
+          "keywords": [
+            "comprehension",
+            "one-liner",
+            "concise",
+            "generate list",
+            "filter",
+            "transform",
+            "loop"
+          ]
+        },
+        {
+          "id": "list_slicing",
+          "name": "List Slicing",
+          "category": "List Operations",
+          "type": "syntax",
+          "description": "Extract sublists using slice notation [start:stop:step].",
+          "syntax": "list[start:stop:step]",
+          "examples": [
+            "lst = [0, 1, 2, 3, 4, 5]\nlst[1:4]     # [1, 2, 3]\nlst[:3]      # [0, 1, 2]\nlst[3:]      # [3, 4, 5]\nlst[::2]     # [0, 2, 4] every other\nlst[::-1]    # [5, 4, 3, 2, 1, 0] reversed"
+          ],
+          "notes": [
+            "Slices return a new list — modifying them doesn't affect original",
+            "Negative indices count from the end",
+            "[::-1] is a common idiom for reversing"
+          ],
+          "keywords": [
+            "slice",
+            "sublist",
+            "subset",
+            "range",
+            "index",
+            "extract",
+            "portion",
+            "negative index"
+          ]
+        },
+        {
+          "id": "list_nested",
+          "name": "Nested Lists / 2D Lists",
+          "category": "List Operations",
+          "type": "syntax",
+          "description": "Lists can contain other lists, enabling 2D and multi-dimensional data structures.",
+          "syntax": "matrix = [[row...], [row...], ...]",
+          "examples": [
+            "matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\nmatrix[1][2]          # 6 (row 1, col 2)\nnested = [[0]*3 for _ in range(3)]  # 3x3 zeros\nflat = [x for row in matrix for x in row]\nfor row in matrix:\n    print(row)"
+          ],
+          "notes": [
+            "Do NOT use [[0]*3]*3 — all rows share the same object",
+            "Use list comprehension to create independent rows",
+            "NumPy arrays are better for numerical 2D data"
+          ],
+          "keywords": [
+            "2D list",
+            "matrix",
+            "grid",
+            "nested",
+            "multi-dimensional",
+            "table",
+            "rows and columns"
+          ]
+        },
+        {
+          "id": "list_unpack_star",
+          "name": "List Unpacking / * Operator",
+          "category": "List Operations",
+          "type": "syntax",
+          "description": "Unpack list elements into variables. Use * to capture remaining items.",
+          "syntax": "a, b, c = lst | a, *rest = lst | [*lst1, *lst2]",
+          "examples": [
+            "a, b, c = [1, 2, 3]\nfirst, *rest = [1, 2, 3, 4]   # first=1, rest=[2,3,4]\n*init, last = [1, 2, 3, 4]   # init=[1,2,3], last=4\ncombined = [*list1, *list2]   # merge two lists\nprint(*lst)                    # unpack as arguments"
+          ],
+          "notes": [
+            "Starred assignment can appear anywhere in the left side",
+            "*lst in a function call unpacks the list as positional args",
+            "Useful for merging lists without extend()"
+          ],
+          "keywords": [
+            "unpack",
+            "destructure",
+            "spread",
+            "merge",
+            "star operator",
+            "assign",
+            "splat"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "python_dict",
+      "title": "Dictionary Operations",
+      "icon": "📖",
+      "description": "Python dictionary creation, access, manipulation, and comprehension",
+      "entries": [
+        {
+          "id": "dict_get_keys_values_items",
+          "name": "dict.get() / keys() / values() / items()",
+          "category": "Dictionary Operations",
+          "type": "method",
+          "description": "Access dictionary data safely with get(), or iterate over keys, values, or key-value pairs.",
+          "syntax": "dict.get(key[, default]) | dict.keys() | dict.values() | dict.items()",
+          "examples": [
+            "d = {'a': 1, 'b': 2}\nd.get('a')           # 1\nd.get('z', 0)        # 0 (default)\nlist(d.keys())       # ['a', 'b']\nlist(d.values())     # [1, 2]\nfor k, v in d.items():\n    print(k, v)"
+          ],
+          "notes": [
+            "get() is safer than d[key] as it won't raise KeyError",
+            "keys(), values(), items() return views, not lists",
+            "Views reflect changes to the dictionary dynamically"
+          ],
+          "keywords": [
+            "access",
+            "lookup",
+            "keys",
+            "values",
+            "iterate",
+            "safe access",
+            "default value"
+          ]
+        },
+        {
+          "id": "dict_update_pop_setdefault",
+          "name": "dict.update() / pop() / setdefault()",
+          "category": "Dictionary Operations",
+          "type": "method",
+          "description": "update() merges another dict. pop() removes a key. setdefault() inserts a key if missing.",
+          "syntax": "dict.update(other) | dict.pop(key[, default]) | dict.setdefault(key[, default])",
+          "examples": [
+            "d = {'a': 1}\nd.update({'b': 2, 'c': 3})   # {'a':1,'b':2,'c':3}\nval = d.pop('a')              # removes 'a', val=1\nd.pop('z', None)              # safe pop with default\nd.setdefault('count', 0)\nd['count'] += 1"
+          ],
+          "notes": [
+            "update() overwrites existing keys with new values",
+            "pop() raises KeyError if key missing and no default given",
+            "setdefault() is useful for building dict of lists patterns"
+          ],
+          "keywords": [
+            "merge",
+            "delete",
+            "remove key",
+            "default",
+            "insert if missing",
+            "update",
+            "combine"
+          ]
+        },
+        {
+          "id": "dict_comprehension",
+          "name": "Dictionary Comprehensions",
+          "category": "Dictionary Operations",
+          "type": "syntax",
+          "description": "Create dictionaries concisely using a key-value expression with a for clause.",
+          "syntax": "{key_expr: val_expr for item in iterable if condition}",
+          "examples": [
+            "squares = {x: x**2 for x in range(6)}\ninverted = {v: k for k, v in d.items()}\nfiltered = {k: v for k, v in d.items() if v > 2}\nword_len = {w: len(w) for w in words}"
+          ],
+          "notes": [
+            "More readable and faster than dict() with a loop",
+            "Can use conditions to filter entries",
+            "Inverting a dict only works if values are unique"
+          ],
+          "keywords": [
+            "comprehension",
+            "one-liner",
+            "create dict",
+            "transform",
+            "generate",
+            "concise"
+          ]
+        },
+        {
+          "id": "dict_merge_operator",
+          "name": "Merging Dictionaries (| operator)",
+          "category": "Dictionary Operations",
+          "type": "syntax",
+          "description": "Python 3.9+ supports the | operator to merge dictionaries. Earlier versions use {**d1, **d2}.",
+          "syntax": "merged = d1 | d2   # Python 3.9+\nmerged = {**d1, **d2}  # all versions",
+          "examples": [
+            "defaults = {'color': 'blue', 'size': 10}\noverrides = {'size': 20, 'shape': 'circle'}\nresult = defaults | overrides\n# {'color': 'blue', 'size': 20, 'shape': 'circle'}\nd1 |= d2   # in-place merge (3.9+)"
+          ],
+          "notes": [
+            "Right-hand dict values take precedence on key conflicts",
+            "** unpacking works in function calls too",
+            "Use | for clarity in Python 3.9+"
+          ],
+          "keywords": [
+            "merge",
+            "combine",
+            "union",
+            "update",
+            "spread",
+            "unpack",
+            "double star"
+          ]
+        },
+        {
+          "id": "dict_defaultdict_counter",
+          "name": "defaultdict / Counter",
+          "category": "Dictionary Operations",
+          "type": "class",
+          "description": "defaultdict auto-initialises missing keys. Counter counts hashable objects.",
+          "syntax": "from collections import defaultdict, Counter",
+          "examples": [
+            "from collections import defaultdict, Counter\n\n# Group items\ngroups = defaultdict(list)\nfor k, v in pairs:\n    groups[k].append(v)\n\n# Count elements\ncounts = Counter(['a', 'b', 'a', 'c', 'a'])\ncounts.most_common(2)  # [('a', 3), ('b', 1)]"
+          ],
+          "notes": [
+            "defaultdict takes a callable that produces default values",
+            "Counter supports arithmetic: counter1 + counter2",
+            "most_common(n) returns the n most frequent elements"
+          ],
+          "keywords": [
+            "count",
+            "frequency",
+            "group by",
+            "histogram",
+            "tally",
+            "aggregate",
+            "default"
+          ]
+        },
+        {
+          "id": "dict_copy_clear",
+          "name": "dict.copy() / dict.clear()",
+          "category": "Dictionary Operations",
+          "type": "method",
+          "description": "copy() creates a shallow copy of the dictionary. clear() removes all items.",
+          "syntax": "dict.copy() | dict.clear()",
+          "examples": [
+            "original = {'a': 1, 'b': [1, 2]}\nshallow = original.copy()     # keys copied\nshallow['a'] = 99             # does not affect original\nshallow['b'].append(3)        # DOES affect original (shared list)\nimport copy\ndeep = copy.deepcopy(original)  # fully independent\noriginal.clear()              # {}"
+          ],
+          "notes": [
+            "shallow copy duplicates the dict but not nested objects",
+            "Use copy.deepcopy() when values are mutable containers",
+            "clear() is faster than creating a new empty dict for reuse"
+          ],
+          "keywords": [
+            "copy",
+            "clone",
+            "duplicate",
+            "empty",
+            "shallow",
+            "deep copy",
+            "reset"
+          ]
+        },
+        {
+          "id": "dict_ordered_access",
+          "name": "Dict Ordering & Access Patterns",
+          "category": "Dictionary Operations",
+          "type": "syntax",
+          "description": "Python 3.7+ dicts maintain insertion order. Access patterns and common idioms.",
+          "syntax": "d[key] = value | del d[key] | key in d",
+          "examples": [
+            "# Check membership\n'key' in d             # True/False\n'key' not in d        # True/False\n\n# Iterate in insertion order\nfor key in d:\n    print(key, d[key])\n\n# Conditional access pattern\nif key in d:\n    process(d[key])\nelse:\n    d[key] = default_value"
+          ],
+          "notes": [
+            "Dicts are ordered by insertion order since Python 3.7",
+            "Use OrderedDict from collections for explicit ordering in older Python",
+            "in operator on dicts checks keys only"
+          ],
+          "keywords": [
+            "ordered",
+            "insertion order",
+            "membership",
+            "contains",
+            "check key",
+            "access",
+            "in operator"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "python_set_tuple",
+      "title": "Sets & Tuples",
+      "icon": "⚙️",
+      "description": "Python set operations and tuple usage including unpacking and named tuples",
+      "entries": [
+        {
+          "id": "set_create_add_remove",
+          "name": "Set Creation / add() / remove() / discard()",
+          "category": "Sets & Tuples",
+          "type": "method",
+          "description": "Sets are unordered collections of unique elements. add() inserts an element; remove() and discard() delete elements.",
+          "syntax": "s = {1, 2, 3} | set(iterable) | s.add(x) | s.remove(x) | s.discard(x)",
+          "examples": [
+            "s = {1, 2, 3}\ns.add(4)          # {1, 2, 3, 4}\ns.add(2)          # no change — already in set\ns.remove(1)       # {2, 3, 4} — raises KeyError if missing\ns.discard(99)     # safe remove — no error if missing\nunique = set([1, 2, 2, 3, 3])  # {1, 2, 3}"
+          ],
+          "notes": [
+            "Sets do not preserve insertion order",
+            "discard() is safer than remove() — won't raise an exception",
+            "Use frozenset() for an immutable, hashable set"
+          ],
+          "keywords": [
+            "unique",
+            "deduplicate",
+            "add",
+            "remove",
+            "membership",
+            "unordered",
+            "contains"
+          ]
+        },
+        {
+          "id": "set_union_intersection_difference",
+          "name": "Set Operations: union / intersection / difference",
+          "category": "Sets & Tuples",
+          "type": "method",
+          "description": "Set theory operations: union combines sets, intersection finds common elements, difference finds elements in one but not the other.",
+          "syntax": "s1 | s2 (union) | s1 & s2 (intersection) | s1 - s2 (difference) | s1 ^ s2 (symmetric difference)",
+          "examples": [
+            "a = {1, 2, 3, 4}\nb = {3, 4, 5, 6}\na | b   # {1, 2, 3, 4, 5, 6} union\na & b   # {3, 4} intersection\na - b   # {1, 2} difference\na ^ b   # {1, 2, 5, 6} symmetric difference\na.union(b)          # same as a | b\na.issubset(b)       # True if a ⊆ b"
+          ],
+          "notes": [
+            "Operator syntax (|, &, -) only works between sets",
+            "Method syntax (.union(), .intersection()) accepts any iterable",
+            "Use <= and >= for subset/superset checks"
+          ],
+          "keywords": [
+            "union",
+            "intersection",
+            "difference",
+            "subset",
+            "overlap",
+            "combine sets",
+            "common elements"
+          ]
+        },
+        {
+          "id": "frozenset",
+          "name": "frozenset",
+          "category": "Sets & Tuples",
+          "type": "builtin",
+          "description": "An immutable, hashable version of set. Can be used as dictionary keys or set elements.",
+          "syntax": "frozenset(iterable)",
+          "examples": [
+            "fs = frozenset([1, 2, 3])\nfs.union({4})          # works — returns new frozenset\nd = {frozenset({1,2}): 'value'}  # can be dict key\nset_of_sets = {frozenset({1,2}), frozenset({3,4})}"
+          ],
+          "notes": [
+            "frozenset is immutable — no add() or remove()",
+            "Supports all read-only set operations",
+            "Use when you need a set as a dictionary key or set member"
+          ],
+          "keywords": [
+            "immutable set",
+            "hashable",
+            "frozen",
+            "dictionary key",
+            "set of sets"
+          ]
+        },
+        {
+          "id": "tuple_create_unpack",
+          "name": "Tuple Creation & Unpacking",
+          "category": "Sets & Tuples",
+          "type": "syntax",
+          "description": "Tuples are immutable ordered sequences. Unpacking assigns tuple elements to variables.",
+          "syntax": "t = (a, b, c) | a, b, c = t | a, *rest = t",
+          "examples": [
+            "t = (1, 2, 3)\na, b, c = t           # a=1, b=2, c=3\nx, y = y, x           # swap variables\nfirst, *rest = (1, 2, 3, 4)\n\n# Function returning multiple values\ndef min_max(lst):\n    return min(lst), max(lst)\nlo, hi = min_max([3, 1, 4, 1, 5])"
+          ],
+          "notes": [
+            "Single-element tuple requires trailing comma: (42,)",
+            "Tuples are faster than lists for fixed data",
+            "Functions can 'return multiple values' via tuple unpacking"
+          ],
+          "keywords": [
+            "unpack",
+            "destructure",
+            "immutable",
+            "fixed",
+            "multiple return",
+            "swap",
+            "assign"
+          ]
+        },
+        {
+          "id": "namedtuple",
+          "name": "namedtuple",
+          "category": "Sets & Tuples",
+          "type": "class",
+          "description": "Factory function for creating tuple subclasses with named fields. Improves code readability.",
+          "syntax": "from collections import namedtuple\nPoint = namedtuple('Point', ['x', 'y'])",
+          "examples": [
+            "from collections import namedtuple\n\nPoint = namedtuple('Point', ['x', 'y'])\np = Point(3, 4)\nprint(p.x, p.y)    # 3 4\nprint(p[0])        # 3 (still indexable)\n\nPerson = namedtuple('Person', 'name age')\nbob = Person('Bob', 30)\nprint(bob._asdict())  # OrderedDict"
+          ],
+          "notes": [
+            "namedtuple instances are immutable like regular tuples",
+            "Access fields by name or index",
+            "Use typing.NamedTuple for type-annotated named tuples"
+          ],
+          "keywords": [
+            "named fields",
+            "struct",
+            "record",
+            "readable tuple",
+            "data class",
+            "immutable"
+          ]
+        },
+        {
+          "id": "tuple_vs_list",
+          "name": "Tuple vs List",
+          "category": "Sets & Tuples",
+          "type": "syntax",
+          "description": "When to use tuples vs lists: tuples for fixed heterogeneous data, lists for homogeneous mutable sequences.",
+          "syntax": "tuple: (a, b) for fixed data | list: [a, b] for mutable sequence",
+          "examples": [
+            "# Tuples for fixed records\ncoords = (40.7128, -74.0060)  # lat, lon\nrgb = (255, 128, 0)\n\n# Lists for homogeneous mutable data\nnames = ['Alice', 'Bob', 'Charlie']\nscores = [95, 87, 92]\n\n# Tuples as dict keys\ngrid = {(0, 0): 'start', (5, 5): 'end'}"
+          ],
+          "notes": [
+            "Tuples are immutable — safer for data that should not change",
+            "Tuples are slightly faster to create and access",
+            "Tuples can be used as dictionary keys; lists cannot"
+          ],
+          "keywords": [
+            "when to use",
+            "tuple vs list",
+            "immutable",
+            "fixed data",
+            "hashable",
+            "comparison"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "python_control_flow",
+      "title": "Control Flow",
+      "icon": "🔀",
+      "description": "Python conditional statements, loops, exception handling, and context managers",
+      "entries": [
+        {
+          "id": "if_elif_else",
+          "name": "if / elif / else",
+          "category": "Control Flow",
+          "type": "syntax",
+          "description": "Conditional execution based on boolean expressions.",
+          "syntax": "if condition:\n    ...\nelif condition:\n    ...\nelse:\n    ...",
+          "examples": [
+            "x = 10\nif x > 10:\n    print('big')\nelif x == 10:\n    print('ten')\nelse:\n    print('small')\n\n# Ternary expression\nresult = 'even' if x % 2 == 0 else 'odd'"
+          ],
+          "notes": [
+            "Use elif to avoid nested if statements",
+            "Ternary: value_if_true if condition else value_if_false",
+            "Any non-zero, non-empty, non-None value is truthy"
+          ],
+          "keywords": [
+            "conditional",
+            "if else",
+            "branch",
+            "decision",
+            "ternary",
+            "boolean",
+            "truthy",
+            "falsy"
+          ]
+        },
+        {
+          "id": "for_loops",
+          "name": "for Loops",
+          "category": "Control Flow",
+          "type": "syntax",
+          "description": "Iterate over any iterable object (list, range, dict, string, etc.).",
+          "syntax": "for variable in iterable:\n    body",
+          "examples": [
+            "for i in range(5):\n    print(i)\n\nfor item in ['a', 'b', 'c']:\n    print(item)\n\nfor i, item in enumerate(['a', 'b']):\n    print(i, item)\n\nfor k, v in my_dict.items():\n    print(k, ':', v)"
+          ],
+          "notes": [
+            "for loops in Python iterate over items, not indices",
+            "Use enumerate() when you need both index and value",
+            "Use zip() to iterate over multiple iterables in parallel"
+          ],
+          "keywords": [
+            "iterate",
+            "loop",
+            "for each",
+            "traverse",
+            "sequence",
+            "range",
+            "enumerate"
+          ]
+        },
+        {
+          "id": "while_loops",
+          "name": "while Loops",
+          "category": "Control Flow",
+          "type": "syntax",
+          "description": "Repeat a block as long as a condition is True.",
+          "syntax": "while condition:\n    body",
+          "examples": [
+            "i = 0\nwhile i < 5:\n    print(i)\n    i += 1\n\n# Infinite loop with break\nwhile True:\n    data = input('Enter: ')\n    if data == 'quit':\n        break\n    process(data)"
+          ],
+          "notes": [
+            "Ensure the condition eventually becomes False to avoid infinite loops",
+            "while/else: the else block runs if the loop exits normally (no break)",
+            "Use for loops when the number of iterations is known"
+          ],
+          "keywords": [
+            "while",
+            "repeat",
+            "loop",
+            "condition",
+            "infinite loop",
+            "iterate until"
+          ]
+        },
+        {
+          "id": "break_continue_pass",
+          "name": "break / continue / pass",
+          "category": "Control Flow",
+          "type": "syntax",
+          "description": "break exits a loop immediately. continue skips to the next iteration. pass is a no-op placeholder.",
+          "syntax": "break | continue | pass",
+          "examples": [
+            "for i in range(10):\n    if i == 5:\n        break       # exit loop\n    if i % 2 == 0:\n        continue    # skip even numbers\n    print(i)\n\ndef placeholder():\n    pass  # empty function body"
+          ],
+          "notes": [
+            "break and continue only affect the innermost loop",
+            "pass is used when a statement is required syntactically but no action needed",
+            "for/else: else runs only if loop completed without break"
+          ],
+          "keywords": [
+            "break",
+            "continue",
+            "pass",
+            "exit loop",
+            "skip",
+            "placeholder",
+            "control"
+          ]
+        },
+        {
+          "id": "try_except_finally",
+          "name": "try / except / finally / raise",
+          "category": "Control Flow",
+          "type": "syntax",
+          "description": "Exception handling: try contains code that might fail, except catches errors, finally always runs.",
+          "syntax": "try:\n    ...\nexcept ExceptionType as e:\n    ...\nfinally:\n    ...",
+          "examples": [
+            "try:\n    result = 10 / 0\nexcept ZeroDivisionError:\n    print('Cannot divide by zero')\nexcept (TypeError, ValueError) as e:\n    print(f'Error: {e}')\nelse:\n    print('Success')\nfinally:\n    print('Always runs')\n\nraise ValueError('bad input')"
+          ],
+          "notes": [
+            "else block runs only if no exception was raised",
+            "finally always runs — use for cleanup (closing files etc.)",
+            "Catch specific exceptions rather than bare except"
+          ],
+          "keywords": [
+            "exception",
+            "error handling",
+            "try catch",
+            "raise",
+            "finally",
+            "runtime error",
+            "safe"
+          ]
+        },
+        {
+          "id": "with_statement",
+          "name": "with Statement (Context Manager)",
+          "category": "Control Flow",
+          "type": "syntax",
+          "description": "Ensures proper acquisition and release of resources. Commonly used for file I/O, locks, and database connections.",
+          "syntax": "with expression as variable:\n    body",
+          "examples": [
+            "# File handling\nwith open('file.txt', 'r') as f:\n    content = f.read()\n# File automatically closed after block\n\n# Multiple context managers\nwith open('in.txt') as fin, open('out.txt', 'w') as fout:\n    fout.write(fin.read())"
+          ],
+          "notes": [
+            "with calls __enter__ on entry and __exit__ on exit",
+            "Works with any object implementing the context manager protocol",
+            "Use contextlib.contextmanager to create custom context managers"
+          ],
+          "keywords": [
+            "context manager",
+            "with",
+            "resource management",
+            "cleanup",
+            "file",
+            "automatic close"
+          ]
+        },
+        {
+          "id": "match_case",
+          "name": "match / case (Structural Pattern Matching)",
+          "category": "Control Flow",
+          "type": "syntax",
+          "description": "Python 3.10+ structural pattern matching for cleaner multi-branch dispatch.",
+          "syntax": "match subject:\n    case pattern:\n        ...",
+          "examples": [
+            "match command:\n    case 'quit':\n        quit_game()\n    case 'go' | 'move':\n        move()\n    case _:\n        print('Unknown command')\n\n# Match with capture\nmatch point:\n    case (0, 0):\n        print('Origin')\n    case (x, 0):\n        print(f'x={x}')"
+          ],
+          "notes": [
+            "match/case is Python 3.10+",
+            "_ is the wildcard pattern (matches anything)",
+            "Much more powerful than a switch statement — supports destructuring"
+          ],
+          "keywords": [
+            "switch",
+            "match case",
+            "pattern matching",
+            "dispatch",
+            "branch",
+            "3.10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "python_functions",
+      "title": "Functions & Lambda",
+      "icon": "λ",
+      "description": "Python function definitions, arguments, decorators, generators, and closures",
+      "entries": [
+        {
+          "id": "func_def_return",
+          "name": "def / return",
+          "category": "Functions & Lambda",
+          "type": "syntax",
+          "description": "Define reusable blocks of code with def. return sends a value back to the caller.",
+          "syntax": "def function_name(params):\n    body\n    return value",
+          "examples": [
+            "def greet(name):\n    return f'Hello, {name}!'\n\ndef add(a, b=0):\n    return a + b\n\n# Multiple return values\ndef divmod_custom(a, b):\n    return a // b, a % b\n\nq, r = divmod_custom(10, 3)"
+          ],
+          "notes": [
+            "return without a value returns None",
+            "Functions are first-class objects — they can be assigned to variables",
+            "Default argument values are evaluated once at function definition time"
+          ],
+          "keywords": [
+            "function",
+            "define",
+            "return",
+            "callable",
+            "subroutine",
+            "reuse",
+            "modular"
+          ]
+        },
+        {
+          "id": "func_args_kwargs",
+          "name": "*args / **kwargs",
+          "category": "Functions & Lambda",
+          "type": "syntax",
+          "description": "*args collects extra positional arguments into a tuple. **kwargs collects extra keyword arguments into a dict.",
+          "syntax": "def func(*args, **kwargs):",
+          "examples": [
+            "def func(*args, **kwargs):\n    print(args)    # tuple\n    print(kwargs)  # dict\n\ndef total(*nums):\n    return sum(nums)\ntotal(1, 2, 3, 4)  # 10\n\ndef config(**settings):\n    for k, v in settings.items():\n        print(k, '=', v)\nconfig(host='localhost', port=8080)"
+          ],
+          "notes": [
+            "Positional args come before keyword args",
+            "Use * alone to force keyword-only arguments after it",
+            "Common in wrapper functions and decorators"
+          ],
+          "keywords": [
+            "variable arguments",
+            "args",
+            "kwargs",
+            "flexible",
+            "positional",
+            "keyword",
+            "unpack",
+            "spread"
+          ]
+        },
+        {
+          "id": "func_lambda",
+          "name": "lambda Functions",
+          "category": "Functions & Lambda",
+          "type": "syntax",
+          "description": "Anonymous inline functions defined with lambda. Limited to a single expression.",
+          "syntax": "lambda arguments: expression",
+          "examples": [
+            "square = lambda x: x**2\nsquare(5)   # 25\n\nsorted(data, key=lambda x: x['age'])\n\nfrom functools import reduce\nproduct = reduce(lambda a, b: a * b, [1,2,3,4])\n\nadd = lambda a, b: a + b"
+          ],
+          "notes": [
+            "lambda can only contain a single expression — no statements",
+            "For multi-line logic, use a regular def function",
+            "Commonly used with sorted(), map(), filter(), reduce()"
+          ],
+          "keywords": [
+            "anonymous function",
+            "inline",
+            "lambda",
+            "one-liner",
+            "functional",
+            "key function"
+          ]
+        },
+        {
+          "id": "func_decorators",
+          "name": "Decorators",
+          "category": "Functions & Lambda",
+          "type": "syntax",
+          "description": "Decorators wrap a function to extend its behaviour without modifying its source code. Applied with @syntax.",
+          "syntax": "@decorator\ndef func():\n    ...",
+          "examples": [
+            "import functools\n\ndef timer(func):\n    @functools.wraps(func)\n    def wrapper(*args, **kwargs):\n        import time\n        start = time.time()\n        result = func(*args, **kwargs)\n        print(f'{func.__name__} took {time.time()-start:.3f}s')\n        return result\n    return wrapper\n\n@timer\ndef slow_func():\n    pass"
+          ],
+          "notes": [
+            "Use functools.wraps to preserve the original function's metadata",
+            "Decorators can be stacked — applied bottom-up",
+            "Built-in decorators: @property, @staticmethod, @classmethod"
+          ],
+          "keywords": [
+            "decorator",
+            "wrap",
+            "modify function",
+            "aspect",
+            "timer",
+            "cache",
+            "log",
+            "@syntax"
+          ]
+        },
+        {
+          "id": "func_generators",
+          "name": "Generators & yield",
+          "category": "Functions & Lambda",
+          "type": "syntax",
+          "description": "Generator functions use yield to lazily produce values one at a time, saving memory for large sequences.",
+          "syntax": "def gen():\n    yield value",
+          "examples": [
+            "def count_up(n):\n    for i in range(n):\n        yield i\n\nfor val in count_up(5):\n    print(val)\n\n# Generator expression\ngen = (x**2 for x in range(10))\nnext(gen)  # 0\n\ndef infinite_counter():\n    n = 0\n    while True:\n        yield n\n        n += 1"
+          ],
+          "notes": [
+            "Generators are memory-efficient for large data streams",
+            "yield pauses the function and resumes on next()",
+            "Generator expressions use () instead of []"
+          ],
+          "keywords": [
+            "yield",
+            "generator",
+            "lazy",
+            "memory efficient",
+            "stream",
+            "iterator",
+            "infinite sequence"
+          ]
+        },
+        {
+          "id": "func_closures",
+          "name": "Closures",
+          "category": "Functions & Lambda",
+          "type": "syntax",
+          "description": "A closure is a function that captures variables from its enclosing scope.",
+          "syntax": "def outer():\n    x = 10\n    def inner():\n        return x\n    return inner",
+          "examples": [
+            "def make_multiplier(factor):\n    def multiply(x):\n        return x * factor\n    return multiply\n\ndouble = make_multiplier(2)\ntriple = make_multiplier(3)\ndouble(5)   # 10\ntriple(5)   # 15"
+          ],
+          "notes": [
+            "Closures capture variables by reference, not by value",
+            "Use nonlocal to modify a variable in the enclosing scope",
+            "Foundation for decorators and factory functions"
+          ],
+          "keywords": [
+            "closure",
+            "enclosing scope",
+            "factory function",
+            "capture",
+            "nonlocal",
+            "inner function"
+          ]
+        },
+        {
+          "id": "func_type_hints",
+          "name": "Type Hints",
+          "category": "Functions & Lambda",
+          "type": "syntax",
+          "description": "Optional type annotations for function parameters and return values, improving readability and tooling support.",
+          "syntax": "def func(x: int, y: str = 'default') -> bool:",
+          "examples": [
+            "def greet(name: str) -> str:\n    return f'Hello, {name}'\n\ndef process(data: list[int]) -> dict[str, int]:\n    return {'sum': sum(data), 'count': len(data)}\n\nfrom typing import Optional, Union\ndef find(lst: list, val: int) -> Optional[int]:\n    return lst.index(val) if val in lst else None"
+          ],
+          "notes": [
+            "Type hints are not enforced at runtime — use mypy for static checking",
+            "Use from typing import ... for complex types pre-3.9",
+            "Python 3.10+ allows X | Y syntax instead of Union[X, Y]"
+          ],
+          "keywords": [
+            "type hints",
+            "annotations",
+            "typing",
+            "static analysis",
+            "mypy",
+            "Optional",
+            "Union"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "python_classes",
+      "title": "Classes & OOP",
+      "icon": "🏗️",
+      "description": "Python object-oriented programming: classes, inheritance, properties, and magic methods",
+      "entries": [
+        {
+          "id": "class_definition",
+          "name": "class / __init__",
+          "category": "Classes & OOP",
+          "type": "syntax",
+          "description": "Define a class with class keyword. __init__ is the constructor called when creating an instance.",
+          "syntax": "class ClassName:\n    def __init__(self, ...):\n        self.attr = value",
+          "examples": [
+            "class Dog:\n    species = 'Canis familiaris'  # class variable\n\n    def __init__(self, name, age):\n        self.name = name    # instance variable\n        self.age = age\n\n    def bark(self):\n        return f'{self.name} says Woof!'\n\ndog = Dog('Rex', 3)\nprint(dog.bark())"
+          ],
+          "notes": [
+            "self refers to the current instance — must be the first parameter",
+            "Class variables are shared across all instances",
+            "Instance variables are unique to each object"
+          ],
+          "keywords": [
+            "class",
+            "object",
+            "instance",
+            "constructor",
+            "__init__",
+            "self",
+            "attribute",
+            "OOP"
+          ]
+        },
+        {
+          "id": "class_inheritance",
+          "name": "Inheritance / super()",
+          "category": "Classes & OOP",
+          "type": "syntax",
+          "description": "A child class inherits methods and attributes from a parent class. super() calls the parent class implementation.",
+          "syntax": "class Child(Parent):\n    def __init__(self):\n        super().__init__()",
+          "examples": [
+            "class Animal:\n    def __init__(self, name):\n        self.name = name\n    def speak(self):\n        raise NotImplementedError\n\nclass Dog(Animal):\n    def speak(self):\n        return f'{self.name}: Woof!'\n\nclass Cat(Animal):\n    def speak(self):\n        return f'{self.name}: Meow!'\n\nanimals = [Dog('Rex'), Cat('Whiskers')]\nfor a in animals:\n    print(a.speak())"
+          ],
+          "notes": [
+            "Python supports multiple inheritance: class C(A, B):",
+            "super() follows the Method Resolution Order (MRO)",
+            "issubclass(Dog, Animal) returns True"
+          ],
+          "keywords": [
+            "inheritance",
+            "parent class",
+            "child class",
+            "extend",
+            "override",
+            "super",
+            "polymorphism"
+          ]
+        },
+        {
+          "id": "class_property",
+          "name": "@property / @setter",
+          "category": "Classes & OOP",
+          "type": "syntax",
+          "description": "@property creates a managed attribute accessed like a regular attribute but controlled by getter/setter methods.",
+          "syntax": "@property\ndef attr(self):\n    return self._attr\n\n@attr.setter\ndef attr(self, value):\n    self._attr = value",
+          "examples": [
+            "class Circle:\n    def __init__(self, radius):\n        self._radius = radius\n\n    @property\n    def radius(self):\n        return self._radius\n\n    @radius.setter\n    def radius(self, value):\n        if value < 0:\n            raise ValueError('Radius cannot be negative')\n        self._radius = value\n\n    @property\n    def area(self):\n        import math\n        return math.pi * self._radius ** 2"
+          ],
+          "notes": [
+            "Prefix private attributes with _ by convention",
+            "@property is useful for computed attributes and validation",
+            "Read-only properties omit the setter"
+          ],
+          "keywords": [
+            "property",
+            "getter",
+            "setter",
+            "managed attribute",
+            "encapsulation",
+            "validation",
+            "computed"
+          ]
+        },
+        {
+          "id": "class_static_class_methods",
+          "name": "@staticmethod / @classmethod",
+          "category": "Classes & OOP",
+          "type": "syntax",
+          "description": "@staticmethod doesn't receive self or cls. @classmethod receives the class as cls and can be used as an alternative constructor.",
+          "syntax": "@staticmethod\ndef method(): ...\n\n@classmethod\ndef method(cls): ...",
+          "examples": [
+            "class MyClass:\n    count = 0\n\n    def __init__(self):\n        MyClass.count += 1\n\n    @classmethod\n    def get_count(cls):\n        return cls.count\n\n    @staticmethod\n    def validate(x):\n        return x > 0\n\nMyClass.validate(-1)   # False (no instance needed)\nMyClass.get_count()    # 0"
+          ],
+          "notes": [
+            "@classmethod is commonly used for alternative constructors",
+            "@staticmethod is a utility function that belongs to the class namespace",
+            "Neither can access instance attributes (no self)"
+          ],
+          "keywords": [
+            "static method",
+            "class method",
+            "alternative constructor",
+            "utility",
+            "factory",
+            "cls"
+          ]
+        },
+        {
+          "id": "class_magic_methods",
+          "name": "Magic Methods (Dunder Methods)",
+          "category": "Classes & OOP",
+          "type": "syntax",
+          "description": "Special methods with double underscores that enable operator overloading and integration with Python built-ins.",
+          "syntax": "__str__, __repr__, __len__, __eq__, __add__, __iter__, ...",
+          "examples": [
+            "class Vector:\n    def __init__(self, x, y):\n        self.x, self.y = x, y\n\n    def __repr__(self):\n        return f'Vector({self.x}, {self.y})'\n\n    def __add__(self, other):\n        return Vector(self.x + other.x, self.y + other.y)\n\n    def __len__(self):\n        return 2\n\n    def __eq__(self, other):\n        return self.x == other.x and self.y == other.y"
+          ],
+          "notes": [
+            "__repr__ should return an unambiguous representation; __str__ a human-readable one",
+            "__len__ enables len(obj); __iter__ makes the object iterable",
+            "__enter__ and __exit__ enable use as a context manager"
+          ],
+          "keywords": [
+            "magic methods",
+            "dunder",
+            "operator overloading",
+            "__str__",
+            "__repr__",
+            "special methods",
+            "protocol"
+          ]
+        },
+        {
+          "id": "dataclass",
+          "name": "@dataclass",
+          "category": "Classes & OOP",
+          "type": "syntax",
+          "description": "Automatically generates __init__, __repr__, and __eq__ for classes that primarily store data.",
+          "syntax": "from dataclasses import dataclass\n\n@dataclass\nclass Name:\n    field: type",
+          "examples": [
+            "from dataclasses import dataclass, field\n\n@dataclass\nclass Point:\n    x: float\n    y: float\n    z: float = 0.0\n\np1 = Point(1.0, 2.0)\np2 = Point(1.0, 2.0)\nprint(p1 == p2)    # True\nprint(p1)          # Point(x=1.0, y=2.0, z=0.0)\n\n@dataclass(frozen=True)  # immutable\nclass Config:\n    host: str = 'localhost'\n    port: int = 8080"
+          ],
+          "notes": [
+            "frozen=True makes instances immutable and hashable",
+            "Use field(default_factory=list) for mutable default values",
+            "Python 3.7+"
+          ],
+          "keywords": [
+            "dataclass",
+            "auto-generate",
+            "data class",
+            "struct",
+            "record",
+            "boilerplate",
+            "3.7"
+          ]
+        },
+        {
+          "id": "class_abstract",
+          "name": "Abstract Base Classes (ABC)",
+          "category": "Classes & OOP",
+          "type": "syntax",
+          "description": "ABCs define interfaces by declaring abstract methods that subclasses must implement.",
+          "syntax": "from abc import ABC, abstractmethod",
+          "examples": [
+            "from abc import ABC, abstractmethod\n\nclass Shape(ABC):\n    @abstractmethod\n    def area(self) -> float:\n        pass\n\n    @abstractmethod\n    def perimeter(self) -> float:\n        pass\n\nclass Rectangle(Shape):\n    def __init__(self, w, h):\n        self.w, self.h = w, h\n    def area(self):\n        return self.w * self.h\n    def perimeter(self):\n        return 2 * (self.w + self.h)"
+          ],
+          "notes": [
+            "Cannot instantiate a class with unimplemented abstract methods",
+            "ABCs are used to define interfaces and ensure consistent APIs",
+            "isinstance() checks work with ABCs"
+          ],
+          "keywords": [
+            "abstract",
+            "interface",
+            "ABC",
+            "enforce",
+            "contract",
+            "override",
+            "must implement"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "python_file_io",
+      "title": "File I/O",
+      "icon": "📁",
+      "description": "Reading and writing files, file modes, and working with paths in Python",
+      "entries": [
+        {
+          "id": "file_open_read",
+          "name": "open() / read() / readline() / readlines()",
+          "category": "File I/O",
+          "type": "builtin",
+          "description": "Open a file and read its contents as a whole string, line by line, or all lines as a list.",
+          "syntax": "with open(path, mode) as f:\n    content = f.read()",
+          "examples": [
+            "# Read entire file\nwith open('file.txt', 'r') as f:\n    content = f.read()\n\n# Read line by line\nwith open('file.txt') as f:\n    for line in f:\n        print(line.strip())\n\n# Read all lines into list\nwith open('file.txt') as f:\n    lines = f.readlines()\n\n# Read single line\nwith open('file.txt') as f:\n    first = f.readline()"
+          ],
+          "notes": [
+            "Default mode is 'r' (text read)",
+            "Iterating directly over a file object is memory efficient",
+            "Always use 'with' to ensure the file is closed"
+          ],
+          "keywords": [
+            "read file",
+            "open",
+            "text file",
+            "read lines",
+            "load file",
+            "input",
+            "load data"
+          ]
+        },
+        {
+          "id": "file_write",
+          "name": "write() / writelines()",
+          "category": "File I/O",
+          "type": "method",
+          "description": "Write text to a file. 'w' mode overwrites; 'a' mode appends.",
+          "syntax": "with open(path, 'w') as f:\n    f.write(string)",
+          "examples": [
+            "with open('output.txt', 'w') as f:\n    f.write('Hello\\n')\n    f.write('World\\n')\n\n# Write multiple lines\nlines = ['line1\\n', 'line2\\n', 'line3\\n']\nwith open('output.txt', 'w') as f:\n    f.writelines(lines)\n\n# Append to file\nwith open('log.txt', 'a') as f:\n    f.write('New log entry\\n')"
+          ],
+          "notes": [
+            "'w' creates the file if it does not exist and overwrites if it does",
+            "'a' appends to the end without truncating",
+            "write() does not add newlines automatically"
+          ],
+          "keywords": [
+            "write file",
+            "save",
+            "output",
+            "append",
+            "create file",
+            "overwrite",
+            "log"
+          ]
+        },
+        {
+          "id": "file_modes",
+          "name": "File Modes",
+          "category": "File I/O",
+          "type": "syntax",
+          "description": "The mode argument controls how a file is opened: read/write/append, text/binary.",
+          "syntax": "open(path, mode)  # mode: r/w/a/x/r+/w+/b",
+          "examples": [
+            "open('f.txt', 'r')   # read text (default)\nopen('f.txt', 'w')   # write text (create/overwrite)\nopen('f.txt', 'a')   # append text\nopen('f.txt', 'x')   # exclusive create (fails if exists)\nopen('f.bin', 'rb')  # read binary\nopen('f.bin', 'wb')  # write binary\nopen('f.txt', 'r+')  # read and write"
+          ],
+          "notes": [
+            "'b' suffix switches to binary mode (bytes instead of str)",
+            "'x' mode prevents accidentally overwriting an existing file",
+            "r+ keeps existing content; w+ truncates to empty first"
+          ],
+          "keywords": [
+            "file mode",
+            "read",
+            "write",
+            "append",
+            "binary",
+            "text",
+            "r",
+            "w",
+            "a",
+            "b"
+          ]
+        },
+        {
+          "id": "file_seek_tell",
+          "name": "seek() / tell()",
+          "category": "File I/O",
+          "type": "method",
+          "description": "tell() returns the current file position in bytes. seek() moves to a specific position.",
+          "syntax": "f.tell() | f.seek(offset[, whence])",
+          "examples": [
+            "with open('file.txt', 'r') as f:\n    pos = f.tell()    # 0\n    f.read(5)         # read 5 chars\n    pos = f.tell()    # 5\n    f.seek(0)         # back to beginning\n    content = f.read()"
+          ],
+          "notes": [
+            "whence: 0=absolute, 1=relative, 2=from end",
+            "seek() in text mode only supports seeking to tell() positions or 0",
+            "Mainly useful when doing non-sequential file access"
+          ],
+          "keywords": [
+            "seek",
+            "position",
+            "file pointer",
+            "rewind",
+            "tell",
+            "byte offset",
+            "move"
+          ]
+        },
+        {
+          "id": "os_path_operations",
+          "name": "os.path Operations",
+          "category": "File I/O",
+          "type": "module",
+          "description": "Common file path manipulations using the os.path module.",
+          "syntax": "import os\nos.path.join() | os.path.exists() | os.path.dirname()",
+          "examples": [
+            "import os\n\nos.path.join('dir', 'subdir', 'file.txt')  # 'dir/subdir/file.txt'\nos.path.exists('file.txt')                # True/False\nos.path.isfile('data.csv')                # True if regular file\nos.path.isdir('folder')                   # True if directory\nos.path.basename('/path/to/file.txt')     # 'file.txt'\nos.path.dirname('/path/to/file.txt')      # '/path/to'\nos.path.splitext('file.txt')              # ('file', '.txt')"
+          ],
+          "notes": [
+            "Use os.path.join() instead of string concatenation for cross-platform paths",
+            "os.getcwd() returns the current working directory",
+            "os.listdir() lists directory contents"
+          ],
+          "keywords": [
+            "path",
+            "directory",
+            "file exists",
+            "join path",
+            "basename",
+            "extension",
+            "os module"
+          ]
+        },
+        {
+          "id": "pathlib_path",
+          "name": "pathlib.Path",
+          "category": "File I/O",
+          "type": "class",
+          "description": "Modern object-oriented path operations. More readable than os.path for most use cases.",
+          "syntax": "from pathlib import Path\np = Path('directory/file.txt')",
+          "examples": [
+            "from pathlib import Path\n\np = Path('data/file.txt')\np.exists()          # True/False\np.suffix            # '.txt'\np.stem              # 'file'\np.parent            # Path('data')\np.name              # 'file.txt'\n\n# Read/write\np.read_text()\np.write_text('hello')\n\n# Glob\nfor f in Path('.').glob('**/*.py'):\n    print(f)"
+          ],
+          "notes": [
+            "Use / operator to join paths: Path('dir') / 'file.txt'",
+            "Available since Python 3.4",
+            "Preferred over os.path in modern Python"
+          ],
+          "keywords": [
+            "pathlib",
+            "Path",
+            "modern",
+            "file path",
+            "glob",
+            "read text",
+            "write text",
+            "object oriented"
+          ]
+        },
+        {
+          "id": "json_csv_file",
+          "name": "Reading/Writing JSON & CSV Files",
+          "category": "File I/O",
+          "type": "module",
+          "description": "Load and save structured data using the json and csv standard library modules.",
+          "syntax": "import json, csv\njson.load(f) | json.dump(data, f) | csv.reader(f)",
+          "examples": [
+            "import json\n\n# Write JSON\nwith open('data.json', 'w') as f:\n    json.dump({'a': 1, 'b': [2, 3]}, f, indent=2)\n\n# Read JSON\nwith open('data.json') as f:\n    data = json.load(f)\n\nimport csv\n# Read CSV\nwith open('data.csv') as f:\n    reader = csv.DictReader(f)\n    rows = list(reader)"
+          ],
+          "notes": [
+            "json.dumps() serializes to a string; json.loads() parses a string",
+            "Use csv.DictReader to get rows as dicts with header keys",
+            "For large CSV files, prefer Pandas read_csv()"
+          ],
+          "keywords": [
+            "JSON",
+            "CSV",
+            "serialize",
+            "deserialize",
+            "load",
+            "save",
+            "structured data",
+            "file format"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "python_stdlib_modules",
+      "title": "Standard Library Modules",
+      "icon": "📦",
+      "description": "Python's built-in standard library modules for common programming tasks",
+      "entries": [
+        {
+          "id": "stdlib_os_sys",
+          "name": "os / sys Modules",
+          "category": "Standard Library Modules",
+          "type": "module",
+          "description": "os provides OS-level operations (files, directories, environment). sys provides access to Python runtime and interpreter.",
+          "syntax": "import os, sys",
+          "examples": [
+            "import os, sys\n\nos.getcwd()                    # current directory\nos.listdir('.')                # list files\nos.makedirs('dir', exist_ok=True)\nos.environ.get('PATH', '')     # environment variable\nos.remove('file.txt')          # delete file\n\nsys.argv                       # command line args\nsys.exit(0)                    # exit program\nsys.path.append('/custom/path') # add to module search path\nprint(sys.version)"
+          ],
+          "notes": [
+            "os.path is a submodule for path manipulation",
+            "sys.argv[0] is the script name",
+            "Use pathlib.Path instead of os.path in new code"
+          ],
+          "keywords": [
+            "os",
+            "sys",
+            "environment",
+            "directory",
+            "command line",
+            "path",
+            "system",
+            "exit"
+          ]
+        },
+        {
+          "id": "stdlib_math",
+          "name": "math Module",
+          "category": "Standard Library Modules",
+          "type": "module",
+          "description": "Mathematical functions and constants for real-number arithmetic.",
+          "syntax": "import math",
+          "examples": [
+            "import math\n\nmath.sqrt(16)          # 4.0\nmath.floor(3.9)        # 3\nmath.ceil(3.1)         # 4\nmath.log(100, 10)      # 2.0\nmath.log2(8)           # 3.0\nmath.pi                # 3.14159...\nmath.e                 # 2.71828...\nmath.factorial(5)      # 120\nmath.gcd(12, 8)        # 4\nmath.isclose(0.1+0.2, 0.3)  # True"
+          ],
+          "notes": [
+            "Use math.isclose() for floating-point comparisons",
+            "math.inf represents positive infinity",
+            "For complex numbers, use the cmath module"
+          ],
+          "keywords": [
+            "math",
+            "sqrt",
+            "logarithm",
+            "trigonometry",
+            "pi",
+            "floor",
+            "ceil",
+            "factorial",
+            "numeric"
+          ]
+        },
+        {
+          "id": "stdlib_datetime",
+          "name": "datetime Module",
+          "category": "Standard Library Modules",
+          "type": "module",
+          "description": "Classes for working with dates, times, and time intervals.",
+          "syntax": "from datetime import datetime, date, timedelta",
+          "examples": [
+            "from datetime import datetime, date, timedelta\n\nnow = datetime.now()\ntoday = date.today()\nprint(now.strftime('%Y-%m-%d %H:%M:%S'))\n\nd = datetime.strptime('2024-01-15', '%Y-%m-%d')\ndiff = datetime.now() - d\nprint(diff.days)\n\ntomorrow = date.today() + timedelta(days=1)"
+          ],
+          "notes": [
+            "strftime() formats a datetime to string; strptime() parses",
+            "timedelta supports days, seconds, microseconds",
+            "Use pytz or zoneinfo (3.9+) for timezone-aware datetimes"
+          ],
+          "keywords": [
+            "date",
+            "time",
+            "datetime",
+            "timestamp",
+            "format",
+            "parse",
+            "duration",
+            "timedelta"
+          ]
+        },
+        {
+          "id": "stdlib_re",
+          "name": "re Module (Regular Expressions)",
+          "category": "Standard Library Modules",
+          "type": "module",
+          "description": "Pattern matching and text manipulation using regular expressions.",
+          "syntax": "import re\nre.match() | re.search() | re.findall() | re.sub()",
+          "examples": [
+            "import re\n\nre.match(r'\\d+', '123abc')          # match at start\nre.search(r'\\d+', 'abc123def')       # anywhere\nre.findall(r'\\d+', 'a1b22c333')      # ['1', '22', '333']\nre.sub(r'\\s+', ' ', 'hello   world') # 'hello world'\n\npattern = re.compile(r'(\\w+)@(\\w+)')\nm = pattern.search('user@example.com')\nm.group(1)  # 'user'"
+          ],
+          "notes": [
+            "Use raw strings r'...' to avoid backslash issues",
+            "re.compile() pre-compiles for repeated use",
+            "Flags: re.IGNORECASE, re.MULTILINE, re.DOTALL"
+          ],
+          "keywords": [
+            "regex",
+            "pattern",
+            "match",
+            "search",
+            "replace",
+            "extract",
+            "text processing",
+            "regular expression"
+          ]
+        },
+        {
+          "id": "stdlib_collections",
+          "name": "collections Module",
+          "category": "Standard Library Modules",
+          "type": "module",
+          "description": "Specialised container datatypes: Counter, defaultdict, deque, OrderedDict, namedtuple.",
+          "syntax": "from collections import Counter, defaultdict, deque, OrderedDict",
+          "examples": [
+            "from collections import Counter, defaultdict, deque\n\n# Counter\nwords = ['apple', 'banana', 'apple']\nc = Counter(words)\nc.most_common(1)   # [('apple', 2)]\n\n# defaultdict\ndd = defaultdict(list)\ndd['key'].append(1)  # no KeyError\n\n# deque (double-ended queue)\ndq = deque([1, 2, 3])\ndq.appendleft(0)   # O(1) prepend\ndq.rotate(1)       # [3, 0, 1, 2]"
+          ],
+          "notes": [
+            "deque is O(1) for append/pop from both ends",
+            "Counter supports arithmetic operations",
+            "defaultdict is great for grouping and accumulation patterns"
+          ],
+          "keywords": [
+            "Counter",
+            "defaultdict",
+            "deque",
+            "collections",
+            "frequency",
+            "group",
+            "queue",
+            "histogram"
+          ]
+        },
+        {
+          "id": "stdlib_itertools",
+          "name": "itertools Module",
+          "category": "Standard Library Modules",
+          "type": "module",
+          "description": "Functions for efficient looping and combinatorics: permutations, combinations, product, chain, groupby.",
+          "syntax": "import itertools\nitertools.chain() | itertools.product() | itertools.groupby()",
+          "examples": [
+            "import itertools\n\nlist(itertools.chain([1,2], [3,4]))  # [1,2,3,4]\nlist(itertools.product('AB', [1,2]))  # [('A',1),('A',2),('B',1),('B',2)]\nlist(itertools.permutations('ABC', 2))  # all 2-perms\nlist(itertools.combinations([1,2,3], 2))  # [(1,2),(1,3),(2,3)]\nfor key, group in itertools.groupby(sorted_data, key=lambda x: x[0]):\n    print(key, list(group))"
+          ],
+          "notes": [
+            "All itertools functions return lazy iterators",
+            "groupby() requires the input to be sorted by the key",
+            "islice() provides lazy slicing without materialising"
+          ],
+          "keywords": [
+            "combinations",
+            "permutations",
+            "product",
+            "chain",
+            "groupby",
+            "lazy",
+            "itertools",
+            "combinatorics"
+          ]
+        },
+        {
+          "id": "stdlib_functools",
+          "name": "functools Module",
+          "category": "Standard Library Modules",
+          "type": "module",
+          "description": "Higher-order functions and operations on callable objects: lru_cache, partial, reduce, wraps.",
+          "syntax": "from functools import lru_cache, partial, reduce, wraps",
+          "examples": [
+            "from functools import lru_cache, partial, reduce\n\n@lru_cache(maxsize=128)\ndef fib(n):\n    return n if n < 2 else fib(n-1) + fib(n-2)\n\ndouble = partial(pow, exp=2)\ndouble(3)   # Calls pow(3, exp=2)\n\nreduce(lambda a, b: a * b, [1,2,3,4])  # 24"
+          ],
+          "notes": [
+            "lru_cache is a memoization decorator — caches return values",
+            "partial() creates a new callable with some arguments pre-filled",
+            "Use functools.wraps in decorators to preserve metadata"
+          ],
+          "keywords": [
+            "cache",
+            "memoize",
+            "partial",
+            "reduce",
+            "lru_cache",
+            "wraps",
+            "decorator",
+            "functional"
+          ]
+        },
+        {
+          "id": "stdlib_random",
+          "name": "random Module",
+          "category": "Standard Library Modules",
+          "type": "module",
+          "description": "Generate pseudo-random numbers and perform random selections and shuffles.",
+          "syntax": "import random",
+          "examples": [
+            "import random\n\nrandom.random()            # float in [0.0, 1.0)\nrandom.randint(1, 10)      # int in [1, 10]\nrandom.choice([1, 2, 3])   # random element\nrandom.sample(range(100), 10)  # 10 unique random items\nrandom.shuffle(lst)        # shuffle in-place\nrandom.seed(42)            # reproducible results"
+          ],
+          "notes": [
+            "Set seed for reproducible random sequences",
+            "Not cryptographically secure — use secrets module for security",
+            "random.gauss(mu, sigma) for normal distribution"
+          ],
+          "keywords": [
+            "random",
+            "shuffle",
+            "sample",
+            "choice",
+            "seed",
+            "probability",
+            "simulation",
+            "stochastic"
+          ]
+        },
+        {
+          "id": "stdlib_typing",
+          "name": "typing Module",
+          "category": "Standard Library Modules",
+          "type": "module",
+          "description": "Support for type hints. Provides Optional, Union, List, Dict, Tuple, Callable, and more.",
+          "syntax": "from typing import Optional, Union, List, Dict, Tuple, Any, Callable",
+          "examples": [
+            "from typing import Optional, Union, List, Dict\n\ndef greet(name: str) -> str:\n    return f'Hi {name}'\n\ndef find(lst: List[int], val: int) -> Optional[int]:\n    return lst.index(val) if val in lst else None\n\ndef process(data: Union[str, bytes]) -> str:\n    ...\n\n# Python 3.10+ shorthand\ndef f(x: int | None) -> list[str]:\n    ..."
+          ],
+          "notes": [
+            "In Python 3.9+ use built-in generics: list[int], dict[str, int]",
+            "In Python 3.10+ use X | Y instead of Union[X, Y]",
+            "typing is still needed for Callable, TypeVar, Protocol etc."
+          ],
+          "keywords": [
+            "type hints",
+            "Optional",
+            "Union",
+            "List",
+            "Dict",
+            "annotations",
+            "static typing",
+            "mypy"
+          ]
+        },
+        {
+          "id": "stdlib_copy_time_threading",
+          "name": "copy / time / threading Modules",
+          "category": "Standard Library Modules",
+          "type": "module",
+          "description": "Miscellaneous standard library modules: copy for cloning objects, time for timing, threading for concurrency.",
+          "syntax": "import copy, time, threading",
+          "examples": [
+            "import copy, time, threading\n\n# Deep copy\noriginal = [[1, 2], [3, 4]]\ndeep = copy.deepcopy(original)\n\n# Timing\nstart = time.time()\ntime.sleep(1)\nelapsed = time.time() - start\n\n# Simple thread\ndef task():\n    print('Running')\nt = threading.Thread(target=task)\nt.start()\nt.join()"
+          ],
+          "notes": [
+            "copy.copy() is shallow; copy.deepcopy() is fully independent",
+            "time.perf_counter() is more precise than time.time() for benchmarking",
+            "Use concurrent.futures.ThreadPoolExecutor for higher-level threading"
+          ],
+          "keywords": [
+            "deep copy",
+            "shallow copy",
+            "timing",
+            "benchmark",
+            "thread",
+            "concurrency",
+            "sleep"
+          ]
         }
       ]
     }
